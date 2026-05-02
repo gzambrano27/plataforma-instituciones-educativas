@@ -4,6 +4,7 @@ import { env } from './config/env.js';
 import systemRoutes from './routes/system.routes.js';
 import institutionsRoutes from './routes/institutions.routes.js';
 import authRoutes from './routes/auth.routes.js';
+import usersRoutes from './routes/users.routes.js';
 
 export function createApp() {
   const app = express();
@@ -18,6 +19,7 @@ export function createApp() {
   app.use('/api/system', systemRoutes);
   app.use('/api/auth', authRoutes);
   app.use('/api/institutions', institutionsRoutes);
+  app.use('/api/users', usersRoutes);
 
   return app;
 }
