@@ -1,5 +1,7 @@
 import { Router } from 'express';
 import { z } from 'zod';
+import { pool } from '../db/pool.js';
+import { requireAuth } from '../middleware/require-auth.js';
 import { successResponse } from '../utils/api.js';
 
 const router = Router();
@@ -14,46 +16,65 @@ const institutionSchema = z.object({
   activeSchoolYearLabel: z.string().optional().or(z.literal('')),
 });
 
-const institutions: Array<{
-  id: string;
-  name: string;
-  slug: string;
-  institutionType: 'publica' | 'privada';
-  contactEmail?: string;
-  contactPhone?: string;
-  address?: string;
-  activeSchoolYearLabel?: string;
-}> = [
-  {
-    id: 'inst-demo-001',
-    name: 'Unidad Educativa Demo Educa',
-    slug: 'unidad-educativa-demo-educa',
-    institutionType: 'privada',
-    contactEmail: 'info@educa.demo',
-    contactPhone: '+593000000000',
-    address: 'Quito, Ecuador',
-    activeSchoolYearLabel: '2026-2027',
-  },
-];
+router.get('/', requireAuth, async (_request, response) => {
+  const result = await pool.query(
+    `
+      SELECT
+        id,
+        name,
+        slug,
+        institution_type AS "institutionType",
+        contact_email AS "contactEmail",
+        contact_phone AS "contactPhone",
+        address,
+        active_school_year_label AS "activeSchoolYearLabel",
+        created_at AS "createdAt",
+        updated_at AS "updatedAt"
+      FROM edu_institutions
+      ORDER BY created_at DESC
+    `,
+  );
 
-router.get('/', (_request, response) => {
-  return response.json(successResponse('Institutions loaded', institutions));
+  return response.json(successResponse('Instituciones cargadas.', result.rows));
 });
 
-router.post('/', (request, response) => {
+router.post('/', requireAuth, async (request, response) => {
   const payload = institutionSchema.parse(request.body);
-  const created = {
-    id: `inst-${Date.now()}`,
-    name: payload.name,
-    slug: payload.slug,
-    institutionType: payload.institutionType,
-    contactEmail: payload.contactEmail || undefined,
-    contactPhone: payload.contactPhone || undefined,
-    address: payload.address || undefined,
-    activeSchoolYearLabel: payload.activeSchoolYearLabel || undefined,
-  };
-  institutions.unshift(created);
-  return response.status(201).json(successResponse('Institution created', created));
+  const result = await pool.query(
+    `
+      INSERT INTO edu_institutions (
+        name,
+        slug,
+        institution_type,
+        contact_email,
+        contact_phone,
+        address,
+        active_school_year_label
+      ) VALUES ($1, $2, $3, $4, $5, $6, $7)
+      RETURNING
+        id,
+        name,
+        slug,
+        institution_type AS "institutionType",
+        contact_email AS "contactEmail",
+        contact_phone AS "contactPhone",
+        address,
+        active_school_year_label AS "activeSchoolYearLabel",
+        created_at AS "createdAt",
+        updated_at AS "updatedAt"
+    `,
+    [
+      payload.name,
+      payload.slug,
+      payload.institutionType,
+      payload.contactEmail || null,
+      payload.contactPhone || null,
+      payload.address || null,
+      payload.activeSchoolYearLabel || null,
+    ],
+  );
+
+  return response.status(201).json(successResponse('Institución creada.', result.rows[0]));
 });
 
 export default router;

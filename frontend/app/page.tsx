@@ -1,12 +1,3 @@
-type Institution = {
-  id: string;
-  name: string;
-  slug: string;
-  institutionType: 'publica' | 'privada';
-  contactEmail?: string;
-  activeSchoolYearLabel?: string;
-};
-
 type AuthBootstrap = {
   mode: string;
   sessionStrategy: string;
@@ -14,17 +5,6 @@ type AuthBootstrap = {
 };
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? 'http://localhost:4100/api';
-
-async function getInstitutions(): Promise<Institution[]> {
-  try {
-    const response = await fetch(`${API_BASE_URL}/institutions`, { cache: 'no-store' });
-    if (!response.ok) return [];
-    const payload = (await response.json()) as { data?: Institution[] };
-    return payload.data ?? [];
-  } catch {
-    return [];
-  }
-}
 
 async function getAuthBootstrap(): Promise<AuthBootstrap | null> {
   try {
@@ -38,7 +18,7 @@ async function getAuthBootstrap(): Promise<AuthBootstrap | null> {
 }
 
 export default async function HomePage() {
-  const [institutions, authBootstrap] = await Promise.all([getInstitutions(), getAuthBootstrap()]);
+  const authBootstrap = await getAuthBootstrap();
 
   return (
     <main className="mx-auto flex min-h-screen w-full max-w-6xl flex-col justify-center px-6 py-16">
@@ -95,14 +75,13 @@ export default async function HomePage() {
           <div className="rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur">
             <p className="text-sm uppercase tracking-[0.2em] text-slate-400">Instituciones demo</p>
             <div className="mt-5 space-y-4">
-              {institutions.length > 0 ? institutions.map((institution) => (
-                <div key={institution.id} className="rounded-2xl border border-white/8 bg-black/20 p-4">
-                  <p className="font-semibold text-white">{institution.name}</p>
-                  <p className="mt-1 text-sm text-slate-400">{institution.slug} · {institution.institutionType}</p>
-                  <p className="mt-2 text-sm text-slate-300">Año activo: {institution.activeSchoolYearLabel ?? 'por definir'}</p>
-                  <p className="mt-1 text-sm text-slate-500">{institution.contactEmail ?? 'sin correo configurado'}</p>
-                </div>
-              )) : <p className="text-sm text-slate-400">Todavía no hay instituciones cargadas.</p>}
+              <div className="rounded-2xl border border-white/8 bg-black/20 p-4">
+                <p className="font-semibold text-white">Unidad Educativa Demo Educa</p>
+                <p className="mt-1 text-sm text-slate-400">unidad-educativa-demo-educa · privada</p>
+                <p className="mt-2 text-sm text-slate-300">Año activo: 2026-2027</p>
+                <p className="mt-1 text-sm text-slate-500">info@educa.demo</p>
+              </div>
+              <p className="text-sm text-slate-400">La consulta completa de instituciones ya quedó protegida por autenticación real base.</p>
             </div>
           </div>
 
