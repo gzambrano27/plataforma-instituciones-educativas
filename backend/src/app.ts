@@ -1,0 +1,23 @@
+import cors from 'cors';
+import express from 'express';
+import { env } from './config/env.js';
+import systemRoutes from './routes/system.routes.js';
+import institutionsRoutes from './routes/institutions.routes.js';
+import authRoutes from './routes/auth.routes.js';
+
+export function createApp() {
+  const app = express();
+
+  app.use(cors({ origin: env.FRONTEND_URL, credentials: true }));
+  app.use(express.json({ limit: '2mb' }));
+
+  app.get('/', (_request, response) => {
+    return response.json({ success: true, message: 'Educa API online' });
+  });
+
+  app.use('/api/system', systemRoutes);
+  app.use('/api/auth', authRoutes);
+  app.use('/api/institutions', institutionsRoutes);
+
+  return app;
+}
