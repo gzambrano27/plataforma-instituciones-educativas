@@ -46,6 +46,10 @@ export function errorHandler(error: unknown, _request: Request, response: Respon
       return response.status(409).json({ success: false, message: 'Ya existe un estudiante con ese correo en la institución actual.' });
     }
 
+    if (pgError.constraint?.includes('edu_enrollments_student_id_school_year_label')) {
+      return response.status(409).json({ success: false, message: 'El estudiante ya tiene una matrícula registrada para el periodo escolar activo.' });
+    }
+
     if (pgError.constraint?.includes('edu_subjects_institution_id_code')) {
       return response.status(409).json({ success: false, message: 'Ya existe una materia con ese código en la institución actual.' });
     }

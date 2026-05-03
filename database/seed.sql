@@ -295,3 +295,46 @@ VALUES
     'Cobertura artística para Inicial 2 en sus paralelos activos.'
   )
 ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO edu_enrollments (
+  id,
+  institution_id,
+  student_id,
+  section_id,
+  school_year_label,
+  enrollment_date,
+  status,
+  notes
+)
+VALUES
+  (
+    '38000000-0000-0000-0000-000000000001',
+    '10000000-0000-0000-0000-000000000001',
+    '35000000-0000-0000-0000-000000000001',
+    '32000000-0000-0000-0000-000000000003',
+    '2026-2027',
+    DATE '2026-09-02',
+    'active',
+    'Matrícula ordinaria confirmada para Primero de EGB A.'
+  ),
+  (
+    '38000000-0000-0000-0000-000000000002',
+    '10000000-0000-0000-0000-000000000001',
+    '35000000-0000-0000-0000-000000000002',
+    '32000000-0000-0000-0000-000000000004',
+    '2026-2027',
+    DATE '2026-09-03',
+    'active',
+    'Matrícula validada para la jornada vespertina de Primero de EGB B.'
+  ),
+  (
+    '38000000-0000-0000-0000-000000000003',
+    '10000000-0000-0000-0000-000000000001',
+    '35000000-0000-0000-0000-000000000003',
+    '32000000-0000-0000-0000-000000000006',
+    '2026-2027',
+    DATE '2026-09-04',
+    'withdrawn',
+    'Retiro registrado luego de cambio de institución durante el primer quimestre.'
+  )
+ON CONFLICT (id) DO NOTHING;

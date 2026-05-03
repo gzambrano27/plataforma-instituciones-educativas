@@ -158,3 +158,17 @@ CREATE TABLE IF NOT EXISTS edu_academic_assignments (
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
+
+CREATE TABLE IF NOT EXISTS edu_enrollments (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  institution_id UUID NOT NULL REFERENCES edu_institutions(id) ON DELETE CASCADE,
+  student_id UUID NOT NULL REFERENCES edu_students(id) ON DELETE CASCADE,
+  section_id UUID NOT NULL REFERENCES edu_academic_sections(id) ON DELETE RESTRICT,
+  school_year_label VARCHAR(80) NOT NULL,
+  enrollment_date DATE NOT NULL DEFAULT CURRENT_DATE,
+  status VARCHAR(20) NOT NULL DEFAULT 'active' CHECK (status IN ('active', 'withdrawn', 'cancelled')),
+  notes TEXT,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  UNIQUE (student_id, school_year_label)
+ );

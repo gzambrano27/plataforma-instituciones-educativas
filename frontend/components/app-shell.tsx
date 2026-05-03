@@ -11,6 +11,7 @@ const navigationItems = [
   { href: '/academico', label: 'Académico', shortLabel: 'AC', description: 'Niveles, grados y secciones' },
   { href: '/docentes', label: 'Docentes', shortLabel: 'DO', description: 'Planta y asignación académica' },
   { href: '/estudiantes', label: 'Estudiantes', shortLabel: 'ES', description: 'Matrícula y ubicación académica' },
+  { href: '/matriculas', label: 'Matrículas', shortLabel: 'MT', description: 'Inscripciones por estudiante y sección' },
   { href: '/materias', label: 'Materias', shortLabel: 'MA', description: 'Oferta curricular y carga base' },
   { href: '/asignaciones-academicas', label: 'Asignaciones', shortLabel: 'AA', description: 'Docente + materia + estructura' },
   { href: '/usuarios', label: 'Usuarios', shortLabel: 'US', description: 'Accesos y perfiles' },
@@ -40,6 +41,10 @@ const pageMeta: Record<string, { title: string; subtitle: string }> = {
   '/estudiantes': {
     title: 'Estudiantes y matrícula académica',
     subtitle: 'Alta y consulta de estudiantes ubicados en nivel, curso y sección.',
+  },
+  '/matriculas': {
+    title: 'Matrículas e inscripciones',
+    subtitle: 'Registro del periodo escolar enlazado con estudiante, curso y sección.',
   },
   '/materias': {
     title: 'Materias y oferta curricular',

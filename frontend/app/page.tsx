@@ -51,6 +51,11 @@ const quickModules = [
     description: 'Matrícula mínima con ubicación coherente por nivel, curso y sección.',
   },
   {
+    href: '/matriculas',
+    title: 'Matrículas',
+    description: 'Inscripciones del periodo escolar conectadas con estudiantes y secciones reales.',
+  },
+  {
     href: '/materias',
     title: 'Materias',
     description: 'Oferta curricular base en español para la institución educativa activa.',
@@ -140,6 +145,9 @@ export default async function HomePage() {
               <Link href="/estudiantes" className="secondary-button w-full sm:w-auto">
                 Gestionar estudiantes
               </Link>
+              <Link href="/matriculas" className="secondary-button w-full sm:w-auto">
+                Gestionar matrículas
+              </Link>
               <Link href="/materias" className="secondary-button w-full sm:w-auto">
                 Gestionar materias
               </Link>
@@ -189,7 +197,7 @@ export default async function HomePage() {
             <h2 className="mt-2 text-xl font-semibold text-slate-950">Navegación rápida del sistema</h2>
             <p className="mt-2 text-sm text-slate-500">Accesos más directos y legibles para los flujos que más se usan.</p>
           </div>
-          <span className="info-chip">8 módulos activos</span>
+          <span className="info-chip">9 módulos activos</span>
         </div>
         <div className="mt-5 grid gap-4 lg:grid-cols-2 2xl:grid-cols-4">
           {quickModules.map((module) => (

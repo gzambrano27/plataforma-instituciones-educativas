@@ -14,6 +14,7 @@ type DashboardPayload = {
     academicSections: number;
     teachers: number;
     students: number;
+    enrollments: number;
     subjects: number;
     academicAssignments: number;
   };
@@ -99,6 +100,7 @@ export default async function PanelPage() {
             <MetricCard label="Secciones" value={dashboard.metrics.academicSections} helper="Paralelos visibles" />
             <MetricCard label="Docentes" value={dashboard.metrics.teachers} helper="Planta académica registrada" />
             <MetricCard label="Estudiantes" value={dashboard.metrics.students} helper="Matrícula visible" />
+            <MetricCard label="Matrículas" value={dashboard.metrics.enrollments} helper="Inscripciones del periodo activo" />
             <MetricCard label="Materias" value={dashboard.metrics.subjects} helper="Oferta curricular activa" />
             <MetricCard label="Asignaciones" value={dashboard.metrics.academicAssignments} helper="Carga académica enlazada" />
           </section>
@@ -130,6 +132,7 @@ export default async function PanelPage() {
                     <Link href="/academico" className="compact-button w-full sm:w-fit">Gestionar estructura académica</Link>
                     <Link href="/docentes" className="compact-button w-full sm:w-fit">Gestionar docentes</Link>
                     <Link href="/estudiantes" className="compact-button w-full sm:w-fit">Gestionar estudiantes</Link>
+                    <Link href="/matriculas" className="compact-button w-full sm:w-fit">Gestionar matrículas</Link>
                     <Link href="/materias" className="compact-button w-full sm:w-fit">Gestionar materias</Link>
                     <Link href="/asignaciones-academicas" className="compact-button w-full sm:w-fit">Gestionar asignaciones</Link>
                   </div>

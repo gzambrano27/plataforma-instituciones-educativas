@@ -9,6 +9,7 @@ import usersRoutes from './routes/users.routes.js';
 import academicStructureRoutes from './routes/academic-structure.routes.js';
 import teachersRoutes from './routes/teachers.routes.js';
 import studentsRoutes from './routes/students.routes.js';
+import enrollmentsRoutes from './routes/enrollments.routes.js';
 import subjectsRoutes from './routes/subjects.routes.js';
 import academicAssignmentsRoutes from './routes/academic-assignments.routes.js';
 
@@ -29,6 +30,7 @@ export function createApp() {
   app.use('/api/academic-structure', academicStructureRoutes);
   app.use('/api/teachers', teachersRoutes);
   app.use('/api/students', studentsRoutes);
+  app.use('/api/enrollments', enrollmentsRoutes);
   app.use('/api/subjects', subjectsRoutes);
   app.use('/api/academic-assignments', academicAssignmentsRoutes);
   app.use(errorHandler);
