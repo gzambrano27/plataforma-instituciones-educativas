@@ -46,6 +46,14 @@ export function errorHandler(error: unknown, _request: Request, response: Respon
       return response.status(409).json({ success: false, message: 'Ya existe un estudiante con ese correo en la institución actual.' });
     }
 
+    if (pgError.constraint?.includes('edu_subjects_institution_id_code')) {
+      return response.status(409).json({ success: false, message: 'Ya existe una materia con ese código en la institución actual.' });
+    }
+
+    if (pgError.constraint?.includes('edu_subjects_institution_id_name')) {
+      return response.status(409).json({ success: false, message: 'Ya existe una materia con ese nombre en la institución actual.' });
+    }
+
     return response.status(409).json({ success: false, message: 'Ya existe un registro con esos datos.' });
   }
 

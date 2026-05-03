@@ -50,6 +50,16 @@ const quickModules = [
     title: 'Estudiantes',
     description: 'Matrícula mínima con ubicación coherente por nivel, curso y sección.',
   },
+  {
+    href: '/materias',
+    title: 'Materias',
+    description: 'Oferta curricular base en español para la institución educativa activa.',
+  },
+  {
+    href: '/asignaciones-academicas',
+    title: 'Asignaciones académicas',
+    description: 'Carga docente enlazada con materia, nivel, curso y sección.',
+  },
 ];
 
 const highlights = [
@@ -130,6 +140,12 @@ export default async function HomePage() {
               <Link href="/estudiantes" className="secondary-button w-full sm:w-auto">
                 Gestionar estudiantes
               </Link>
+              <Link href="/materias" className="secondary-button w-full sm:w-auto">
+                Gestionar materias
+              </Link>
+              <Link href="/asignaciones-academicas" className="secondary-button w-full sm:w-auto">
+                Gestionar asignaciones
+              </Link>
             </div>
           </div>
 
@@ -173,7 +189,7 @@ export default async function HomePage() {
             <h2 className="mt-2 text-xl font-semibold text-slate-950">Navegación rápida del sistema</h2>
             <p className="mt-2 text-sm text-slate-500">Accesos más directos y legibles para los flujos que más se usan.</p>
           </div>
-          <span className="info-chip">6 módulos activos</span>
+          <span className="info-chip">8 módulos activos</span>
         </div>
         <div className="mt-5 grid gap-4 lg:grid-cols-2 2xl:grid-cols-4">
           {quickModules.map((module) => (

@@ -16,9 +16,9 @@ router.get('/health', (_request, response) => {
 router.get('/bootstrap', (_request, response) => {
   return response.json(successResponse('Bootstrap snapshot loaded', {
     project: 'plataforma-instituciones-educativas',
-    phase: 'academic-3-estudiantes',
+    phase: 'academic-4-materias-asignaciones',
     publicUrl: 'https://educa.hacktrickstore.com',
-    modules: ['auth-base', 'instituciones', 'usuarios', 'roles', 'academico-base', 'docentes', 'estudiantes'],
+    modules: ['auth-base', 'instituciones', 'usuarios', 'roles', 'academico-base', 'docentes', 'estudiantes', 'materias', 'asignaciones-academicas'],
   }));
 });
 
@@ -31,7 +31,7 @@ router.get('/auth/bootstrap', (_request, response) => {
 });
 
 router.get('/dashboard', requireAuth, async (_request, response) => {
-  const [institutionsCount, usersCount, activeUsersCount, rolesCount, levelsCount, gradesCount, sectionsCount, teachersCount, studentsCount, institutions, users] = await Promise.all([
+  const [institutionsCount, usersCount, activeUsersCount, rolesCount, levelsCount, gradesCount, sectionsCount, teachersCount, studentsCount, subjectsCount, academicAssignmentsCount, institutions, users] = await Promise.all([
     pool.query(`SELECT COUNT(*)::int AS total FROM edu_institutions`),
     pool.query(`SELECT COUNT(*)::int AS total FROM edu_users`),
     pool.query(`SELECT COUNT(*)::int AS total FROM edu_users WHERE status = 'active'`),
@@ -41,6 +41,8 @@ router.get('/dashboard', requireAuth, async (_request, response) => {
     pool.query(`SELECT COUNT(*)::int AS total FROM edu_academic_sections`),
     pool.query(`SELECT COUNT(*)::int AS total FROM edu_teachers`),
     pool.query(`SELECT COUNT(*)::int AS total FROM edu_students`),
+    pool.query(`SELECT COUNT(*)::int AS total FROM edu_subjects`),
+    pool.query(`SELECT COUNT(*)::int AS total FROM edu_academic_assignments`),
     pool.query(`SELECT id, name, slug, active_school_year_label AS "activeSchoolYearLabel" FROM edu_institutions ORDER BY created_at DESC LIMIT 5`),
     pool.query(`
       SELECT
@@ -64,12 +66,14 @@ router.get('/dashboard', requireAuth, async (_request, response) => {
       roles: rolesCount.rows[0]?.total ?? 0,
       academicLevels: levelsCount.rows[0]?.total ?? 0,
       academicGrades: gradesCount.rows[0]?.total ?? 0,
-      academicSections: sectionsCount.rows[0]?.total ?? 0,
-      teachers: teachersCount.rows[0]?.total ?? 0,
-      students: studentsCount.rows[0]?.total ?? 0,
-    },
-    institutions: institutions.rows,
-    recentUsers: users.rows,
+        academicSections: sectionsCount.rows[0]?.total ?? 0,
+        teachers: teachersCount.rows[0]?.total ?? 0,
+        students: studentsCount.rows[0]?.total ?? 0,
+        subjects: subjectsCount.rows[0]?.total ?? 0,
+        academicAssignments: academicAssignmentsCount.rows[0]?.total ?? 0,
+      },
+      institutions: institutions.rows,
+      recentUsers: users.rows,
   }));
 });
 

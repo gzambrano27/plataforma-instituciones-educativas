@@ -11,6 +11,8 @@ const navigationItems = [
   { href: '/academico', label: 'Académico', shortLabel: 'AC', description: 'Niveles, grados y secciones' },
   { href: '/docentes', label: 'Docentes', shortLabel: 'DO', description: 'Planta y asignación académica' },
   { href: '/estudiantes', label: 'Estudiantes', shortLabel: 'ES', description: 'Matrícula y ubicación académica' },
+  { href: '/materias', label: 'Materias', shortLabel: 'MA', description: 'Oferta curricular y carga base' },
+  { href: '/asignaciones-academicas', label: 'Asignaciones', shortLabel: 'AA', description: 'Docente + materia + estructura' },
   { href: '/usuarios', label: 'Usuarios', shortLabel: 'US', description: 'Accesos y perfiles' },
 ];
 
@@ -38,6 +40,14 @@ const pageMeta: Record<string, { title: string; subtitle: string }> = {
   '/estudiantes': {
     title: 'Estudiantes y matrícula académica',
     subtitle: 'Alta y consulta de estudiantes ubicados en nivel, curso y sección.',
+  },
+  '/materias': {
+    title: 'Materias y oferta curricular',
+    subtitle: 'Base de materias visible para la institución activa y su carga académica.',
+  },
+  '/asignaciones-academicas': {
+    title: 'Asignaciones académicas',
+    subtitle: 'Vínculo operativo entre docente, materia, nivel, curso y sección.',
   },
   '/usuarios': {
     title: 'Usuarios y gobierno de acceso',

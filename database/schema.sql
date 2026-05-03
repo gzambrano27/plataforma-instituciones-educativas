@@ -129,3 +129,32 @@ CREATE TABLE IF NOT EXISTS edu_students (
   UNIQUE (institution_id, enrollment_code),
   UNIQUE (institution_id, email)
 );
+
+CREATE TABLE IF NOT EXISTS edu_subjects (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  institution_id UUID NOT NULL REFERENCES edu_institutions(id) ON DELETE CASCADE,
+  level_id UUID REFERENCES edu_academic_levels(id) ON DELETE SET NULL,
+  name VARCHAR(140) NOT NULL,
+  code VARCHAR(40) NOT NULL,
+  area VARCHAR(120),
+  weekly_hours INTEGER CHECK (weekly_hours IS NULL OR (weekly_hours >= 1 AND weekly_hours <= 60)),
+  status VARCHAR(20) NOT NULL DEFAULT 'active' CHECK (status IN ('active', 'inactive')),
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  UNIQUE (institution_id, code),
+  UNIQUE (institution_id, name)
+);
+
+CREATE TABLE IF NOT EXISTS edu_academic_assignments (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  institution_id UUID NOT NULL REFERENCES edu_institutions(id) ON DELETE CASCADE,
+  teacher_id UUID NOT NULL REFERENCES edu_teachers(id) ON DELETE CASCADE,
+  subject_id UUID NOT NULL REFERENCES edu_subjects(id) ON DELETE CASCADE,
+  level_id UUID NOT NULL REFERENCES edu_academic_levels(id) ON DELETE RESTRICT,
+  grade_id UUID NOT NULL REFERENCES edu_academic_grades(id) ON DELETE RESTRICT,
+  section_id UUID REFERENCES edu_academic_sections(id) ON DELETE RESTRICT,
+  weekly_hours INTEGER CHECK (weekly_hours IS NULL OR (weekly_hours >= 1 AND weekly_hours <= 60)),
+  notes TEXT,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
