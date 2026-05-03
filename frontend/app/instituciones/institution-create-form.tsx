@@ -20,7 +20,6 @@ export type InstitutionFormValues = {
   contactEmail?: string;
   contactPhone?: string;
   address?: string;
-  activeSchoolYearLabel?: string;
 };
 
 type InstitutionFormModalProps = {
@@ -47,7 +46,7 @@ export function InstitutionFormModal({ open, mode, onClose, initialValues }: Ins
     setState({ success: false, message: null });
 
     if (mode === 'edit') {
-      setState({ success: false, message: 'La edición quedará habilitada cuando la API exponga actualización de instituciones.' });
+      setState({ success: false, message: 'La edición quedará habilitada cuando la API exponga actualización de la estructura institucional.' });
       setPending(false);
       return;
     }
@@ -59,7 +58,6 @@ export function InstitutionFormModal({ open, mode, onClose, initialValues }: Ins
       contactEmail: String(formData.get('contactEmail') ?? '').trim(),
       contactPhone: String(formData.get('contactPhone') ?? '').trim(),
       address: String(formData.get('address') ?? '').trim(),
-      activeSchoolYearLabel: String(formData.get('activeSchoolYearLabel') ?? '').trim(),
     };
 
     if (!payload.name || !payload.slug || !payload.institutionType) {
@@ -82,14 +80,14 @@ export function InstitutionFormModal({ open, mode, onClose, initialValues }: Ins
       const responsePayload = await response.json().catch(() => null) as { message?: string } | null;
 
       if (!response.ok) {
-        throw new Error(responsePayload?.message ?? 'No fue posible crear la institución.');
+        throw new Error(responsePayload?.message ?? 'No fue posible crear el registro.');
       }
 
-      setState({ success: true, message: 'Institución creada correctamente.' });
+      setState({ success: true, message: 'Registro creado correctamente.' });
       onClose();
       router.refresh();
     } catch (error) {
-      setState({ success: false, message: error instanceof Error ? error.message : 'No fue posible crear la institución.' });
+      setState({ success: false, message: error instanceof Error ? error.message : 'No fue posible crear el registro.' });
     } finally {
       setPending(false);
     }
@@ -99,10 +97,10 @@ export function InstitutionFormModal({ open, mode, onClose, initialValues }: Ins
     <ModalShell
       open={open}
       onClose={onClose}
-      title={mode === 'create' ? 'Registrar sede o dato institucional' : 'Editar registro institucional'}
+      title={mode === 'create' ? 'Registrar sede o dato base' : 'Editar registro institucional'}
       description={mode === 'create'
-        ? 'Completa los datos principales para crear un registro institucional real en la API protegida y verlo de inmediato en la tabla actual.'
-        : 'La interfaz de edición ya quedó preparada dentro del modal para activarse apenas exista actualización de registros institucionales en la API.'}
+        ? 'Completa los datos principales para crear un registro base o una sede y verlo de inmediato en la tabla actual.'
+        : 'La interfaz de edición ya quedó preparada dentro del modal para activarse apenas exista actualización de la estructura institucional en la API.'}
     >
       <form action={handleSubmit} className="space-y-5">
         <div className="grid gap-4 md:grid-cols-2">
@@ -129,10 +127,6 @@ export function InstitutionFormModal({ open, mode, onClose, initialValues }: Ins
             <span className="text-sm font-medium text-slate-700">Teléfono</span>
             <input name="contactPhone" defaultValue={initialValues?.contactPhone ?? ''} className="form-field" placeholder="+593999999999" />
           </label>
-          <label className="block">
-            <span className="text-sm font-medium text-slate-700">Año lectivo activo</span>
-            <input name="activeSchoolYearLabel" defaultValue={initialValues?.activeSchoolYearLabel ?? ''} className="form-field" placeholder="2026-2027" />
-          </label>
         </div>
 
         <label className="block">
@@ -157,7 +151,7 @@ export function InstitutionFormModal({ open, mode, onClose, initialValues }: Ins
           </button>
           {mode === 'create' ? (
             <button type="submit" disabled={pending} className="primary-button disabled:cursor-not-allowed disabled:opacity-60">
-              {pending ? 'Creando institución...' : 'Crear institución'}
+              {pending ? 'Creando registro...' : 'Crear registro'}
             </button>
           ) : (
             <button type="button" disabled className="primary-button cursor-not-allowed opacity-60">

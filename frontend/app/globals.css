@@ -213,6 +213,10 @@ a {
     @apply px-5 py-5 text-sm text-slate-500;
   }
 
+  .table-actions {
+    @apply flex flex-wrap items-center gap-2;
+  }
+
   .pagination-bar {
     @apply flex flex-col gap-3 border-t border-slate-200 px-5 py-4 text-sm text-slate-500 sm:flex-row sm:items-center sm:justify-between;
   }

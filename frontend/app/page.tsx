@@ -23,12 +23,12 @@ const quickModules = [
   {
     href: '/panel',
     title: 'Panel diario',
-    description: 'Resumen de operaci\u00f3n, accesos y actividad reciente del colegio.',
+    description: 'Resumen de operación, accesos y actividad reciente del colegio.',
   },
   {
     href: '/instituciones',
-    title: 'Instituci\u00f3n y sedes',
-    description: 'Datos institucionales, a\u00f1o lectivo y sedes registradas en el sistema.',
+    title: 'Institución',
+    description: 'Datos base, sedes y contacto operativo de la institución.',
   },
   {
     href: '/usuarios',
@@ -40,15 +40,15 @@ const quickModules = [
 const highlights = [
   {
     title: 'Autoridades',
-    description: 'Indicadores claros para rectorado y coordinaci\u00f3n sin sobrecargar la pantalla.',
+    description: 'Indicadores claros para rectorado y coordinación sin sobrecargar la pantalla.',
   },
   {
     title: 'Gestión diaria',
-    description: 'Procesos de alta, consulta y seguimiento en vistas m\u00e1s compactas.',
+    description: 'Procesos de alta, consulta y seguimiento en vistas más compactas.',
   },
   {
     title: 'Equipo institucional',
-    description: 'Una base visual consistente para administraci\u00f3n, soporte y seguimiento acad\u00e9mico.',
+    description: 'Una base visual consistente para administración, soporte y seguimiento académico.',
   },
 ];
 
@@ -66,16 +66,16 @@ export default async function HomePage() {
             </div>
             <div className="space-y-3">
               <h1 className="section-title max-w-4xl">
-                Un sistema m\u00e1s claro para operar una sola instituci\u00f3n educativa.
+                Un sistema más claro para operar una sola institución educativa.
               </h1>
               <p className="section-copy max-w-3xl">
-                El nuevo frente visual concentra la lectura diaria del colegio en vistas compactas, tablas responsivas y acciones directas para rectorado, coordinaci\u00f3n y administraci\u00f3n.
+                El nuevo frente visual concentra la lectura diaria del colegio en vistas compactas, tablas responsivas y acciones directas para rectorado, coordinación y administración.
               </p>
             </div>
 
             <div className="summary-strip">
               <div className="dark-metric-card">
-                <p className="text-sm font-medium text-slate-300">Retenci\u00f3n acad\u00e9mica</p>
+                <p className="text-sm font-medium text-slate-300">Retención académica</p>
                 <p className="mt-3 text-4xl font-semibold tracking-tight">94%</p>
                 <p className="mt-2 text-sm text-slate-300">Continuidad estudiantil del periodo actual.</p>
               </div>
@@ -87,7 +87,7 @@ export default async function HomePage() {
               <div className="summary-item">
                 <p className="summary-label">Estudiantes</p>
                 <p className="summary-value">2.4k</p>
-                <p className="mt-1 text-sm text-slate-500">Matr\u00edcula consolidada.</p>
+                <p className="mt-1 text-sm text-slate-500">Matrícula consolidada.</p>
               </div>
               <div className="summary-item">
                 <p className="summary-label">Soporte</p>
@@ -101,7 +101,7 @@ export default async function HomePage() {
                 Abrir panel diario
               </Link>
               <Link href="/instituciones" className="secondary-button">
-                Revisar instituci\u00f3n
+                Revisar institución
               </Link>
               <Link href="/usuarios" className="secondary-button">
                 Gestionar accesos
@@ -112,8 +112,8 @@ export default async function HomePage() {
           <aside className="section-grid-card">
             <div className="flex items-center justify-between gap-3">
               <div>
-                <p className="eyebrow">Acceso de demostraci\u00f3n</p>
-                <h2 className="mt-2 text-xl font-semibold text-slate-950">Operaci\u00f3n lista para pruebas</h2>
+                <p className="eyebrow">Acceso de demostración</p>
+                <h2 className="mt-2 text-xl font-semibold text-slate-950">Operación lista para pruebas</h2>
               </div>
               <span className="info-chip">Base activa</span>
             </div>
@@ -141,19 +141,19 @@ export default async function HomePage() {
       <section className="table-shell">
         <div className="table-toolbar soft-divider">
           <div>
-            <p className="eyebrow">M\u00f3dulos principales</p>
-            <h2 className="table-title">Navegaci\u00f3n r\u00e1pida del sistema</h2>
-            <p className="table-subtitle">Accede a las vistas operativas m\u00e1s usadas sin depender de bloques extensos.</p>
+            <p className="eyebrow">Módulos principales</p>
+            <h2 className="table-title">Navegación rápida del sistema</h2>
+            <p className="table-subtitle">Accede a las vistas operativas más usadas sin depender de bloques extensos.</p>
           </div>
-          <span className="info-chip">3 m\u00f3dulos activos</span>
+          <span className="info-chip">3 módulos activos</span>
         </div>
         <div className="table-scroller">
           <table className="data-table min-w-[720px]">
             <thead>
               <tr>
-                <th>M\u00f3dulo</th>
+                <th>Módulo</th>
                 <th>Uso principal</th>
-                <th>Acci\u00f3n</th>
+                <th>Acción</th>
               </tr>
             </thead>
             <tbody>
@@ -182,22 +182,22 @@ export default async function HomePage() {
           <div className="flex items-center justify-between gap-4">
             <div>
               <p className="eyebrow">Bloques operativos</p>
-              <h3 className="mt-2 text-xl font-semibold text-slate-950">Lectura acad\u00e9mica y administrativa en la misma vista</h3>
+              <h3 className="mt-2 text-xl font-semibold text-slate-950">Lectura académica y administrativa en la misma vista</h3>
             </div>
-            <span className="info-chip">Lectivo 2026-2027</span>
+            <span className="info-chip">Oferta 2026-2027</span>
           </div>
           <div className="mt-5 grid gap-3 md:grid-cols-2">
             <div className="surface-muted p-4">
               <p className="text-sm text-slate-500">Cursos</p>
-              <p className="mt-2 text-base font-semibold text-slate-950">Planificaci\u00f3n por nivel y secci\u00f3n</p>
+              <p className="mt-2 text-base font-semibold text-slate-950">Planificación por nivel y sección</p>
             </div>
             <div className="surface-muted p-4">
               <p className="text-sm text-slate-500">Estudiantes</p>
-              <p className="mt-2 text-base font-semibold text-slate-950">Seguimiento de matr\u00edcula y permanencia</p>
+              <p className="mt-2 text-base font-semibold text-slate-950">Seguimiento de matrícula y permanencia</p>
             </div>
             <div className="surface-muted p-4">
               <p className="text-sm text-slate-500">Evaluaciones</p>
-              <p className="mt-2 text-base font-semibold text-slate-950">Resultados visibles para coordinaci\u00f3n</p>
+              <p className="mt-2 text-base font-semibold text-slate-950">Resultados visibles para coordinación</p>
             </div>
             <div className="surface-muted p-4">
               <p className="text-sm text-slate-500">Actividades</p>

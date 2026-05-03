@@ -28,9 +28,9 @@ export function InstitutionsWorkspace({ institutions, error }: InstitutionsWorks
           <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             <div>
               <p className="eyebrow">Acciones institucionales</p>
-              <h2 className="mt-2 text-xl font-semibold text-slate-950">Altas y edici\u00f3n sin sacar el foco del listado</h2>
+              <h2 className="mt-2 text-xl font-semibold text-slate-950">Altas y edición sin sacar el foco del listado</h2>
               <p className="mt-2 text-sm leading-6 text-slate-600">
-                La vista principal se mantiene libre de formularios persistentes. El alta y la futura edici\u00f3n viven en modal para favorecer lectura y velocidad operativa.
+                La vista principal se mantiene libre de formularios persistentes. El alta y la futura edición viven en modal para favorecer lectura y velocidad operativa.
               </p>
             </div>
 
@@ -46,9 +46,9 @@ export function InstitutionsWorkspace({ institutions, error }: InstitutionsWorks
         <section className="table-shell">
           <div className="table-toolbar soft-divider">
             <div>
-              <p className="eyebrow">Registro institucional</p>
-              <h2 className="table-title">Sedes y datos institucionales</h2>
-              <p className="table-subtitle">Tabla responsiva para revisar informaci\u00f3n operativa, contacto y ciclo activo.</p>
+              <p className="eyebrow">Estructura institucional</p>
+              <h2 className="table-title">Sedes y datos base</h2>
+              <p className="table-subtitle">Tabla responsiva para revisar ubicación, contacto y tipo de registro.</p>
             </div>
             <div className="flex items-center gap-3">
               <span className="info-chip">{institutions.length} registros</span>
@@ -61,16 +61,15 @@ export function InstitutionsWorkspace({ institutions, error }: InstitutionsWorks
           {error ? (
             <div className="table-empty text-rose-700">{error}</div>
           ) : institutions.length === 0 ? (
-            <div className="table-empty">Todav\u00eda no hay registros institucionales.</div>
+            <div className="table-empty">Todavía no hay sedes o datos base registrados.</div>
           ) : (
             <>
               <div className="table-scroller">
-                <table className="data-table min-w-[980px]">
+                <table className="data-table min-w-[900px]">
                   <thead>
                     <tr>
                       <th>Registro</th>
                       <th>Tipo</th>
-                      <th>A\u00f1o lectivo</th>
                       <th>Contacto</th>
                       <th>Acciones</th>
                     </tr>
@@ -81,24 +80,28 @@ export function InstitutionsWorkspace({ institutions, error }: InstitutionsWorks
                         <td>
                           <p className="font-semibold text-slate-950">{institution.name}</p>
                           <p className="mt-1 text-sm text-slate-500">{institution.slug}</p>
-                          <p className="mt-2 text-sm text-slate-500">{institution.address ?? 'Direcci\u00f3n por definir'}</p>
+                          <p className="mt-2 text-sm text-slate-500">{institution.address ?? 'Dirección por definir'}</p>
                         </td>
                         <td>
                           <span className="info-chip h-fit">{translateInstitutionType(institution.institutionType)}</span>
                         </td>
                         <td>
-                          <span className="info-chip h-fit">{institution.activeSchoolYearLabel ?? 'Año por definir'}</span>
-                        </td>
-                        <td>
                           <div className="space-y-1 text-sm text-slate-600">
                             <p>{institution.contactEmail ?? 'Sin correo'}</p>
-                            <p>{institution.contactPhone ?? 'Sin tel\u00e9fono'}</p>
+                            <p>{institution.contactPhone ?? 'Sin teléfono'}</p>
                           </div>
                         </td>
                         <td>
-                          <button type="button" className="compact-button" onClick={() => setEditingInstitution(institution)}>
-                            Editar
-                          </button>
+                          <div className="table-actions">
+                            <button type="button" className="compact-button" onClick={() => setEditingInstitution(institution)}>
+                              Editar
+                            </button>
+                            {institution.contactEmail ? (
+                              <a href={`mailto:${institution.contactEmail}`} className="compact-button">
+                                Correo
+                              </a>
+                            ) : null}
+                          </div>
                         </td>
                       </tr>
                     ))}

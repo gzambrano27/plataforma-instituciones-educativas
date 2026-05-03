@@ -114,7 +114,7 @@ export function UserFormModal({ institutions, roles, open, mode, onClose, initia
       onClose={onClose}
       title={mode === 'create' ? 'Registrar usuario' : 'Editar usuario'}
       description={mode === 'create'
-        ? 'Crea usuarios reales, define su estado y asigna roles sobre la API protegida existente sin salir del flujo administrativo.'
+        ? 'Crea usuarios reales, define su estado y asigna roles dentro de la institución actual sin salir del flujo administrativo.'
         : 'La interacción de edición ya quedó preparada en modal para activarse apenas exista actualización de usuarios en la API.'}
     >
       <form action={handleSubmit} className="space-y-5">
@@ -142,9 +142,9 @@ export function UserFormModal({ institutions, roles, open, mode, onClose, initia
         </div>
 
         <label className="block">
-          <span className="text-sm font-medium text-slate-700">Sede o registro institucional</span>
+          <span className="text-sm font-medium text-slate-700">Sede</span>
           <select name="institutionId" defaultValue={initialValues?.institutionId ?? ''} className="form-field">
-            <option value="">Sin sede asignada</option>
+            <option value="">Sin sede asociada</option>
             {institutions.map((institution) => (
               <option key={institution.id} value={institution.id}>{institution.name}</option>
             ))}

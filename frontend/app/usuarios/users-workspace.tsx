@@ -44,9 +44,9 @@ export function UsersWorkspace({ users, roles, institutions, error }: UsersWorks
             <div className="flex flex-col gap-4">
               <div>
                 <p className="eyebrow">Acciones de usuario</p>
-                <h2 className="mt-2 text-xl font-semibold text-slate-950">Altas y edici\u00f3n desde una vista compacta</h2>
+                <h2 className="mt-2 text-xl font-semibold text-slate-950">Altas y edición desde una vista compacta</h2>
                 <p className="mt-2 text-sm leading-6 text-slate-600">
-                  La creaci\u00f3n se resuelve en modal y la futura edici\u00f3n ya est\u00e1 preparada desde cada fila, evitando formularios largos dentro de la pantalla principal.
+                  La creación se resuelve en modal y la futura edición ya está preparada desde cada fila, evitando formularios largos dentro de la pantalla principal.
                 </p>
               </div>
 
@@ -58,7 +58,7 @@ export function UsersWorkspace({ users, roles, institutions, error }: UsersWorks
               </div>
 
               <div className="surface-muted p-4 text-sm text-slate-600">
-                El flujo actual de creaci\u00f3n sigue operativo sobre la API protegida. La edici\u00f3n queda lista en interfaz sin modificar backend.
+                El flujo actual de creación sigue operativo sobre la API protegida. La edición queda lista en interfaz sin modificar backend.
               </div>
             </div>
           </aside>
@@ -92,7 +92,7 @@ export function UsersWorkspace({ users, roles, institutions, error }: UsersWorks
             <div>
               <p className="eyebrow">Usuarios registrados</p>
               <h2 className="table-title">Accesos y perfiles del colegio</h2>
-              <p className="table-subtitle">Tabla responsiva para revisar responsables, sede asignada, roles y estado.</p>
+              <p className="table-subtitle">Tabla responsiva para revisar responsables, sede asignada, roles, estado y acciones rápidas.</p>
             </div>
             <div className="flex items-center gap-3">
               <span className="info-chip">{users.length} usuarios</span>
@@ -105,15 +105,15 @@ export function UsersWorkspace({ users, roles, institutions, error }: UsersWorks
           {error ? (
             <div className="table-empty text-rose-700">{error}</div>
           ) : users.length === 0 ? (
-            <div className="table-empty">Todav\u00eda no hay usuarios registrados.</div>
+            <div className="table-empty">Todavía no hay usuarios registrados.</div>
           ) : (
             <>
               <div className="table-scroller">
-                <table className="data-table min-w-[1080px]">
+                <table className="data-table min-w-[1120px]">
                   <thead>
                     <tr>
                       <th>Usuario</th>
-                      <th>Sede o registro</th>
+                      <th>Sede</th>
                       <th>Roles</th>
                       <th>Estado</th>
                       <th>Acciones</th>
@@ -127,7 +127,7 @@ export function UsersWorkspace({ users, roles, institutions, error }: UsersWorks
                           <p className="mt-1 text-sm text-slate-500">{user.email}</p>
                         </td>
                         <td>
-                          <p className="text-sm text-slate-600">{user.institutionName ?? 'Sin sede asignada'}</p>
+                          <p className="text-sm text-slate-600">{user.institutionName ?? 'Sin sede asociada'}</p>
                         </td>
                         <td>
                           <p className="text-sm text-slate-600">{user.roleCodes.join(', ')}</p>
@@ -136,9 +136,14 @@ export function UsersWorkspace({ users, roles, institutions, error }: UsersWorks
                           <span className="info-chip h-fit">{translateUserStatus(user.status)}</span>
                         </td>
                         <td>
-                          <button type="button" className="compact-button" onClick={() => setEditingUser(user)}>
-                            Editar
-                          </button>
+                          <div className="table-actions">
+                            <button type="button" className="compact-button" onClick={() => setEditingUser(user)}>
+                              Editar
+                            </button>
+                            <a href={`mailto:${user.email}`} className="compact-button">
+                              Correo
+                            </a>
+                          </div>
                         </td>
                       </tr>
                     ))}

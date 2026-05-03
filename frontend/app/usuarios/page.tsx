@@ -53,7 +53,7 @@ async function loginAndLoadUsers() {
       users: [] as EduUser[],
       roles: [] as EduRole[],
       institutions: [] as InstitutionOption[],
-      error: 'No fue posible cargar usuarios, roles o instituciones.',
+      error: 'No fue posible cargar usuarios, roles o sedes.',
     };
   }
 }

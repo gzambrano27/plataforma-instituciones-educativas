@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 const navigationItems = [
   { href: '/', label: 'Inicio', shortLabel: 'IN', description: 'Resumen general' },
   { href: '/panel', label: 'Panel', shortLabel: 'PA', description: 'Centro operativo' },
-  { href: '/instituciones', label: 'Institución', shortLabel: 'IE', description: 'Datos y sedes' },
+  { href: '/instituciones', label: 'Institución', shortLabel: 'IE', description: 'Datos base y sedes' },
   { href: '/usuarios', label: 'Usuarios', shortLabel: 'US', description: 'Accesos y perfiles' },
 ];
 
@@ -21,8 +21,8 @@ const pageMeta: Record<string, { title: string; subtitle: string }> = {
     subtitle: 'Seguimiento diario de operación, accesos y actividad reciente.',
   },
   '/instituciones': {
-    title: 'Institución y sedes',
-    subtitle: 'Datos institucionales, sedes y contacto operativo en una sola vista.',
+    title: 'Institución',
+    subtitle: 'Datos base, sedes y contacto operativo en una sola vista.',
   },
   '/usuarios': {
     title: 'Usuarios y gobierno de acceso',
@@ -88,7 +88,7 @@ export function AppShell({ children }: Readonly<{ children: React.ReactNode }>) 
                       ED
                     </span>
                     <span>
-                      <span className="block text-xs font-semibold uppercase tracking-[0.24em] text-slate-500">Gesti\u00f3n escolar</span>
+                      <span className="block text-xs font-semibold uppercase tracking-[0.24em] text-slate-500">Gestión escolar</span>
                       <span className="block text-lg font-semibold tracking-tight">Campus Central</span>
                     </span>
                   </Link>
@@ -106,7 +106,7 @@ export function AppShell({ children }: Readonly<{ children: React.ReactNode }>) 
                   <svg viewBox="0 0 24 24" aria-hidden="true" className="h-4 w-4 text-slate-400">
                     <path d="M10.5 4a6.5 6.5 0 1 0 4.03 11.6l4.43 4.43 1.06-1.06-4.43-4.43A6.5 6.5 0 0 0 10.5 4Zm0 1.5a5 5 0 1 1 0 10 5 5 0 0 1 0-10Z" fill="currentColor" />
                   </svg>
-                  <input aria-label="Buscar" placeholder="Buscar sede, usuario o módulo" />
+                  <input aria-label="Buscar" placeholder="Buscar sede, usuario o vista" />
                 </label>
 
                 <div className="flex items-center gap-3 xl:shrink-0">
@@ -140,7 +140,7 @@ function SidebarContent({ pathname, onNavigate }: { pathname: string; onNavigate
             ED
           </span>
           <span>
-            <span className="block text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-500">Gesti\u00f3n escolar</span>
+            <span className="block text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-500">Gestión escolar</span>
             <span className="block text-lg font-semibold tracking-tight">Campus Central</span>
           </span>
         </Link>
@@ -152,8 +152,8 @@ function SidebarContent({ pathname, onNavigate }: { pathname: string; onNavigate
         <div className="mt-4 flex items-center gap-3">
           <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-sky-100 text-sm font-semibold text-sky-700">AP</div>
           <div>
-            <p className="font-semibold text-slate-950">Administraci\u00f3n general</p>
-            <p className="text-sm text-slate-500">Rectorado y operaci\u00f3n</p>
+            <p className="font-semibold text-slate-950">Administración general</p>
+            <p className="text-sm text-slate-500">Rectorado y operación</p>
           </div>
         </div>
       </div>
@@ -189,7 +189,7 @@ function SidebarContent({ pathname, onNavigate }: { pathname: string; onNavigate
         <p className="text-xs font-semibold uppercase tracking-[0.22em] text-sky-200">Seguimiento escolar</p>
         <h2 className="mt-3 text-lg font-semibold">87% de continuidad estudiantil este periodo</h2>
         <p className="mt-3 text-sm leading-6 text-slate-300">
-          La interfaz ahora prioriza menos ruido visual, lectura r\u00e1pida y control diario para una sola instituci\u00f3n.
+          La interfaz ahora prioriza menos ruido visual, lectura rápida y control diario para una sola institución.
         </p>
         <Link href="/panel" className="mt-5 inline-flex items-center text-sm font-semibold text-sky-200 transition hover:text-white" onClick={onNavigate}>
           Abrir panel diario

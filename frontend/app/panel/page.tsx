@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { DemoApiError, fetchDemoApi } from '../lib/demo-api';
 
 export const dynamic = 'force-dynamic';
@@ -13,7 +14,6 @@ type DashboardPayload = {
     id: string;
     name: string;
     slug: string;
-    activeSchoolYearLabel?: string | null;
   }>;
   recentUsers: Array<{
     id: string;
@@ -51,7 +51,7 @@ export default async function PanelPage() {
               <p className="eyebrow">Panel administrativo</p>
               <span className="info-chip">Operación del día</span>
             </div>
-            <h1 className="section-title">Lectura inmediata de operaci\u00f3n, accesos y actividad reciente</h1>
+            <h1 className="section-title">Lectura inmediata de operación, accesos y actividad reciente</h1>
             <p className="section-copy max-w-3xl">
               El panel prioriza el seguimiento diario del colegio con indicadores compactos, listados claros y menos bloques decorativos para acelerar decisiones.
             </p>
@@ -59,9 +59,9 @@ export default async function PanelPage() {
 
           <div className="summary-strip">
             <div className="summary-item">
-              <p className="summary-label">Sedes o registros</p>
+              <p className="summary-label">Sedes visibles</p>
               <p className="summary-value">{institutionCoverage}</p>
-              <p className="mt-1 text-sm text-slate-500">Estructura institucional visible.</p>
+              <p className="mt-1 text-sm text-slate-500">Estructura cargada para la operación.</p>
             </div>
             <div className="summary-item">
               <p className="summary-label">Actividad reciente</p>
@@ -77,7 +77,7 @@ export default async function PanelPage() {
       ) : (
         <>
           <section className="summary-strip">
-            <MetricCard label="Registros institucionales" value={dashboard.metrics.institutions} helper="Sedes o registros cargados" />
+            <MetricCard label="Estructura institucional" value={dashboard.metrics.institutions} helper="Sede principal y sedes cargadas" />
             <MetricCard label="Usuarios" value={dashboard.metrics.users} helper="Cuentas registradas" />
             <MetricCard label="Usuarios activos" value={dashboard.metrics.activeUsers} helper="Accesos habilitados" />
             <MetricCard label="Roles" value={dashboard.metrics.roles} helper="Perfiles disponibles" />
@@ -105,7 +105,7 @@ export default async function PanelPage() {
                 </div>
                 <div className="surface-muted p-4 md:col-span-2">
                   <p className="text-sm text-slate-500">Actividades priorizadas</p>
-                  <p className="mt-2 text-base font-semibold text-slate-950">Apertura de periodo, revisi\u00f3n de accesos y validaci\u00f3n acad\u00e9mica</p>
+                  <p className="mt-2 text-base font-semibold text-slate-950">Apertura de periodo, revisión de accesos y validación académica</p>
                 </div>
               </div>
             </div>
@@ -113,9 +113,9 @@ export default async function PanelPage() {
             <div className="table-shell">
               <div className="table-toolbar soft-divider">
                 <div>
-                  <p className="eyebrow">Sedes o registros</p>
-                  <h2 className="table-title">Estructura institucional reciente</h2>
-                  <p className="table-subtitle">Registros visibles para la operaci\u00f3n actual del colegio.</p>
+                  <p className="eyebrow">Estructura institucional</p>
+                  <h2 className="table-title">Sedes visibles recientemente</h2>
+                  <p className="table-subtitle">Acceso rápido a la estructura disponible del colegio.</p>
                 </div>
                 <span className="info-chip">{dashboard.institutions.length} visibles</span>
               </div>
@@ -124,7 +124,7 @@ export default async function PanelPage() {
                   <thead>
                     <tr>
                       <th>Registro</th>
-                      <th>Ciclo activo</th>
+                      <th>Acción</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -135,7 +135,9 @@ export default async function PanelPage() {
                           <p className="mt-1 text-sm text-slate-500">{institution.slug}</p>
                         </td>
                         <td>
-                          <span className="info-chip h-fit">{institution.activeSchoolYearLabel ?? 'Año por definir'}</span>
+                          <div className="table-actions">
+                            <Link href="/instituciones" className="compact-button">Gestionar</Link>
+                          </div>
                         </td>
                       </tr>
                     ))}
@@ -149,17 +151,18 @@ export default async function PanelPage() {
                 <div>
                   <p className="eyebrow">Usuarios recientes</p>
                   <h2 className="table-title">Accesos creados recientemente</h2>
-                  <p className="table-subtitle">Personas habilitadas para la operaci\u00f3n institucional.</p>
+                  <p className="table-subtitle">Personas habilitadas para la operación institucional.</p>
                 </div>
                 <span className="info-chip">{dashboard.recentUsers.length} visibles</span>
               </div>
               <div className="table-scroller">
-                <table className="data-table min-w-[760px]">
+                <table className="data-table min-w-[900px]">
                   <thead>
                     <tr>
                       <th>Usuario</th>
-                      <th>Sede o registro</th>
+                      <th>Sede</th>
                       <th>Estado</th>
+                      <th>Acción</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -170,10 +173,15 @@ export default async function PanelPage() {
                           <p className="mt-1 text-sm text-slate-500">{user.email}</p>
                         </td>
                         <td>
-                          <p className="text-sm text-slate-600">{user.institutionName ?? 'Sin sede asignada'}</p>
+                          <p className="text-sm text-slate-600">{user.institutionName ?? 'Sin sede asociada'}</p>
                         </td>
                         <td>
                           <span className="info-chip h-fit">{translateUserStatus(user.status)}</span>
+                        </td>
+                        <td>
+                          <div className="table-actions">
+                            <Link href="/usuarios" className="compact-button">Gestionar</Link>
+                          </div>
                         </td>
                       </tr>
                     ))}
