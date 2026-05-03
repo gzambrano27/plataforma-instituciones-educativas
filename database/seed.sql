@@ -140,3 +140,58 @@ VALUES
     'Acompañamiento académico del nivel Inicial.'
   )
 ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO edu_students (
+  id,
+  institution_id,
+  level_id,
+  grade_id,
+  section_id,
+  full_name,
+  identity_document,
+  enrollment_code,
+  email,
+  phone,
+  status
+)
+VALUES
+  (
+    '35000000-0000-0000-0000-000000000001',
+    '10000000-0000-0000-0000-000000000001',
+    '30000000-0000-0000-0000-000000000002',
+    '31000000-0000-0000-0000-000000000003',
+    '32000000-0000-0000-0000-000000000003',
+    'Sofía Cárdenas',
+    'EST-001',
+    'MAT-2026-001',
+    'sofia.cardenas@familia.demo',
+    '+593444444441',
+    'active'
+  ),
+  (
+    '35000000-0000-0000-0000-000000000002',
+    '10000000-0000-0000-0000-000000000001',
+    '30000000-0000-0000-0000-000000000002',
+    '31000000-0000-0000-0000-000000000003',
+    '32000000-0000-0000-0000-000000000004',
+    'Mateo Villacrés',
+    'EST-002',
+    'MAT-2026-002',
+    'mateo.villacres@familia.demo',
+    '+593444444442',
+    'active'
+  ),
+  (
+    '35000000-0000-0000-0000-000000000003',
+    '10000000-0000-0000-0000-000000000001',
+    '30000000-0000-0000-0000-000000000003',
+    '31000000-0000-0000-0000-000000000005',
+    '32000000-0000-0000-0000-000000000006',
+    'Valentina Rojas',
+    'EST-003',
+    'MAT-2026-003',
+    'valentina.rojas@familia.demo',
+    '+593444444443',
+    'inactive'
+  )
+ON CONFLICT (institution_id, identity_document) DO NOTHING;

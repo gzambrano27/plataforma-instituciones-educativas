@@ -34,6 +34,18 @@ export function errorHandler(error: unknown, _request: Request, response: Respon
       return response.status(409).json({ success: false, message: 'Ya existe un docente con ese correo en la institución actual.' });
     }
 
+    if (pgError.constraint?.includes('edu_students_institution_id_identity_document')) {
+      return response.status(409).json({ success: false, message: 'Ya existe un estudiante con ese documento en la institución actual.' });
+    }
+
+    if (pgError.constraint?.includes('edu_students_institution_id_enrollment_code')) {
+      return response.status(409).json({ success: false, message: 'Ya existe un estudiante con ese código de matrícula en la institución actual.' });
+    }
+
+    if (pgError.constraint?.includes('edu_students_institution_id_email')) {
+      return response.status(409).json({ success: false, message: 'Ya existe un estudiante con ese correo en la institución actual.' });
+    }
+
     return response.status(409).json({ success: false, message: 'Ya existe un registro con esos datos.' });
   }
 

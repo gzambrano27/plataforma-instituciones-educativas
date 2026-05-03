@@ -110,3 +110,22 @@ CREATE TABLE IF NOT EXISTS edu_teacher_assignments (
     OR section_id IS NOT NULL
   )
 );
+
+CREATE TABLE IF NOT EXISTS edu_students (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  institution_id UUID NOT NULL REFERENCES edu_institutions(id) ON DELETE CASCADE,
+  level_id UUID NOT NULL REFERENCES edu_academic_levels(id) ON DELETE RESTRICT,
+  grade_id UUID NOT NULL REFERENCES edu_academic_grades(id) ON DELETE RESTRICT,
+  section_id UUID NOT NULL REFERENCES edu_academic_sections(id) ON DELETE RESTRICT,
+  full_name VARCHAR(180) NOT NULL,
+  identity_document VARCHAR(40) NOT NULL,
+  enrollment_code VARCHAR(40) NOT NULL,
+  email VARCHAR(180),
+  phone VARCHAR(40),
+  status VARCHAR(20) NOT NULL DEFAULT 'active' CHECK (status IN ('active', 'inactive', 'retirado')),
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  UNIQUE (institution_id, identity_document),
+  UNIQUE (institution_id, enrollment_code),
+  UNIQUE (institution_id, email)
+);
