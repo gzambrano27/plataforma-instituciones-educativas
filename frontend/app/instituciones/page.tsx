@@ -1,6 +1,5 @@
-import Link from 'next/link';
-import { InstitutionCreateForm } from './institution-create-form';
 import { DemoApiError, fetchDemoApi } from '../lib/demo-api';
+import { InstitutionsWorkspace } from './institutions-workspace';
 
 export const dynamic = 'force-dynamic';
 
@@ -59,56 +58,7 @@ export default async function InstitutionsPage() {
         </div>
       </section>
 
-      <div className="grid gap-6 xl:grid-cols-[0.95fr_1.05fr]">
-        <InstitutionCreateForm />
-
-        <section className="table-shell">
-          <div className="soft-divider flex flex-col gap-4 px-6 py-5 sm:flex-row sm:items-center sm:justify-between">
-            <div>
-              <p className="eyebrow">Registro institucional</p>
-              <p className="mt-2 text-sm text-slate-500">Instituciones disponibles en la operación actual.</p>
-            </div>
-            <span className="info-chip">{institutions.length} instituciones</span>
-          </div>
-
-          {error ? (
-            <div className="px-6 py-6 text-sm text-rose-700">{error}</div>
-          ) : institutions.length === 0 ? (
-            <div className="px-6 py-6 text-sm text-slate-500">Todavía no hay instituciones registradas.</div>
-          ) : (
-            <>
-              <div className="table-header-row grid-cols-[minmax(0,1fr)_150px_180px_220px]">
-                <span>Institución</span>
-                <span>Tipo</span>
-                <span>Año lectivo</span>
-                <span>Contacto</span>
-              </div>
-              <div>
-              {institutions.map((institution) => (
-                <article key={institution.id} className="table-data-row grid-cols-[minmax(0,1fr)_150px_180px_220px]">
-                  <div>
-                    <h3 className="text-base font-semibold text-slate-950">{institution.name}</h3>
-                    <p className="mt-1 text-sm text-slate-500">{institution.slug}</p>
-                    <p className="mt-2 text-sm text-slate-500">{institution.address ?? 'Dirección por definir'}</p>
-                  </div>
-                  <span className="info-chip h-fit">{translateInstitutionType(institution.institutionType)}</span>
-                  <span className="info-chip h-fit">{institution.activeSchoolYearLabel ?? 'Año por definir'}</span>
-                  <div className="space-y-1 text-sm text-slate-600">
-                    <p>{institution.contactEmail ?? 'Sin correo'}</p>
-                    <p>{institution.contactPhone ?? 'Sin teléfono'}</p>
-                  </div>
-                </article>
-              ))}
-              </div>
-            </>
-          )}
-        </section>
-      </div>
+      <InstitutionsWorkspace institutions={institutions} error={error} />
     </main>
   );
-}
-
-function translateInstitutionType(type: Institution['institutionType']) {
-  if (type === 'publica') return 'Pública';
-  return 'Privada';
 }

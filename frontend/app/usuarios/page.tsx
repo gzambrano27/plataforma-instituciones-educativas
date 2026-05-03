@@ -1,6 +1,5 @@
-import Link from 'next/link';
-import { UserCreateForm } from './user-create-form';
 import { DemoApiError, fetchDemoApi } from '../lib/demo-api';
+import { UsersWorkspace } from './users-workspace';
 
 export const dynamic = 'force-dynamic';
 
@@ -90,78 +89,7 @@ export default async function UsersPage() {
         </div>
       </section>
 
-      <div className="grid gap-6 xl:grid-cols-[0.92fr_1.08fr]">
-        <div className="space-y-6">
-          <UserCreateForm institutions={institutions} roles={roles} />
-
-          <aside className="section-grid-card">
-            <div className="flex items-center justify-between gap-4">
-              <div>
-                <p className="eyebrow">Catálogo de roles</p>
-                <p className="mt-2 text-sm text-slate-500">Perfiles disponibles en la gobernanza inicial del sistema.</p>
-              </div>
-              <span className="info-chip">{roles.length} roles</span>
-            </div>
-            <div className="mt-5 space-y-3">
-              {roles.map((role) => (
-                <div key={role.id} className="surface-muted p-4">
-                  <div className="flex items-start justify-between gap-4">
-                    <div>
-                      <p className="font-medium text-slate-950">{role.name}</p>
-                      <p className="mt-1 text-xs text-slate-500">{role.code}</p>
-                    </div>
-                    <span className="info-chip">{role.isSystem ? 'Sistema' : 'Editable'}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </aside>
-        </div>
-
-        <section className="table-shell overflow-hidden">
-          <div className="soft-divider flex flex-col gap-4 px-6 py-5 sm:flex-row sm:items-center sm:justify-between">
-            <div>
-              <p className="eyebrow">Usuarios registrados</p>
-              <p className="mt-2 text-sm text-slate-500">Lectura de accesos institucionales y globales.</p>
-            </div>
-            <span className="info-chip">{users.length} usuarios</span>
-          </div>
-
-          {error ? (
-            <div className="px-6 py-6 text-sm text-rose-700">{error}</div>
-          ) : users.length === 0 ? (
-            <div className="px-6 py-6 text-sm text-slate-500">Todavía no hay usuarios registrados.</div>
-          ) : (
-            <>
-              <div className="table-header-row grid-cols-[minmax(0,1fr)_220px_220px_180px]">
-                <span>Usuario</span>
-                <span>Institución</span>
-                <span>Roles</span>
-                <span>Estado</span>
-              </div>
-              <div>
-              {users.map((user) => (
-                <article key={user.id} className="table-data-row grid-cols-[minmax(0,1fr)_220px_220px_180px]">
-                  <div>
-                    <h3 className="text-base font-semibold text-slate-950">{user.fullName}</h3>
-                    <p className="mt-1 text-sm text-slate-500">{user.email}</p>
-                  </div>
-                  <p className="text-sm text-slate-600">{user.institutionName ?? 'Acceso global sin institución'}</p>
-                  <p className="text-sm text-slate-600">{user.roleCodes.join(', ')}</p>
-                  <span className="info-chip h-fit">{translateUserStatus(user.status)}</span>
-                </article>
-              ))}
-              </div>
-            </>
-          )}
-        </section>
-      </div>
+      <UsersWorkspace users={users} roles={roles} institutions={institutions} error={error} />
     </main>
   );
-}
-
-function translateUserStatus(status: EduUser['status']) {
-  if (status === 'active') return 'Activo';
-  if (status === 'pending') return 'Pendiente';
-  return 'Bloqueado';
 }

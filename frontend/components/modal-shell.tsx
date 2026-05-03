@@ -1,0 +1,62 @@
+'use client';
+
+import { ReactNode, useEffect } from 'react';
+
+type ModalShellProps = {
+  open: boolean;
+  title: string;
+  description: string;
+  onClose: () => void;
+  children: ReactNode;
+};
+
+export function ModalShell({ open, title, description, onClose, children }: ModalShellProps) {
+  useEffect(() => {
+    if (!open) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === 'Escape') {
+        onClose();
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [open, onClose]);
+
+  if (!open) return null;
+
+  return (
+    <div className="modal-backdrop" onClick={onClose}>
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modal-title"
+        aria-describedby="modal-description"
+        className="modal-panel"
+        onClick={(event) => event.stopPropagation()}
+      >
+        <button type="button" aria-label="Cerrar modal" className="modal-close" onClick={onClose}>
+          ×
+        </button>
+
+        <div className="pr-12">
+          <p className="eyebrow">Formulario</p>
+          <h2 id="modal-title" className="mt-3 text-2xl font-semibold text-slate-950">{title}</h2>
+          <p id="modal-description" className="mt-3 text-sm leading-7 text-slate-600">
+            {description}
+          </p>
+        </div>
+
+        <div className="mt-6">{children}</div>
+      </div>
+    </div>
+  );
+}

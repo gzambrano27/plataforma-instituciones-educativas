@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { ModalShell } from '../../components/modal-shell';
 import { getDemoAccessToken } from '../lib/demo-api';
 
 type InstitutionOption = {
@@ -19,6 +20,15 @@ type UserCreateFormProps = {
   roles: RoleOption[];
 };
 
+export type UserFormValues = {
+  id?: string;
+  institutionId: string | null;
+  fullName: string;
+  email: string;
+  status: 'pending' | 'active' | 'blocked';
+  roleCodes: string[];
+};
+
 type FormState = {
   success: boolean;
   message: string | null;
@@ -26,13 +36,33 @@ type FormState = {
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? 'http://localhost:4100/api';
 
-export function UserCreateForm({ institutions, roles }: UserCreateFormProps) {
+type UserFormModalProps = UserCreateFormProps & {
+  open: boolean;
+  mode: 'create' | 'edit';
+  onClose: () => void;
+  initialValues?: UserFormValues;
+};
+
+export function UserFormModal({ institutions, roles, open, mode, onClose, initialValues }: UserFormModalProps) {
   const [pending, setPending] = useState(false);
   const [state, setState] = useState<FormState>({ success: false, message: null });
+
+  useEffect(() => {
+    if (open) {
+      setPending(false);
+      setState({ success: false, message: null });
+    }
+  }, [open, mode, initialValues]);
 
   async function handleSubmit(formData: FormData) {
     setPending(true);
     setState({ success: false, message: null });
+
+    if (mode === 'edit') {
+      setState({ success: false, message: 'La edición quedará habilitada cuando la API exponga actualización de usuarios.' });
+      setPending(false);
+      return;
+    }
 
     const payload = {
       fullName: String(formData.get('fullName') ?? '').trim(),
@@ -76,32 +106,31 @@ export function UserCreateForm({ institutions, roles }: UserCreateFormProps) {
   }
 
   return (
-    <section className="section-grid-card sm:p-7">
-      <div>
-        <p className="eyebrow">Nuevo usuario</p>
-        <h2 className="mt-3 text-2xl font-semibold text-slate-950">Registrar acceso institucional</h2>
-        <p className="mt-3 text-sm leading-7 text-slate-600">
-          Crea usuarios reales, define su estado y asigna roles sobre la API protegida existente sin salir del flujo administrativo.
-        </p>
-      </div>
-
-      <form action={handleSubmit} className="mt-6 space-y-5">
+    <ModalShell
+      open={open}
+      onClose={onClose}
+      title={mode === 'create' ? 'Registrar usuario' : 'Editar usuario'}
+      description={mode === 'create'
+        ? 'Crea usuarios reales, define su estado y asigna roles sobre la API protegida existente sin salir del flujo administrativo.'
+        : 'La interacción de edición ya quedó preparada en modal para activarse apenas exista actualización de usuarios en la API.'}
+    >
+      <form action={handleSubmit} className="space-y-5">
         <div className="grid gap-4 md:grid-cols-2">
           <label className="block">
             <span className="text-sm font-medium text-slate-700">Nombre completo</span>
-            <input name="fullName" required minLength={3} maxLength={180} className="form-field" placeholder="Mariana Pérez" />
+            <input name="fullName" required minLength={3} maxLength={180} defaultValue={initialValues?.fullName ?? ''} className="form-field" placeholder="Mariana Pérez" />
           </label>
           <label className="block">
             <span className="text-sm font-medium text-slate-700">Correo</span>
-            <input name="email" type="email" required className="form-field" placeholder="mariana.perez@educa.local" />
+            <input name="email" type="email" required defaultValue={initialValues?.email ?? ''} className="form-field" placeholder="mariana.perez@educa.local" />
           </label>
           <label className="block">
-            <span className="text-sm font-medium text-slate-700">Clave inicial</span>
-            <input name="password" type="password" required minLength={8} className="form-field" placeholder="Mínimo 8 caracteres" />
+            <span className="text-sm font-medium text-slate-700">{mode === 'create' ? 'Clave inicial' : 'Nueva clave'}</span>
+            <input name="password" type="password" required={mode === 'create'} minLength={8} className="form-field" placeholder={mode === 'create' ? 'Mínimo 8 caracteres' : 'Opcional para futura edición'} />
           </label>
           <label className="block">
             <span className="text-sm font-medium text-slate-700">Estado</span>
-            <select name="status" defaultValue="active" className="form-field">
+            <select name="status" defaultValue={initialValues?.status ?? 'active'} className="form-field">
               <option value="active">Activo</option>
               <option value="pending">Pendiente</option>
               <option value="blocked">Bloqueado</option>
@@ -111,7 +140,7 @@ export function UserCreateForm({ institutions, roles }: UserCreateFormProps) {
 
         <label className="block">
           <span className="text-sm font-medium text-slate-700">Institución</span>
-          <select name="institutionId" defaultValue="" className="form-field">
+          <select name="institutionId" defaultValue={initialValues?.institutionId ?? ''} className="form-field">
             <option value="">Acceso global sin institución</option>
             {institutions.map((institution) => (
               <option key={institution.id} value={institution.id}>{institution.name}</option>
@@ -124,7 +153,13 @@ export function UserCreateForm({ institutions, roles }: UserCreateFormProps) {
           <div className="mt-3 grid gap-3 md:grid-cols-2">
             {roles.map((role) => (
               <label key={role.id} className="flex items-start gap-3 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-700 transition hover:border-sky-300 hover:bg-sky-50/60">
-                <input name="roleCodes" type="checkbox" value={role.code} className="mt-1 h-4 w-4 rounded border-white/20 bg-transparent text-sky-400" />
+                <input
+                  name="roleCodes"
+                  type="checkbox"
+                  value={role.code}
+                  defaultChecked={initialValues?.roleCodes.includes(role.code)}
+                  className="mt-1 h-4 w-4 rounded border-white/20 bg-transparent text-sky-400"
+                />
                 <span>
                   <span className="block font-medium text-slate-900">{role.name}</span>
                   <span className="mt-1 block text-xs text-slate-500">{role.code}</span>
@@ -134,12 +169,25 @@ export function UserCreateForm({ institutions, roles }: UserCreateFormProps) {
           </div>
         </fieldset>
 
+        {mode === 'edit' ? (
+          <p className="text-sm text-slate-500">
+            La edición visual ya está disponible en este modal. El guardado real se activará cuando exista soporte de actualización en backend.
+          </p>
+        ) : null}
+
         {state.message ? <p className={`text-sm ${state.success ? 'status-good' : 'status-bad'}`}>{state.message}</p> : null}
 
-        <button type="submit" disabled={pending} className="primary-button disabled:cursor-not-allowed disabled:opacity-60">
-          {pending ? 'Creando usuario...' : 'Crear usuario'}
-        </button>
+        <div className="flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
+          <button type="button" onClick={onClose} className="secondary-button">
+            Cancelar
+          </button>
+          <button type="submit" disabled={pending} className="primary-button disabled:cursor-not-allowed disabled:opacity-60">
+            {mode === 'create'
+              ? pending ? 'Creando usuario...' : 'Crear usuario'
+              : pending ? 'Preparando edición...' : 'Guardar cambios'}
+          </button>
+        </div>
       </form>
-    </section>
+    </ModalShell>
   );
 }
