@@ -20,28 +20,51 @@ export function InstitutionsWorkspace({ institutions, error }: InstitutionsWorks
   const pageSize = 8;
   const totalPages = Math.max(1, Math.ceil(institutions.length / pageSize));
   const paginatedInstitutions = institutions.slice((page - 1) * pageSize, page * pageSize);
+  const institutionsWithContact = institutions.filter((institution) => institution.contactEmail || institution.contactPhone).length;
 
   return (
     <>
       <div className="space-y-5">
-        <aside className="section-grid-card">
-          <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-            <div>
-              <p className="eyebrow">Acciones institucionales</p>
-              <h2 className="mt-2 text-xl font-semibold text-slate-950">Altas y edición sin sacar el foco del listado</h2>
-              <p className="mt-2 text-sm leading-6 text-slate-600">
-                La vista principal se mantiene libre de formularios persistentes. El alta y la futura edición viven en modal para favorecer lectura y velocidad operativa.
-              </p>
-            </div>
+        <div className="grid gap-5 xl:grid-cols-[1.1fr_0.9fr]">
+          <aside className="section-grid-card">
+            <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+              <div>
+                <p className="eyebrow">Acciones institucionales</p>
+                <h2 className="mt-2 text-xl font-semibold text-slate-950">Altas y edición sin sacar el foco del listado</h2>
+                <p className="mt-2 text-sm leading-6 text-slate-600">
+                  La vista principal se mantiene libre de formularios persistentes. El alta y la futura edición viven en modal para favorecer lectura y velocidad operativa.
+                </p>
+              </div>
 
-            <div className="flex flex-wrap gap-3">
-              <button type="button" className="primary-button" onClick={() => setCreateOpen(true)}>
-                Nuevo registro
-              </button>
-              <span className="info-chip">{institutions.length} registros</span>
+              <div className="flex flex-wrap gap-3">
+                <button type="button" className="primary-button" onClick={() => setCreateOpen(true)}>
+                  Nuevo registro
+                </button>
+                <span className="info-chip">{institutions.length} registros</span>
+              </div>
             </div>
-          </div>
-        </aside>
+          </aside>
+
+          <aside className="section-grid-card">
+            <div className="flex items-center justify-between gap-4">
+              <div>
+                <p className="eyebrow">Cobertura operativa</p>
+                <p className="mt-2 text-sm text-slate-500">Registros con mejor preparación para contacto y seguimiento.</p>
+              </div>
+              <span className="info-chip">Resumen</span>
+            </div>
+            <div className="mt-5 grid gap-3 sm:grid-cols-2">
+              <div className="metric-tile">
+                <p className="summary-label">Con contacto</p>
+                <p className="summary-value">{institutionsWithContact}</p>
+              </div>
+              <div className="metric-tile">
+                <p className="summary-label">Sin contacto</p>
+                <p className="summary-value">{Math.max(institutions.length - institutionsWithContact, 0)}</p>
+              </div>
+            </div>
+          </aside>
+        </div>
 
         <section className="table-shell">
           <div className="table-toolbar soft-divider">
@@ -50,7 +73,7 @@ export function InstitutionsWorkspace({ institutions, error }: InstitutionsWorks
               <h2 className="table-title">Sedes y datos base</h2>
               <p className="table-subtitle">Tabla responsiva para revisar ubicación, contacto y tipo de registro.</p>
             </div>
-            <div className="flex items-center gap-3">
+            <div className="flex flex-wrap items-center gap-3">
               <span className="info-chip">{institutions.length} registros</span>
               <button type="button" className="compact-button" onClick={() => setCreateOpen(true)}>
                 Crear

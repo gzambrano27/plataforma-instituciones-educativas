@@ -47,7 +47,7 @@ export function ModalShell({ open, title, description, onClose, children }: Moda
           ×
         </button>
 
-        <div className="pr-12">
+        <div className="pr-12 sm:pr-14">
           <p className="eyebrow">Formulario</p>
           <h2 id="modal-title" className="mt-3 text-2xl font-semibold text-slate-950">{title}</h2>
           <p id="modal-description" className="mt-3 text-sm leading-7 text-slate-600">
@@ -55,7 +55,7 @@ export function ModalShell({ open, title, description, onClose, children }: Moda
           </p>
         </div>
 
-        <div className="mt-6">{children}</div>
+        <div className="mt-6 rounded-[22px] border border-slate-200 bg-slate-50/55 p-4 sm:p-5">{children}</div>
       </div>
     </div>
   );

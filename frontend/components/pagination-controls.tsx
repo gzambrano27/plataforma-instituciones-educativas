@@ -17,10 +17,10 @@ export function PaginationControls({ page, totalPages, pageSize, totalItems, ite
 
   return (
     <div className="pagination-bar">
-      <p>
+      <p className="leading-6">
         Mostrando {start}-{end} de {totalItems} {itemLabel}
       </p>
-      <div className="flex items-center gap-2">
+      <div className="flex flex-wrap items-center gap-2">
         <button type="button" className="compact-button disabled:cursor-not-allowed disabled:opacity-50" disabled={page <= 1} onClick={() => onPageChange(page - 1)}>
           Anterior
         </button>

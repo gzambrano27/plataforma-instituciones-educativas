@@ -56,9 +56,9 @@ export default async function HomePage() {
   const authBootstrap = await getAuthBootstrap();
 
   return (
-    <main className="space-y-6 pb-8">
-      <section className="glass-panel px-6 py-7 sm:px-8 lg:px-8">
-        <div className="grid gap-6 xl:grid-cols-[1.45fr_0.55fr]">
+    <main className="page-main">
+      <section className="hero-panel">
+        <div className="hero-grid xl:grid-cols-[minmax(0,1.35fr)_minmax(300px,0.65fr)]">
           <div className="space-y-5">
             <div className="flex flex-wrap items-center gap-3">
               <span className="eyebrow">Software institucional</span>
@@ -109,7 +109,7 @@ export default async function HomePage() {
             </div>
           </div>
 
-          <aside className="section-grid-card">
+          <aside className="side-note-card">
             <div className="flex items-center justify-between gap-3">
               <div>
                 <p className="eyebrow">Acceso de demostración</p>
@@ -118,62 +118,50 @@ export default async function HomePage() {
               <span className="info-chip">Base activa</span>
             </div>
 
-            <div className="mt-6 space-y-4">
-              <div className="surface-muted p-4">
+            <div className="mt-6 stack-list">
+              <div className="stack-list-item">
                 <p className="text-sm text-slate-500">Correo institucional</p>
                 <p className="mt-2 font-semibold text-slate-950">admin@educa.local</p>
               </div>
-              <div className="surface-muted p-4">
+              <div className="stack-list-item">
                 <p className="text-sm text-slate-500">Clave temporal</p>
                 <p className="mt-2 font-semibold text-slate-950">Educa2026!</p>
               </div>
-              <div className="surface-muted p-4">
+              <div className="stack-list-item">
                 <p className="text-sm text-slate-500">Autenticación</p>
                 <p className="mt-2 text-sm text-slate-700">
                   {authBootstrap ? `${authBootstrap.currentStatus} · ${authBootstrap.sessionStrategy}` : 'Sin información disponible.'}
                 </p>
+              </div>
+              <div className="stack-list-item bg-slate-950 text-white">
+                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-sky-200">Criterio visual</p>
+                <p className="mt-2 text-sm leading-6 text-slate-200">Tarjetas más compactas, jerarquía clara y navegación rápida para no parecer una plantilla genérica.</p>
               </div>
             </div>
           </aside>
         </div>
       </section>
 
-      <section className="table-shell">
-        <div className="table-toolbar soft-divider">
+      <section className="section-grid-card">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <p className="eyebrow">Módulos principales</p>
-            <h2 className="table-title">Navegación rápida del sistema</h2>
-            <p className="table-subtitle">Accede a las vistas operativas más usadas sin depender de bloques extensos.</p>
+            <h2 className="mt-2 text-xl font-semibold text-slate-950">Navegación rápida del sistema</h2>
+            <p className="mt-2 text-sm text-slate-500">Accesos más directos y legibles para los flujos que más se usan.</p>
           </div>
           <span className="info-chip">3 módulos activos</span>
         </div>
-        <div className="table-scroller">
-          <table className="data-table min-w-[720px]">
-            <thead>
-              <tr>
-                <th>Módulo</th>
-                <th>Uso principal</th>
-                <th>Acción</th>
-              </tr>
-            </thead>
-            <tbody>
-              {quickModules.map((module) => (
-                <tr key={module.href}>
-                  <td>
-                    <p className="font-semibold text-slate-950">{module.title}</p>
-                  </td>
-                  <td>
-                    <p className="text-sm text-slate-600">{module.description}</p>
-                  </td>
-                  <td>
-                    <Link href={module.href} className="compact-button">
-                      Abrir
-                    </Link>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        <div className="mt-5 grid gap-4 lg:grid-cols-3">
+          {quickModules.map((module) => (
+            <article key={module.href} className="flex h-full flex-col rounded-[22px] border border-slate-200 bg-slate-50/80 p-5">
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">Módulo</p>
+              <h3 className="mt-3 text-lg font-semibold text-slate-950">{module.title}</h3>
+              <p className="mt-2 flex-1 text-sm leading-6 text-slate-600">{module.description}</p>
+              <Link href={module.href} className="compact-button mt-5 w-fit">
+                Abrir módulo
+              </Link>
+            </article>
+          ))}
         </div>
       </section>
 

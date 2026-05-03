@@ -35,6 +35,7 @@ export function UsersWorkspace({ users, roles, institutions, error }: UsersWorks
   const pageSize = 10;
   const totalPages = Math.max(1, Math.ceil(users.length / pageSize));
   const paginatedUsers = users.slice((page - 1) * pageSize, page * pageSize);
+  const systemRoles = roles.filter((role) => role.isSystem).length;
 
   return (
     <>
@@ -71,7 +72,7 @@ export function UsersWorkspace({ users, roles, institutions, error }: UsersWorks
               </div>
               <span className="info-chip">{roles.length} roles</span>
             </div>
-            <div className="mt-5 space-y-3">
+            <div className="mt-5 grid gap-3 md:grid-cols-2">
               {roles.map((role) => (
                 <div key={role.id} className="surface-muted p-4">
                   <div className="flex items-start justify-between gap-4">
@@ -84,6 +85,16 @@ export function UsersWorkspace({ users, roles, institutions, error }: UsersWorks
                 </div>
               ))}
             </div>
+            <div className="mt-4 grid gap-3 sm:grid-cols-2">
+              <div className="metric-tile">
+                <p className="summary-label">Roles del sistema</p>
+                <p className="summary-value">{systemRoles}</p>
+              </div>
+              <div className="metric-tile">
+                <p className="summary-label">Sedes disponibles</p>
+                <p className="summary-value">{institutions.length}</p>
+              </div>
+            </div>
           </aside>
         </div>
 
@@ -94,7 +105,7 @@ export function UsersWorkspace({ users, roles, institutions, error }: UsersWorks
               <h2 className="table-title">Accesos y perfiles del colegio</h2>
               <p className="table-subtitle">Tabla responsiva para revisar responsables, sede asignada, roles, estado y acciones rápidas.</p>
             </div>
-            <div className="flex items-center gap-3">
+            <div className="flex flex-wrap items-center gap-3">
               <span className="info-chip">{users.length} usuarios</span>
               <button type="button" className="compact-button" onClick={() => setCreateOpen(true)}>
                 Crear

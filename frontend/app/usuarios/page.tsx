@@ -64,9 +64,9 @@ export default async function UsersPage() {
   const blockedUsers = users.filter((user) => user.status === 'blocked').length;
 
   return (
-    <main className="space-y-6 pb-8">
-      <section className="glass-panel px-6 py-7 sm:px-8 lg:px-8">
-        <div className="grid gap-6 xl:grid-cols-[1.2fr_0.8fr] xl:items-end">
+    <main className="page-main">
+      <section className="hero-panel">
+        <div className="hero-grid">
           <div>
             <p className="eyebrow">Usuarios y roles</p>
             <h1 className="section-title mt-3">Gobernanza de acceso con foco en perfiles, estados y permisos</h1>
@@ -74,18 +74,24 @@ export default async function UsersPage() {
               La vista de usuarios se simplifica para el trabajo diario del colegio: listados compactos, roles visibles y acciones concentradas en modales sin tocar el backend actual.
             </p>
           </div>
-          <div className="summary-strip">
-            <div className="summary-item">
-              <p className="summary-label">Usuarios activos</p>
-              <p className="summary-value">{activeUsers}</p>
-              <p className="mt-1 text-sm text-slate-500">Accesos operativos habilitados.</p>
+          <aside className="side-note-card">
+            <div className="summary-strip xl:grid-cols-2">
+              <div className="summary-item">
+                <p className="summary-label">Usuarios activos</p>
+                <p className="summary-value">{activeUsers}</p>
+                <p className="mt-1 text-sm text-slate-500">Accesos operativos habilitados.</p>
+              </div>
+              <div className="summary-item">
+                <p className="summary-label">Bloqueados</p>
+                <p className="summary-value">{blockedUsers}</p>
+                <p className="mt-1 text-sm text-slate-500">Cuentas suspendidas para seguimiento.</p>
+              </div>
             </div>
-            <div className="summary-item">
-              <p className="summary-label">Bloqueados</p>
-              <p className="summary-value">{blockedUsers}</p>
-              <p className="mt-1 text-sm text-slate-500">Cuentas suspendidas para seguimiento.</p>
+            <div className="mt-4 rounded-[20px] border border-slate-200 bg-slate-50/80 p-4">
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">Lectura de acceso</p>
+              <p className="mt-2 text-sm leading-6 text-slate-600">Se priorizan estados, roles y acciones de fila para reducir saltos visuales y mejorar la operación en pantallas pequeñas.</p>
             </div>
-          </div>
+          </aside>
         </div>
       </section>
 

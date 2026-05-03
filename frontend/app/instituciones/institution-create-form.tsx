@@ -105,32 +105,32 @@ export function InstitutionFormModal({ open, mode, onClose, initialValues }: Ins
       <form action={handleSubmit} className="space-y-5">
         <div className="grid gap-4 md:grid-cols-2">
           <label className="block">
-            <span className="text-sm font-medium text-slate-700">Nombre</span>
+            <span className="field-label">Nombre</span>
             <input name="name" required minLength={3} maxLength={180} defaultValue={initialValues?.name ?? ''} className="form-field" placeholder="Unidad Educativa Nueva Esperanza" />
           </label>
           <label className="block">
-            <span className="text-sm font-medium text-slate-700">Slug</span>
+            <span className="field-label">Slug</span>
             <input name="slug" required minLength={3} maxLength={120} defaultValue={initialValues?.slug ?? ''} className="form-field" placeholder="unidad-educativa-nueva-esperanza" />
           </label>
           <label className="block">
-            <span className="text-sm font-medium text-slate-700">Tipo</span>
+            <span className="field-label">Tipo</span>
             <select name="institutionType" required defaultValue={initialValues?.institutionType ?? 'privada'} className="form-field">
               <option value="privada">Privada</option>
               <option value="publica">Pública</option>
             </select>
           </label>
           <label className="block">
-            <span className="text-sm font-medium text-slate-700">Correo de contacto</span>
+            <span className="field-label">Correo de contacto</span>
             <input name="contactEmail" type="email" defaultValue={initialValues?.contactEmail ?? ''} className="form-field" placeholder="rectorado@institucion.edu" />
           </label>
           <label className="block">
-            <span className="text-sm font-medium text-slate-700">Teléfono</span>
+            <span className="field-label">Teléfono</span>
             <input name="contactPhone" defaultValue={initialValues?.contactPhone ?? ''} className="form-field" placeholder="+593999999999" />
           </label>
         </div>
 
         <label className="block">
-          <span className="text-sm font-medium text-slate-700">Dirección</span>
+          <span className="field-label">Dirección</span>
           <textarea name="address" rows={3} defaultValue={initialValues?.address ?? ''} className="form-field" placeholder="Ciudad, sector y referencia principal" />
         </label>
 

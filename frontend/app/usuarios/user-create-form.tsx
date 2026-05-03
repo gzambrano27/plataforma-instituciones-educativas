@@ -120,19 +120,19 @@ export function UserFormModal({ institutions, roles, open, mode, onClose, initia
       <form action={handleSubmit} className="space-y-5">
         <div className="grid gap-4 md:grid-cols-2">
           <label className="block">
-            <span className="text-sm font-medium text-slate-700">Nombre completo</span>
+            <span className="field-label">Nombre completo</span>
             <input name="fullName" required minLength={3} maxLength={180} defaultValue={initialValues?.fullName ?? ''} className="form-field" placeholder="Mariana Pérez" />
           </label>
           <label className="block">
-            <span className="text-sm font-medium text-slate-700">Correo</span>
+            <span className="field-label">Correo</span>
             <input name="email" type="email" required defaultValue={initialValues?.email ?? ''} className="form-field" placeholder="mariana.perez@educa.local" />
           </label>
           <label className="block">
-            <span className="text-sm font-medium text-slate-700">{mode === 'create' ? 'Clave inicial' : 'Nueva clave'}</span>
+            <span className="field-label">{mode === 'create' ? 'Clave inicial' : 'Nueva clave'}</span>
             <input name="password" type="password" required={mode === 'create'} minLength={8} className="form-field" placeholder={mode === 'create' ? 'Mínimo 8 caracteres' : 'Opcional para futura edición'} />
           </label>
           <label className="block">
-            <span className="text-sm font-medium text-slate-700">Estado</span>
+            <span className="field-label">Estado</span>
             <select name="status" defaultValue={initialValues?.status ?? 'active'} className="form-field">
               <option value="active">Activo</option>
               <option value="pending">Pendiente</option>
@@ -142,7 +142,7 @@ export function UserFormModal({ institutions, roles, open, mode, onClose, initia
         </div>
 
         <label className="block">
-          <span className="text-sm font-medium text-slate-700">Sede</span>
+          <span className="field-label">Sede</span>
           <select name="institutionId" defaultValue={initialValues?.institutionId ?? ''} className="form-field">
             <option value="">Sin sede asociada</option>
             {institutions.map((institution) => (
@@ -152,7 +152,7 @@ export function UserFormModal({ institutions, roles, open, mode, onClose, initia
         </label>
 
         <fieldset>
-          <legend className="text-sm font-medium text-slate-700">Roles</legend>
+          <legend className="field-label">Roles</legend>
           <div className="mt-3 grid gap-3 md:grid-cols-2">
             {roles.map((role) => (
               <label key={role.id} className="flex items-start gap-3 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-700 transition hover:border-sky-300 hover:bg-sky-50/60">

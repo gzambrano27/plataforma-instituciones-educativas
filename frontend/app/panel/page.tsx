@@ -43,9 +43,9 @@ export default async function PanelPage() {
   const institutionCoverage = dashboard?.institutions.length ?? 0;
 
   return (
-    <main className="space-y-6 pb-8">
-      <section className="glass-panel px-6 py-7 sm:px-8 lg:px-8">
-        <div className="grid gap-6 xl:grid-cols-[1.25fr_0.75fr] xl:items-end">
+    <main className="page-main">
+      <section className="hero-panel">
+        <div className="hero-grid">
           <div className="space-y-4">
             <div className="flex flex-wrap items-center gap-3">
               <p className="eyebrow">Panel administrativo</p>
@@ -57,18 +57,24 @@ export default async function PanelPage() {
             </p>
           </div>
 
-          <div className="summary-strip">
-            <div className="summary-item">
-              <p className="summary-label">Sedes visibles</p>
-              <p className="summary-value">{institutionCoverage}</p>
-              <p className="mt-1 text-sm text-slate-500">Estructura cargada para la operación.</p>
+          <aside className="side-note-card">
+            <div className="summary-strip xl:grid-cols-2">
+              <div className="summary-item">
+                <p className="summary-label">Sedes visibles</p>
+                <p className="summary-value">{institutionCoverage}</p>
+                <p className="mt-1 text-sm text-slate-500">Estructura cargada para la operación.</p>
+              </div>
+              <div className="summary-item">
+                <p className="summary-label">Actividad reciente</p>
+                <p className="summary-value">{trackedUsers}</p>
+                <p className="mt-1 text-sm text-slate-500">Altas recientes monitoreadas.</p>
+              </div>
             </div>
-            <div className="summary-item">
-              <p className="summary-label">Actividad reciente</p>
-              <p className="summary-value">{trackedUsers}</p>
-              <p className="mt-1 text-sm text-slate-500">Altas recientes monitoreadas.</p>
+            <div className="mt-4 rounded-[20px] border border-slate-200 bg-slate-50/80 p-4">
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">Lectura operativa</p>
+              <p className="mt-2 text-sm leading-6 text-slate-600">La vista se reorganiza para que métricas, tablas y acciones tengan la misma densidad visual en móvil, tablet y desktop.</p>
             </div>
-          </div>
+          </aside>
         </div>
       </section>
 
@@ -76,7 +82,7 @@ export default async function PanelPage() {
         <div className="surface-panel px-5 py-4 text-sm text-rose-700">{error ?? 'No hay datos del panel.'}</div>
       ) : (
         <>
-          <section className="summary-strip">
+          <section className="kpi-grid">
             <MetricCard label="Estructura institucional" value={dashboard.metrics.institutions} helper="Sede principal y sedes cargadas" />
             <MetricCard label="Usuarios" value={dashboard.metrics.users} helper="Cuentas registradas" />
             <MetricCard label="Usuarios activos" value={dashboard.metrics.activeUsers} helper="Accesos habilitados" />
