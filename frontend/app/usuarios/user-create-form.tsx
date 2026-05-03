@@ -76,7 +76,7 @@ export function UserCreateForm({ institutions, roles }: UserCreateFormProps) {
   }
 
   return (
-    <section className="surface-panel p-6 sm:p-7">
+    <section className="section-grid-card sm:p-7">
       <div>
         <p className="eyebrow">Nuevo usuario</p>
         <h2 className="mt-3 text-2xl font-semibold text-slate-950">Registrar acceso institucional</h2>
@@ -85,22 +85,22 @@ export function UserCreateForm({ institutions, roles }: UserCreateFormProps) {
         </p>
       </div>
 
-      <form action={handleSubmit} className="mt-6 space-y-4">
+      <form action={handleSubmit} className="mt-6 space-y-5">
         <div className="grid gap-4 md:grid-cols-2">
           <label className="block">
-            <span className="text-sm text-slate-700">Nombre completo</span>
+            <span className="text-sm font-medium text-slate-700">Nombre completo</span>
             <input name="fullName" required minLength={3} maxLength={180} className="form-field" placeholder="Mariana Pérez" />
           </label>
           <label className="block">
-            <span className="text-sm text-slate-700">Correo</span>
+            <span className="text-sm font-medium text-slate-700">Correo</span>
             <input name="email" type="email" required className="form-field" placeholder="mariana.perez@educa.local" />
           </label>
           <label className="block">
-            <span className="text-sm text-slate-700">Clave inicial</span>
+            <span className="text-sm font-medium text-slate-700">Clave inicial</span>
             <input name="password" type="password" required minLength={8} className="form-field" placeholder="Mínimo 8 caracteres" />
           </label>
           <label className="block">
-            <span className="text-sm text-slate-700">Estado</span>
+            <span className="text-sm font-medium text-slate-700">Estado</span>
             <select name="status" defaultValue="active" className="form-field">
               <option value="active">Activo</option>
               <option value="pending">Pendiente</option>
@@ -110,7 +110,7 @@ export function UserCreateForm({ institutions, roles }: UserCreateFormProps) {
         </div>
 
         <label className="block">
-          <span className="text-sm text-slate-700">Institución</span>
+          <span className="text-sm font-medium text-slate-700">Institución</span>
           <select name="institutionId" defaultValue="" className="form-field">
             <option value="">Acceso global sin institución</option>
             {institutions.map((institution) => (
@@ -120,7 +120,7 @@ export function UserCreateForm({ institutions, roles }: UserCreateFormProps) {
         </label>
 
         <fieldset>
-          <legend className="text-sm text-slate-700">Roles</legend>
+          <legend className="text-sm font-medium text-slate-700">Roles</legend>
           <div className="mt-3 grid gap-3 md:grid-cols-2">
             {roles.map((role) => (
               <label key={role.id} className="flex items-start gap-3 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-700 transition hover:border-sky-300 hover:bg-sky-50/60">

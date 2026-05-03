@@ -30,21 +30,31 @@ async function loginAndLoadInstitutions() {
 
 export default async function InstitutionsPage() {
   const { institutions, error } = await loginAndLoadInstitutions();
+  const publicCount = institutions.filter((institution) => institution.institutionType === 'publica').length;
+  const privateCount = institutions.length - publicCount;
 
   return (
     <main className="space-y-8 pb-10">
       <section className="glass-panel px-6 py-8 sm:px-8 lg:px-10">
-        <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+        <div className="grid gap-6 xl:grid-cols-[1.2fr_0.8fr] xl:items-end">
           <div>
             <p className="eyebrow">Instituciones</p>
-            <h1 className="section-title mt-3">Gestión institucional clara y confiable</h1>
+            <h1 className="section-title mt-3">Gestión institucional con catálogo visible, limpio y listo para operación</h1>
             <p className="section-copy mt-4 max-w-3xl">
-              Un módulo pensado para autoridades que necesitan registrar, revisar y mantener la información principal de cada institución.
+              Este módulo presenta una experiencia más ejecutiva para registrar instituciones, leer capacidad instalada y consultar datos operativos con mejor jerarquía visual.
             </p>
           </div>
-          <div className="flex flex-wrap gap-3">
-            <Link href="/panel" className="secondary-button">Ver panel</Link>
-            <Link href="/usuarios" className="secondary-button">Ver usuarios</Link>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div className="metric-card">
+              <p className="eyebrow">Instituciones</p>
+              <p className="stat-value mt-3">{institutions.length}</p>
+              <p className="mt-3 text-sm text-slate-500">Unidades educativas cargadas en la plataforma.</p>
+            </div>
+            <div className="dark-metric-card">
+              <p className="text-sm font-medium text-slate-300">Balance actual</p>
+              <p className="mt-4 text-2xl font-semibold">{publicCount} públicas / {privateCount} privadas</p>
+              <p className="mt-3 text-sm text-slate-300">Distribución del portafolio institucional activo.</p>
+            </div>
           </div>
         </div>
       </section>
@@ -52,7 +62,7 @@ export default async function InstitutionsPage() {
       <div className="grid gap-6 xl:grid-cols-[0.95fr_1.05fr]">
         <InstitutionCreateForm />
 
-        <section className="surface-panel overflow-hidden">
+        <section className="table-shell">
           <div className="soft-divider flex flex-col gap-4 px-6 py-5 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <p className="eyebrow">Registro institucional</p>
@@ -66,27 +76,31 @@ export default async function InstitutionsPage() {
           ) : institutions.length === 0 ? (
             <div className="px-6 py-6 text-sm text-slate-500">Todavía no hay instituciones registradas.</div>
           ) : (
-            <div className="space-y-3 p-4">
+            <>
+              <div className="table-header-row grid-cols-[minmax(0,1fr)_150px_180px_220px]">
+                <span>Institución</span>
+                <span>Tipo</span>
+                <span>Año lectivo</span>
+                <span>Contacto</span>
+              </div>
+              <div>
               {institutions.map((institution) => (
-                <article key={institution.id} className="table-row-card">
-                  <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
-                    <div className="space-y-2">
-                      <h3 className="text-lg font-semibold text-slate-950">{institution.name}</h3>
-                      <p className="text-sm text-slate-500">{institution.slug}</p>
-                      <div className="flex flex-wrap gap-2 pt-1">
-                        <span className="info-chip">{translateInstitutionType(institution.institutionType)}</span>
-                        <span className="info-chip">{institution.activeSchoolYearLabel ?? 'Año por definir'}</span>
-                      </div>
-                    </div>
-                    <div className="space-y-2 text-sm text-slate-600 lg:max-w-xs lg:text-right">
-                      <p>{institution.contactEmail ?? 'Sin correo'}</p>
-                      <p>{institution.contactPhone ?? 'Sin teléfono'}</p>
-                      <p className="text-slate-500">{institution.address ?? 'Dirección por definir'}</p>
-                    </div>
+                <article key={institution.id} className="table-data-row grid-cols-[minmax(0,1fr)_150px_180px_220px]">
+                  <div>
+                    <h3 className="text-base font-semibold text-slate-950">{institution.name}</h3>
+                    <p className="mt-1 text-sm text-slate-500">{institution.slug}</p>
+                    <p className="mt-2 text-sm text-slate-500">{institution.address ?? 'Dirección por definir'}</p>
+                  </div>
+                  <span className="info-chip h-fit">{translateInstitutionType(institution.institutionType)}</span>
+                  <span className="info-chip h-fit">{institution.activeSchoolYearLabel ?? 'Año por definir'}</span>
+                  <div className="space-y-1 text-sm text-slate-600">
+                    <p>{institution.contactEmail ?? 'Sin correo'}</p>
+                    <p>{institution.contactPhone ?? 'Sin teléfono'}</p>
                   </div>
                 </article>
               ))}
-            </div>
+              </div>
+            </>
           )}
         </section>
       </div>

@@ -61,21 +61,31 @@ async function loginAndLoadUsers() {
 
 export default async function UsersPage() {
   const { users, roles, institutions, error } = await loginAndLoadUsers();
+  const activeUsers = users.filter((user) => user.status === 'active').length;
+  const blockedUsers = users.filter((user) => user.status === 'blocked').length;
 
   return (
     <main className="space-y-8 pb-10">
       <section className="glass-panel px-6 py-8 sm:px-8 lg:px-10">
-        <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+        <div className="grid gap-6 xl:grid-cols-[1.2fr_0.8fr] xl:items-end">
           <div>
             <p className="eyebrow">Usuarios y roles</p>
-            <h1 className="section-title mt-3">Gobernanza de acceso clara para la operación institucional</h1>
+            <h1 className="section-title mt-3">Gobernanza de acceso con foco en perfiles, estados y asignación institucional</h1>
             <p className="section-copy mt-4 max-w-3xl">
-              Registra usuarios, asigna permisos y revisa su relación con cada institución desde una vista más directa, sobria y fácil de entender.
+              El rediseño organiza altas, catálogo de roles y listado de usuarios en superficies más claras, manteniendo intacto el flujo real sobre la API protegida.
             </p>
           </div>
-          <div className="flex flex-wrap gap-3">
-            <Link href="/panel" className="secondary-button">Ver panel</Link>
-            <Link href="/instituciones" className="secondary-button">Ver instituciones</Link>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div className="metric-card">
+              <p className="eyebrow">Usuarios activos</p>
+              <p className="stat-value mt-3">{activeUsers}</p>
+              <p className="mt-3 text-sm text-slate-500">Accesos operativos habilitados actualmente.</p>
+            </div>
+            <div className="dark-metric-card">
+              <p className="text-sm font-medium text-slate-300">Riesgo controlado</p>
+              <p className="mt-4 text-2xl font-semibold">{blockedUsers} bloqueados</p>
+              <p className="mt-3 text-sm text-slate-300">Cuentas suspendidas para seguimiento y soporte.</p>
+            </div>
           </div>
         </div>
       </section>
@@ -84,7 +94,7 @@ export default async function UsersPage() {
         <div className="space-y-6">
           <UserCreateForm institutions={institutions} roles={roles} />
 
-          <aside className="surface-panel p-6">
+          <aside className="section-grid-card">
             <div className="flex items-center justify-between gap-4">
               <div>
                 <p className="eyebrow">Catálogo de roles</p>
@@ -108,7 +118,7 @@ export default async function UsersPage() {
           </aside>
         </div>
 
-        <section className="surface-panel overflow-hidden">
+        <section className="table-shell overflow-hidden">
           <div className="soft-divider flex flex-col gap-4 px-6 py-5 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <p className="eyebrow">Usuarios registrados</p>
@@ -122,26 +132,27 @@ export default async function UsersPage() {
           ) : users.length === 0 ? (
             <div className="px-6 py-6 text-sm text-slate-500">Todavía no hay usuarios registrados.</div>
           ) : (
-            <div className="space-y-3 p-4">
+            <>
+              <div className="table-header-row grid-cols-[minmax(0,1fr)_220px_220px_180px]">
+                <span>Usuario</span>
+                <span>Institución</span>
+                <span>Roles</span>
+                <span>Estado</span>
+              </div>
+              <div>
               {users.map((user) => (
-                <article key={user.id} className="table-row-card">
-                  <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
-                    <div className="space-y-2">
-                      <div className="flex flex-wrap items-center gap-2">
-                        <h3 className="text-lg font-semibold text-slate-950">{user.fullName}</h3>
-                        <span className="info-chip">{translateUserStatus(user.status)}</span>
-                      </div>
-                      <p className="text-sm text-slate-500">{user.email}</p>
-                      <p className="text-sm text-slate-600">{user.institutionName ?? 'Acceso global sin institución'}</p>
-                    </div>
-                    <div className="space-y-2 lg:max-w-xs lg:text-right">
-                      <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Roles asignados</p>
-                      <p className="text-sm text-slate-600">{user.roleCodes.join(', ')}</p>
-                    </div>
+                <article key={user.id} className="table-data-row grid-cols-[minmax(0,1fr)_220px_220px_180px]">
+                  <div>
+                    <h3 className="text-base font-semibold text-slate-950">{user.fullName}</h3>
+                    <p className="mt-1 text-sm text-slate-500">{user.email}</p>
                   </div>
+                  <p className="text-sm text-slate-600">{user.institutionName ?? 'Acceso global sin institución'}</p>
+                  <p className="text-sm text-slate-600">{user.roleCodes.join(', ')}</p>
+                  <span className="info-chip h-fit">{translateUserStatus(user.status)}</span>
                 </article>
               ))}
-            </div>
+              </div>
+            </>
           )}
         </section>
       </div>

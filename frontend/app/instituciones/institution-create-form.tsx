@@ -61,7 +61,7 @@ export function InstitutionCreateForm() {
   }
 
   return (
-    <section className="surface-panel p-6 sm:p-7">
+    <section className="section-grid-card sm:p-7">
       <div>
         <p className="eyebrow">Nueva institución</p>
         <h2 className="mt-3 text-2xl font-semibold text-slate-950">Registrar una institución</h2>
@@ -70,39 +70,39 @@ export function InstitutionCreateForm() {
         </p>
       </div>
 
-      <form action={handleSubmit} className="mt-6 space-y-4">
+      <form action={handleSubmit} className="mt-6 space-y-5">
         <div className="grid gap-4 md:grid-cols-2">
           <label className="block">
-            <span className="text-sm text-slate-700">Nombre</span>
+            <span className="text-sm font-medium text-slate-700">Nombre</span>
             <input name="name" required minLength={3} maxLength={180} className="form-field" placeholder="Unidad Educativa Nueva Esperanza" />
           </label>
           <label className="block">
-            <span className="text-sm text-slate-700">Slug</span>
+            <span className="text-sm font-medium text-slate-700">Slug</span>
             <input name="slug" required minLength={3} maxLength={120} className="form-field" placeholder="unidad-educativa-nueva-esperanza" />
           </label>
           <label className="block">
-            <span className="text-sm text-slate-700">Tipo</span>
+            <span className="text-sm font-medium text-slate-700">Tipo</span>
             <select name="institutionType" required defaultValue="privada" className="form-field">
               <option value="privada">Privada</option>
               <option value="publica">Pública</option>
             </select>
           </label>
           <label className="block">
-            <span className="text-sm text-slate-700">Correo de contacto</span>
+            <span className="text-sm font-medium text-slate-700">Correo de contacto</span>
             <input name="contactEmail" type="email" className="form-field" placeholder="rectorado@institucion.edu" />
           </label>
           <label className="block">
-            <span className="text-sm text-slate-700">Teléfono</span>
+            <span className="text-sm font-medium text-slate-700">Teléfono</span>
             <input name="contactPhone" className="form-field" placeholder="+593999999999" />
           </label>
           <label className="block">
-            <span className="text-sm text-slate-700">Año lectivo activo</span>
+            <span className="text-sm font-medium text-slate-700">Año lectivo activo</span>
             <input name="activeSchoolYearLabel" className="form-field" placeholder="2026-2027" />
           </label>
         </div>
 
         <label className="block">
-          <span className="text-sm text-slate-700">Dirección</span>
+          <span className="text-sm font-medium text-slate-700">Dirección</span>
           <textarea name="address" rows={3} className="form-field" placeholder="Ciudad, sector y referencia principal" />
         </label>
 

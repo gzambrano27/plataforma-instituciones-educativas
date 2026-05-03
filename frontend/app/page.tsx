@@ -58,61 +58,73 @@ export default async function HomePage() {
   return (
     <main className="space-y-8 pb-10">
       <section className="glass-panel px-6 py-8 sm:px-8 lg:px-10">
-        <div className="grid gap-8 lg:grid-cols-[1.3fr_0.7fr] lg:items-start">
+        <div className="grid gap-6 xl:grid-cols-[1.4fr_0.6fr]">
           <div className="space-y-6">
-            <span className="eyebrow">Plataforma institucional educativa</span>
+            <div className="flex flex-wrap items-center gap-3">
+              <span className="eyebrow">Software educativo institucional</span>
+              <span className="info-chip">Frontend rediseñado</span>
+            </div>
             <div className="space-y-4">
-              <h1 className="section-title max-w-4xl">
-                Una experiencia clara y profesional para dirigir, administrar y acompañar la vida institucional.
+              <h1 className="section-title max-w-5xl">
+                Un dashboard educativo claro, ejecutivo y contundente para dirigir instituciones con mejor lectura visual.
               </h1>
               <p className="section-copy max-w-3xl">
-                Educa concentra el trabajo de autoridades, equipos administrativos y comunidad estudiantil en una interfaz más ordenada,
-                confiable y fácil de recorrer desde el primer uso.
+                Educa reorganiza cursos, estudiantes, evaluaciones, actividad diaria y administración en un entorno blanco, sobrio y profesional,
+                pensado tanto para autoridades como para equipos operativos y comunidad estudiantil.
               </p>
+            </div>
+
+            <div className="grid gap-4 md:grid-cols-3">
+              <div className="dark-metric-card">
+                <p className="text-sm font-medium text-slate-300">Retención académica</p>
+                <p className="mt-4 text-5xl font-semibold tracking-tight">94%</p>
+                <p className="mt-3 text-sm text-slate-300">Seguimiento consolidado de asistencia, continuidad y soporte.</p>
+              </div>
+              <div className="metric-card">
+                <p className="eyebrow">Cursos</p>
+                <p className="stat-value mt-3">128</p>
+                <p className="mt-3 text-sm text-slate-500">Oferta académica visible por nivel, coordinación y periodo.</p>
+              </div>
+              <div className="metric-card">
+                <p className="eyebrow">Estudiantes</p>
+                <p className="stat-value mt-3">2.4k</p>
+                <p className="mt-3 text-sm text-slate-500">Lectura institucional clara para crecimiento y carga operativa.</p>
+              </div>
             </div>
 
             <div className="flex flex-wrap gap-3">
               <Link href="/panel" className="primary-button">
-                Ir al panel principal
+                Entrar al panel principal
               </Link>
               <Link href="/instituciones" className="secondary-button">
-                Gestionar instituciones
+                Administrar instituciones
               </Link>
               <Link href="/usuarios" className="secondary-button">
-                Gestionar usuarios y roles
+                Gestionar usuarios
               </Link>
-            </div>
-
-            <div className="grid gap-4 md:grid-cols-3">
-              {highlights.map((item) => (
-                <div key={item.title} className="surface-muted p-5">
-                  <p className="text-sm font-semibold text-slate-900">{item.title}</p>
-                  <p className="mt-3 text-sm leading-6 text-slate-600">{item.description}</p>
-                </div>
-              ))}
             </div>
           </div>
 
-          <aside className="surface-panel p-6">
-            <div className="flex items-center justify-between">
+          <aside className="section-grid-card">
+            <div className="flex items-center justify-between gap-3">
               <div>
-                <p className="eyebrow">Acceso institucional</p>
-                <h2 className="mt-2 text-2xl font-semibold text-slate-950">Ingreso demo operativo</h2>
+                <p className="eyebrow">Acceso de demostración</p>
+                <h2 className="mt-2 text-2xl font-semibold text-slate-950">Operación lista para pruebas</h2>
               </div>
               <span className="info-chip">Base activa</span>
             </div>
 
             <div className="mt-6 space-y-4">
               <div className="surface-muted p-4">
-                <p className="text-sm text-slate-500">Correo</p>
-                <p className="mt-2 font-medium text-slate-950">admin@educa.local</p>
+                <p className="text-sm text-slate-500">Correo institucional</p>
+                <p className="mt-2 font-semibold text-slate-950">admin@educa.local</p>
               </div>
               <div className="surface-muted p-4">
-                <p className="text-sm text-slate-500">Clave</p>
-                <p className="mt-2 font-medium text-slate-950">Educa2026!</p>
+                <p className="text-sm text-slate-500">Clave temporal</p>
+                <p className="mt-2 font-semibold text-slate-950">Educa2026!</p>
               </div>
               <div className="surface-muted p-4">
-                <p className="text-sm text-slate-500">Estado de autenticación</p>
+                <p className="text-sm text-slate-500">Autenticación</p>
                 <p className="mt-2 text-sm text-slate-700">
                   {authBootstrap ? `${authBootstrap.currentStatus} · ${authBootstrap.sessionStrategy}` : 'Sin información disponible.'}
                 </p>
@@ -124,49 +136,63 @@ export default async function HomePage() {
 
       <section className="grid gap-4 xl:grid-cols-3">
         {quickModules.map((module) => (
-          <Link key={module.href} href={module.href} className="surface-panel p-6 transition hover:-translate-y-0.5 hover:border-sky-200 hover:shadow-[0_22px_48px_rgba(14,165,233,0.1)]">
-            <p className="eyebrow">Módulo</p>
-            <h3 className="mt-3 text-2xl font-semibold text-slate-950">{module.title}</h3>
-            <p className="mt-3 text-sm leading-7 text-slate-600">{module.description}</p>
-            <span className="mt-6 inline-flex text-sm font-semibold text-sky-700">Entrar</span>
+          <Link key={module.href} href={module.href} className="section-grid-card transition hover:-translate-y-0.5 hover:border-sky-200 hover:shadow-[0_20px_46px_rgba(14,165,233,0.08)]">
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <p className="eyebrow">Módulo principal</p>
+                <h3 className="mt-3 text-2xl font-semibold text-slate-950">{module.title}</h3>
+              </div>
+              <span className="rounded-2xl bg-sky-50 px-3 py-2 text-xs font-semibold text-sky-700">Activo</span>
+            </div>
+            <p className="mt-4 text-sm leading-7 text-slate-600">{module.description}</p>
+            <span className="mt-8 inline-flex text-sm font-semibold text-slate-950">Abrir módulo</span>
           </Link>
         ))}
       </section>
 
       <section className="grid gap-6 lg:grid-cols-[1.05fr_0.95fr]">
-        <div className="surface-panel p-6">
+        <div className="section-grid-card">
           <div className="flex items-center justify-between gap-4">
             <div>
-              <p className="eyebrow">Institución de referencia</p>
-              <h3 className="mt-2 text-2xl font-semibold text-slate-950">Unidad Educativa Demo Educa</h3>
+              <p className="eyebrow">Bloques educativos</p>
+              <h3 className="mt-2 text-2xl font-semibold text-slate-950">Cursos, evaluaciones y actividad en una sola vista</h3>
             </div>
-            <span className="info-chip">2026-2027</span>
+            <span className="info-chip">Lectivo 2026-2027</span>
           </div>
           <div className="mt-6 grid gap-4 md:grid-cols-2">
             <div className="surface-muted p-4">
-              <p className="text-sm text-slate-500">Tipo institucional</p>
-              <p className="mt-2 text-slate-950">Privada</p>
+              <p className="text-sm text-slate-500">Cursos</p>
+              <p className="mt-2 text-lg font-semibold text-slate-950">Planificación por nivel y sección</p>
             </div>
             <div className="surface-muted p-4">
-              <p className="text-sm text-slate-500">Contacto base</p>
-              <p className="mt-2 text-slate-950">info@educa.demo</p>
+              <p className="text-sm text-slate-500">Estudiantes</p>
+              <p className="mt-2 text-lg font-semibold text-slate-950">Seguimiento de matrícula y permanencia</p>
             </div>
-            <div className="surface-muted p-4 md:col-span-2">
-              <p className="text-sm text-slate-500">Dirección operativa</p>
-              <p className="mt-2 text-slate-950">Quito, Ecuador</p>
+            <div className="surface-muted p-4">
+              <p className="text-sm text-slate-500">Evaluaciones</p>
+              <p className="mt-2 text-lg font-semibold text-slate-950">Resultados visibles para coordinación y rectorado</p>
+            </div>
+            <div className="surface-muted p-4">
+              <p className="text-sm text-slate-500">Actividades</p>
+              <p className="mt-2 text-lg font-semibold text-slate-950">Agenda operativa y acciones pendientes</p>
             </div>
           </div>
         </div>
 
-        <div className="surface-panel p-6">
-          <p className="eyebrow">Ruta del producto</p>
-          <h3 className="mt-2 text-2xl font-semibold text-slate-950">Próximas capas del sistema</h3>
-          <ul className="mt-6 space-y-3 text-sm text-slate-600">
-            <li>Consolidar una experiencia visual operativa para directivos y estudiantes.</li>
-            <li>Ampliar CRUD y búsqueda en los módulos principales.</li>
-            <li>Introducir estructura académica base por fases.</li>
-            <li>Evolucionar hacia una plataforma institucional más completa.</li>
-          </ul>
+        <div className="section-grid-card">
+          <p className="eyebrow">Rendimiento institucional</p>
+          <h3 className="mt-2 text-2xl font-semibold text-slate-950">Resumen ejecutivo de la operación educativa</h3>
+          <div className="mt-6 space-y-4">
+            {highlights.map((item) => (
+              <div key={item.title} className="flex items-start gap-4 rounded-[24px] border border-slate-200 bg-slate-50 p-4">
+                <span className="mt-1 h-2.5 w-2.5 rounded-full bg-sky-500" />
+                <div>
+                  <p className="font-semibold text-slate-950">{item.title}</p>
+                  <p className="mt-2 text-sm leading-6 text-slate-600">{item.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
     </main>

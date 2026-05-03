@@ -4,31 +4,70 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 const navigationItems = [
-  { href: '/', label: 'Inicio' },
-  { href: '/panel', label: 'Panel' },
-  { href: '/instituciones', label: 'Instituciones' },
-  { href: '/usuarios', label: 'Usuarios' },
+  { href: '/', label: 'Inicio', shortLabel: 'IN', description: 'Resumen general' },
+  { href: '/panel', label: 'Panel', shortLabel: 'PA', description: 'Centro operativo' },
+  { href: '/instituciones', label: 'Instituciones', shortLabel: 'IE', description: 'Registro académico' },
+  { href: '/usuarios', label: 'Usuarios', shortLabel: 'US', description: 'Accesos y perfiles' },
 ];
+
+const pageMeta: Record<string, { title: string; subtitle: string }> = {
+  '/': {
+    title: 'Centro de gestión educativa',
+    subtitle: 'Vista general para autoridades, coordinación y comunidad institucional.',
+  },
+  '/panel': {
+    title: 'Panel institucional',
+    subtitle: 'Seguimiento ejecutivo de operación, accesos y actividad reciente.',
+  },
+  '/instituciones': {
+    title: 'Instituciones educativas',
+    subtitle: 'Catálogo institucional, capacidad operativa y datos de contacto centralizados.',
+  },
+  '/usuarios': {
+    title: 'Usuarios y gobierno de acceso',
+    subtitle: 'Control de perfiles, asignación institucional y seguridad operativa.',
+  },
+};
 
 export function AppShell({ children }: Readonly<{ children: React.ReactNode }>) {
   const pathname = usePathname();
+  const activePage = pathname ? (pageMeta[pathname] ?? pageMeta['/']) : pageMeta['/'];
 
   return (
-    <div className="relative min-h-screen overflow-hidden">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(59,130,246,0.12),_transparent_24%),radial-gradient(circle_at_bottom_right,_rgba(14,165,233,0.12),_transparent_22%)]" />
-      <div className="relative mx-auto flex min-h-screen w-full max-w-[1600px] gap-6 px-4 py-4 sm:px-6 sm:py-6 lg:px-8">
-        <aside className="app-sidebar hidden w-[290px] shrink-0 lg:flex lg:flex-col lg:p-6">
-          <Link href="/" className="inline-flex items-center gap-3 text-slate-950 transition hover:text-sky-700">
-            <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-sky-600 text-sm font-semibold text-white shadow-[0_14px_28px_rgba(2,132,199,0.22)]">
-              E
-            </span>
-            <span>
-              <span className="block text-xs font-semibold uppercase tracking-[0.24em] text-slate-500">Plataforma educativa</span>
-              <span className="block text-lg font-semibold tracking-tight">Educa</span>
-            </span>
-          </Link>
+    <div className="min-h-screen bg-[#f3f6fb] text-slate-900">
+      <div className="mx-auto flex min-h-screen w-full max-w-[1680px] gap-6 px-4 py-4 sm:px-6 lg:px-8 lg:py-6">
+        <aside className="app-sidebar hidden w-[296px] shrink-0 lg:flex lg:flex-col lg:p-5">
+          <div className="flex items-center justify-between rounded-[24px] border border-slate-200 bg-slate-50 px-4 py-4">
+            <Link href="/" className="inline-flex items-center gap-3 text-slate-950 transition hover:text-sky-700">
+              <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-950 text-sm font-semibold text-white shadow-[0_14px_30px_rgba(15,23,42,0.16)]">
+                ED
+              </span>
+              <span>
+                <span className="block text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-500">Plataforma educativa</span>
+                <span className="block text-lg font-semibold tracking-tight">Educa Suite</span>
+              </span>
+            </Link>
+            <span className="rounded-full bg-emerald-50 px-2.5 py-1 text-[11px] font-semibold text-emerald-700">En línea</span>
+          </div>
 
-          <div className="mt-8 space-y-2">
+          <div className="mt-5 rounded-[24px] border border-slate-200 bg-slate-50 p-4">
+            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">Perfil activo</p>
+            <div className="mt-4 flex items-center gap-3">
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-sky-100 text-sm font-semibold text-sky-700">
+                AP
+              </div>
+              <div>
+                <p className="font-semibold text-slate-950">Admin Plataforma</p>
+                <p className="text-sm text-slate-500">Rectorado y operación</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-6">
+            <p className="px-2 text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">Navegación</p>
+          </div>
+
+          <div className="mt-3 space-y-2">
             {navigationItems.map((item) => {
               const isActive = pathname === item.href;
 
@@ -38,40 +77,47 @@ export function AppShell({ children }: Readonly<{ children: React.ReactNode }>) 
                   href={item.href}
                   className={`app-sidebar-link ${isActive ? 'app-sidebar-link-active' : ''}`}
                 >
-                  <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-slate-100 text-xs font-semibold text-slate-600">
-                    {item.label.slice(0, 1)}
+                  <span className={`flex h-11 w-11 items-center justify-center rounded-2xl text-xs font-semibold ${isActive ? 'bg-sky-600 text-white' : 'bg-slate-100 text-slate-600'}`}>
+                    {item.shortLabel}
                   </span>
-                  <span>{item.label}</span>
+                  <span className="min-w-0 flex-1">
+                    <span className="block text-sm font-semibold">{item.label}</span>
+                    <span className="mt-1 block text-xs font-medium text-slate-500">{item.description}</span>
+                  </span>
                 </Link>
               );
             })}
           </div>
 
-          <div className="mt-auto rounded-[28px] border border-slate-200 bg-slate-50 p-5">
-            <p className="eyebrow">Entorno institucional</p>
-            <h2 className="mt-3 text-lg font-semibold text-slate-950">Operación clara para autoridades y estudiantes</h2>
-            <p className="mt-3 text-sm leading-6 text-slate-600">
-              Navegación simple, superficies limpias y acceso directo a los módulos principales.
+          <div className="mt-auto rounded-[28px] border border-slate-200 bg-slate-950 p-5 text-white">
+            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-sky-200">Radar académico</p>
+            <h2 className="mt-3 text-lg font-semibold">87% de continuidad estudiantil este periodo</h2>
+            <p className="mt-3 text-sm leading-6 text-slate-300">
+              El nuevo frente visual prioriza decisiones rápidas, lectura limpia y seguimiento institucional continuo.
             </p>
+            <Link href="/panel" className="mt-5 inline-flex items-center text-sm font-semibold text-sky-200 transition hover:text-white">
+              Abrir centro de control
+            </Link>
           </div>
         </aside>
 
         <div className="flex min-w-0 flex-1 flex-col">
-          <header className="topbar-panel sticky top-4 z-20 mb-6 px-4 py-4 sm:px-6">
-            <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+          <header className="topbar-panel sticky top-4 z-20 mb-6 px-4 py-4 sm:px-5 lg:px-6">
+            <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
               <div className="space-y-1">
                 <Link href="/" className="inline-flex items-center gap-3 text-slate-950 transition hover:text-sky-700 lg:hidden">
-                  <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-sky-600 text-sm font-semibold text-white shadow-[0_14px_28px_rgba(2,132,199,0.22)]">
-                    E
+                  <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-slate-950 text-sm font-semibold text-white">
+                    ED
                   </span>
                   <span>
                     <span className="block text-xs font-semibold uppercase tracking-[0.24em] text-slate-500">Plataforma educativa</span>
-                    <span className="block text-lg font-semibold tracking-tight">Educa</span>
+                    <span className="block text-lg font-semibold tracking-tight">Educa Suite</span>
                   </span>
                 </Link>
-                <div className="hidden lg:block">
-                  <p className="text-sm font-medium text-slate-500">Plataforma institucional educativa</p>
-                  <h1 className="text-xl font-semibold tracking-tight text-slate-950">Gestión académica y administrativa</h1>
+                <div>
+                  <p className="text-sm font-medium text-slate-500">Dashboard institucional</p>
+                  <h1 className="text-xl font-semibold tracking-tight text-slate-950 sm:text-2xl">{activePage.title}</h1>
+                  <p className="mt-1 hidden text-sm text-slate-500 lg:block">{activePage.subtitle}</p>
                 </div>
               </div>
 
@@ -83,9 +129,25 @@ export function AppShell({ children }: Readonly<{ children: React.ReactNode }>) 
                 ))}
               </div>
 
-              <div className="hidden items-center gap-3 lg:flex">
-                <span className="info-chip">Interfaz clara</span>
-                <span className="info-chip">Flujo administrativo</span>
+              <div className="flex flex-col gap-3 xl:min-w-[620px] xl:max-w-[720px] xl:flex-row xl:items-center xl:justify-end">
+                <label className="header-search xl:flex-1">
+                  <svg viewBox="0 0 24 24" aria-hidden="true" className="h-4 w-4 text-slate-400">
+                    <path d="M10.5 4a6.5 6.5 0 1 0 4.03 11.6l4.43 4.43 1.06-1.06-4.43-4.43A6.5 6.5 0 0 0 10.5 4Zm0 1.5a5 5 0 1 1 0 10 5 5 0 0 1 0-10Z" fill="currentColor" />
+                  </svg>
+                  <input aria-label="Buscar" placeholder="Buscar institución, usuario o módulo" />
+                </label>
+
+                <div className="flex items-center gap-3 xl:shrink-0">
+                  <button type="button" className="icon-button" aria-label="Notificaciones">
+                    <span className="absolute right-2 top-2 h-2.5 w-2.5 rounded-full bg-sky-500" />
+                    <svg viewBox="0 0 24 24" aria-hidden="true" className="h-5 w-5 text-slate-600">
+                      <path d="M12 3.75a4.25 4.25 0 0 0-4.25 4.25v1.02c0 .64-.2 1.26-.57 1.78L5.8 12.77A1.75 1.75 0 0 0 7.23 15.5h9.54a1.75 1.75 0 0 0 1.43-2.73l-1.38-1.97a3.23 3.23 0 0 1-.57-1.78V8A4.25 4.25 0 0 0 12 3.75Zm0 16.5a2.24 2.24 0 0 0 2.12-1.5H9.88A2.24 2.24 0 0 0 12 20.25Z" fill="currentColor" />
+                    </svg>
+                  </button>
+                  <Link href="/instituciones" className="primary-button whitespace-nowrap">
+                    Nueva institución
+                  </Link>
+                </div>
               </div>
             </div>
           </header>
