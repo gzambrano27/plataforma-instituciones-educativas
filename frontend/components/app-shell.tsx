@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 const navigationItems = [
   { href: '/', label: 'Inicio', shortLabel: 'IN', description: 'Resumen general' },
@@ -32,101 +33,72 @@ const pageMeta: Record<string, { title: string; subtitle: string }> = {
 export function AppShell({ children }: Readonly<{ children: React.ReactNode }>) {
   const pathname = usePathname();
   const activePage = pathname ? (pageMeta[pathname] ?? pageMeta['/']) : pageMeta['/'];
+  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
+
+  useEffect(() => {
+    setMobileSidebarOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    if (!mobileSidebarOpen) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    function handleEscape(event: KeyboardEvent) {
+      if (event.key === 'Escape') setMobileSidebarOpen(false);
+    }
+
+    window.addEventListener('keydown', handleEscape);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener('keydown', handleEscape);
+    };
+  }, [mobileSidebarOpen]);
 
   return (
     <div className="min-h-screen bg-[#f3f6fb] text-slate-900">
+      {mobileSidebarOpen ? (
+        <div className="mobile-sidebar-overlay lg:hidden" onClick={() => setMobileSidebarOpen(false)}>
+          <aside className="mobile-sidebar-panel" onClick={(event) => event.stopPropagation()}>
+            <SidebarContent pathname={pathname ?? '/'} onNavigate={() => setMobileSidebarOpen(false)} />
+          </aside>
+        </div>
+      ) : null}
+
       <div className="mx-auto flex min-h-screen w-full max-w-[1680px] gap-6 px-4 py-4 sm:px-6 lg:px-8 lg:py-6">
         <aside className="app-sidebar hidden w-[296px] shrink-0 lg:flex lg:flex-col lg:p-5">
-          <div className="flex items-center justify-between rounded-[24px] border border-slate-200 bg-slate-50 px-4 py-4">
-            <Link href="/" className="inline-flex items-center gap-3 text-slate-950 transition hover:text-sky-700">
-              <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-950 text-sm font-semibold text-white shadow-[0_14px_30px_rgba(15,23,42,0.16)]">
-                ED
-              </span>
-              <span>
-                <span className="block text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-500">Plataforma educativa</span>
-                <span className="block text-lg font-semibold tracking-tight">Educa Suite</span>
-              </span>
-            </Link>
-            <span className="rounded-full bg-emerald-50 px-2.5 py-1 text-[11px] font-semibold text-emerald-700">En línea</span>
-          </div>
-
-          <div className="mt-5 rounded-[24px] border border-slate-200 bg-slate-50 p-4">
-            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">Perfil activo</p>
-            <div className="mt-4 flex items-center gap-3">
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-sky-100 text-sm font-semibold text-sky-700">
-                AP
-              </div>
-              <div>
-                <p className="font-semibold text-slate-950">Admin Plataforma</p>
-                <p className="text-sm text-slate-500">Rectorado y operación</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="mt-6">
-            <p className="px-2 text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">Navegación</p>
-          </div>
-
-          <div className="mt-3 space-y-2">
-            {navigationItems.map((item) => {
-              const isActive = pathname === item.href;
-
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={`app-sidebar-link ${isActive ? 'app-sidebar-link-active' : ''}`}
-                >
-                  <span className={`flex h-11 w-11 items-center justify-center rounded-2xl text-xs font-semibold ${isActive ? 'bg-sky-600 text-white' : 'bg-slate-100 text-slate-600'}`}>
-                    {item.shortLabel}
-                  </span>
-                  <span className="min-w-0 flex-1">
-                    <span className="block text-sm font-semibold">{item.label}</span>
-                    <span className="mt-1 block text-xs font-medium text-slate-500">{item.description}</span>
-                  </span>
-                </Link>
-              );
-            })}
-          </div>
-
-          <div className="mt-auto rounded-[28px] border border-slate-200 bg-slate-950 p-5 text-white">
-            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-sky-200">Radar académico</p>
-            <h2 className="mt-3 text-lg font-semibold">87% de continuidad estudiantil este periodo</h2>
-            <p className="mt-3 text-sm leading-6 text-slate-300">
-              El nuevo frente visual prioriza decisiones rápidas, lectura limpia y seguimiento institucional continuo.
-            </p>
-            <Link href="/panel" className="mt-5 inline-flex items-center text-sm font-semibold text-sky-200 transition hover:text-white">
-              Abrir centro de control
-            </Link>
-          </div>
+          <SidebarContent pathname={pathname ?? '/'} />
         </aside>
 
         <div className="flex min-w-0 flex-1 flex-col">
           <header className="topbar-panel sticky top-4 z-20 mb-6 px-4 py-4 sm:px-5 lg:px-6">
             <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
-              <div className="space-y-1">
-                <Link href="/" className="inline-flex items-center gap-3 text-slate-950 transition hover:text-sky-700 lg:hidden">
-                  <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-slate-950 text-sm font-semibold text-white">
-                    ED
-                  </span>
-                  <span>
-                    <span className="block text-xs font-semibold uppercase tracking-[0.24em] text-slate-500">Plataforma educativa</span>
-                    <span className="block text-lg font-semibold tracking-tight">Educa Suite</span>
-                  </span>
-                </Link>
+              <div className="space-y-3">
+                <div className="flex items-center gap-3 lg:hidden">
+                  <button type="button" className="icon-button" aria-label="Abrir navegación" onClick={() => setMobileSidebarOpen(true)}>
+                    <svg viewBox="0 0 24 24" aria-hidden="true" className="h-5 w-5 text-slate-700">
+                      <path d="M4 7h16v1.5H4V7Zm0 4.25h16v1.5H4v-1.5ZM4 15.5h16V17H4v-1.5Z" fill="currentColor" />
+                    </svg>
+                  </button>
+
+                  <Link href="/" className="inline-flex items-center gap-3 text-slate-950 transition hover:text-sky-700">
+                    <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-slate-950 text-sm font-semibold text-white">
+                      ED
+                    </span>
+                    <span>
+                      <span className="block text-xs font-semibold uppercase tracking-[0.24em] text-slate-500">Plataforma educativa</span>
+                      <span className="block text-lg font-semibold tracking-tight">Educa Suite</span>
+                    </span>
+                  </Link>
+                </div>
+
                 <div>
                   <p className="text-sm font-medium text-slate-500">Dashboard institucional</p>
                   <h1 className="text-xl font-semibold tracking-tight text-slate-950 sm:text-2xl">{activePage.title}</h1>
                   <p className="mt-1 hidden text-sm text-slate-500 lg:block">{activePage.subtitle}</p>
                 </div>
-              </div>
-
-              <div className="flex flex-wrap gap-2 lg:hidden">
-                {navigationItems.map((item) => (
-                  <Link key={item.href} href={item.href} className="nav-link">
-                    {item.label}
-                  </Link>
-                ))}
               </div>
 
               <div className="flex flex-col gap-3 xl:min-w-[620px] xl:max-w-[720px] xl:flex-row xl:items-center xl:justify-end">
@@ -156,5 +128,73 @@ export function AppShell({ children }: Readonly<{ children: React.ReactNode }>) 
         </div>
       </div>
     </div>
+  );
+}
+
+function SidebarContent({ pathname, onNavigate }: { pathname: string; onNavigate?: () => void }) {
+  return (
+    <>
+      <div className="flex items-center justify-between rounded-[24px] border border-slate-200 bg-slate-50 px-4 py-4">
+        <Link href="/" className="inline-flex items-center gap-3 text-slate-950 transition hover:text-sky-700" onClick={onNavigate}>
+          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-950 text-sm font-semibold text-white shadow-[0_14px_30px_rgba(15,23,42,0.16)]">
+            ED
+          </span>
+          <span>
+            <span className="block text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-500">Plataforma educativa</span>
+            <span className="block text-lg font-semibold tracking-tight">Educa Suite</span>
+          </span>
+        </Link>
+        <span className="rounded-full bg-emerald-50 px-2.5 py-1 text-[11px] font-semibold text-emerald-700">En línea</span>
+      </div>
+
+      <div className="mt-5 rounded-[24px] border border-slate-200 bg-slate-50 p-4">
+        <p className="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">Perfil activo</p>
+        <div className="mt-4 flex items-center gap-3">
+          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-sky-100 text-sm font-semibold text-sky-700">AP</div>
+          <div>
+            <p className="font-semibold text-slate-950">Admin Plataforma</p>
+            <p className="text-sm text-slate-500">Rectorado y operación</p>
+          </div>
+        </div>
+      </div>
+
+      <div className="mt-6">
+        <p className="px-2 text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">Navegación</p>
+      </div>
+
+      <div className="mt-3 space-y-2">
+        {navigationItems.map((item) => {
+          const isActive = pathname === item.href;
+
+          return (
+            <Link
+              key={item.href}
+              href={item.href}
+              onClick={onNavigate}
+              className={`app-sidebar-link ${isActive ? 'app-sidebar-link-active' : ''}`}
+            >
+              <span className={`flex h-11 w-11 items-center justify-center rounded-2xl text-xs font-semibold ${isActive ? 'bg-sky-600 text-white' : 'bg-slate-100 text-slate-600'}`}>
+                {item.shortLabel}
+              </span>
+              <span className="min-w-0 flex-1">
+                <span className="block text-sm font-semibold">{item.label}</span>
+                <span className="mt-1 block text-xs font-medium text-slate-500">{item.description}</span>
+              </span>
+            </Link>
+          );
+        })}
+      </div>
+
+      <div className="mt-auto rounded-[28px] border border-slate-200 bg-slate-950 p-5 text-white">
+        <p className="text-xs font-semibold uppercase tracking-[0.22em] text-sky-200">Radar académico</p>
+        <h2 className="mt-3 text-lg font-semibold">87% de continuidad estudiantil este periodo</h2>
+        <p className="mt-3 text-sm leading-6 text-slate-300">
+          El nuevo frente visual prioriza decisiones rápidas, lectura limpia y seguimiento institucional continuo.
+        </p>
+        <Link href="/panel" className="mt-5 inline-flex items-center text-sm font-semibold text-sky-200 transition hover:text-white" onClick={onNavigate}>
+          Abrir centro de control
+        </Link>
+      </div>
+    </>
   );
 }
