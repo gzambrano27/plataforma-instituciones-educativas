@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 type FormState = {
@@ -10,7 +9,6 @@ type FormState = {
 };
 
 export function LoginForm() {
-  const router = useRouter();
   const [state, setState] = useState<FormState>({ pending: false, error: null });
   const recoveryHref = '/registro?requestType=acceso&context=recuperacion';
 
@@ -36,8 +34,10 @@ export function LoginForm() {
       }
 
       const nextPath = new URLSearchParams(window.location.search).get('next');
-      router.replace(nextPath?.startsWith('/sistema') ? nextPath : '/sistema');
-      router.refresh();
+      const targetPath = nextPath?.startsWith('/sistema') ? nextPath : '/sistema';
+
+      window.location.assign(targetPath);
+      return;
     } catch (error) {
       setState({
         pending: false,
