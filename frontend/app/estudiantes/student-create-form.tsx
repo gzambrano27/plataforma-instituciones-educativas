@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
 import { ModalShell } from '../../components/modal-shell';
-import { getDemoAccessToken } from '../lib/demo-api';
+import { getAccessToken } from '../lib/client-auth';
 import type { StudentAcademicGrade, StudentAcademicLevel, StudentAcademicSection, StudentStatus } from './page';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? 'http://localhost:4100/api';
@@ -85,7 +85,7 @@ export function StudentFormModal({ open, onClose, levels, grades, sections }: St
     }
 
     try {
-      const accessToken = await getDemoAccessToken();
+      const accessToken = await getAccessToken();
       const response = await fetch(`${API_BASE_URL}/students`, {
         method: 'POST',
         headers: {

@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { ModalShell } from '../../components/modal-shell';
-import { getDemoAccessToken } from '../lib/demo-api';
+import { getAccessToken } from '../lib/client-auth';
 
 type FormState = {
   success: boolean;
@@ -67,7 +67,7 @@ export function InstitutionFormModal({ open, mode, onClose, initialValues }: Ins
     }
 
     try {
-      const accessToken = await getDemoAccessToken();
+      const accessToken = await getAccessToken();
       const response = await fetch(`${API_BASE_URL}/institutions`, {
         method: 'POST',
         headers: {

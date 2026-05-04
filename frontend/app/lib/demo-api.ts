@@ -1,3 +1,7 @@
+import { cookies } from 'next/headers';
+
+import { ACCESS_TOKEN_COOKIE } from '../../lib/auth-session';
+
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? 'http://localhost:4100/api';
 
 type ApiPayload<T> = {
@@ -16,22 +20,11 @@ export class DemoApiError extends Error {
 export { API_BASE_URL };
 
 export async function getDemoAccessToken() {
-  const loginResponse = await fetch(`${API_BASE_URL}/auth/login`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email: 'admin@educa.local', password: 'Educa2026!' }),
-    cache: 'no-store',
-  });
-
-  if (!loginResponse.ok) {
-    throw new DemoApiError('No fue posible autenticar el acceso demo.');
-  }
-
-  const loginPayload = (await loginResponse.json()) as ApiPayload<{ accessToken?: string }>;
-  const accessToken = loginPayload.data?.accessToken;
+  const cookieStore = await cookies();
+  const accessToken = cookieStore.get(ACCESS_TOKEN_COOKIE)?.value;
 
   if (!accessToken) {
-    throw new DemoApiError('No se recibió token de acceso.');
+    throw new DemoApiError('Debes iniciar sesión para acceder al sistema institucional.');
   }
 
   return accessToken;
@@ -52,6 +45,10 @@ export async function fetchDemoApi<T>(path: string, init?: RequestInit) {
   const payload = (await response.json().catch(() => null)) as ApiPayload<T> | null;
 
   if (!response.ok) {
+    if (response.status === 401) {
+      throw new DemoApiError('Tu sesión expiró o ya no es válida. Inicia sesión nuevamente.');
+    }
+
     throw new DemoApiError(payload?.message ?? 'No fue posible completar la operación.');
   }
 

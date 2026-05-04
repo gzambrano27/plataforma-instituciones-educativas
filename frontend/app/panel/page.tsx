@@ -135,14 +135,14 @@ export default async function PanelPage() {
                   <p className="text-sm text-slate-500">Secciones operativas</p>
                   <p className="mt-2 text-base font-semibold text-slate-950">{dashboard.metrics.academicSections} paralelos listos para organización, matrícula y seguimiento posterior</p>
                   <div className="mt-4 flex flex-col gap-3 sm:flex-row">
-                    <Link href="/academico" className="compact-button w-full sm:w-fit">Gestionar estructura académica</Link>
-                    <Link href="/docentes" className="compact-button w-full sm:w-fit">Gestionar docentes</Link>
-                    <Link href="/estudiantes" className="compact-button w-full sm:w-fit">Gestionar estudiantes</Link>
-                    <Link href="/matriculas" className="compact-button w-full sm:w-fit">Gestionar matrículas</Link>
-                    <Link href="/materias" className="compact-button w-full sm:w-fit">Gestionar materias</Link>
-                    <Link href="/asignaciones-academicas" className="compact-button w-full sm:w-fit">Gestionar asignaciones</Link>
-                     <Link href="/evaluaciones" className="compact-button w-full sm:w-fit">Gestionar evaluaciones</Link>
-                     <Link href="/asistencia" className="compact-button w-full sm:w-fit">Gestionar asistencia</Link>
+                    <Link href="/sistema/academico" className="compact-button w-full sm:w-fit">Gestionar estructura académica</Link>
+                    <Link href="/sistema/docentes" className="compact-button w-full sm:w-fit">Gestionar docentes</Link>
+                    <Link href="/sistema/estudiantes" className="compact-button w-full sm:w-fit">Gestionar estudiantes</Link>
+                    <Link href="/sistema/matriculas" className="compact-button w-full sm:w-fit">Gestionar matrículas</Link>
+                    <Link href="/sistema/materias" className="compact-button w-full sm:w-fit">Gestionar materias</Link>
+                    <Link href="/sistema/asignaciones-academicas" className="compact-button w-full sm:w-fit">Gestionar asignaciones</Link>
+                     <Link href="/sistema/evaluaciones" className="compact-button w-full sm:w-fit">Gestionar evaluaciones</Link>
+                     <Link href="/sistema/asistencia" className="compact-button w-full sm:w-fit">Gestionar asistencia</Link>
                    </div>
                  </div>
               </div>
@@ -174,7 +174,7 @@ export default async function PanelPage() {
                         </td>
                         <td>
                           <div className="table-actions">
-                            <Link href="/instituciones" className="compact-button">Gestionar</Link>
+                            <Link href="/sistema/instituciones" className="compact-button">Gestionar</Link>
                           </div>
                         </td>
                       </tr>
@@ -218,7 +218,7 @@ export default async function PanelPage() {
                         </td>
                         <td>
                           <div className="table-actions">
-                            <Link href="/usuarios" className="compact-button">Gestionar</Link>
+                            <Link href="/sistema/usuarios" className="compact-button">Gestionar</Link>
                           </div>
                         </td>
                       </tr>

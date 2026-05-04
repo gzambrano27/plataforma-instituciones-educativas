@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
 import { ModalShell } from '../../components/modal-shell';
-import { getDemoAccessToken } from '../lib/demo-api';
+import { getAccessToken } from '../lib/client-auth';
 import type {
   AssignmentGradeOption,
   AssignmentLevelOption,
@@ -97,7 +97,7 @@ export function AcademicAssignmentFormModal({
     }
 
     try {
-      const accessToken = await getDemoAccessToken();
+      const accessToken = await getAccessToken();
       const response = await fetch(`${API_BASE_URL}/academic-assignments`, {
         method: 'POST',
         headers: {

@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { ModalShell } from '../../components/modal-shell';
-import { getDemoAccessToken } from '../lib/demo-api';
+import { getAccessToken } from '../lib/client-auth';
 
 type InstitutionOption = {
   id: string;
@@ -82,7 +82,7 @@ export function UserFormModal({ institutions, roles, open, mode, onClose, initia
     }
 
     try {
-      const accessToken = await getDemoAccessToken();
+      const accessToken = await getAccessToken();
       const response = await fetch(`${API_BASE_URL}/users`, {
         method: 'POST',
         headers: {

@@ -3,68 +3,68 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { LogoutButton } from './logout-button';
 
 const navigationItems = [
-  { href: '/', label: 'Inicio', shortLabel: 'IN', description: 'Resumen general' },
-  { href: '/panel', label: 'Panel', shortLabel: 'PA', description: 'Centro operativo' },
-  { href: '/instituciones', label: 'Institución', shortLabel: 'IE', description: 'Datos base y sedes' },
-  { href: '/academico', label: 'Académico', shortLabel: 'AC', description: 'Niveles, grados y secciones' },
-  { href: '/docentes', label: 'Docentes', shortLabel: 'DO', description: 'Planta y asignación académica' },
-  { href: '/estudiantes', label: 'Estudiantes', shortLabel: 'ES', description: 'Matrícula y ubicación académica' },
-  { href: '/matriculas', label: 'Matrículas', shortLabel: 'MT', description: 'Inscripciones por estudiante y sección' },
-  { href: '/materias', label: 'Materias', shortLabel: 'MA', description: 'Oferta curricular y carga base' },
-  { href: '/asignaciones-academicas', label: 'Asignaciones', shortLabel: 'AA', description: 'Docente + materia + estructura' },
-  { href: '/evaluaciones', label: 'Evaluaciones', shortLabel: 'EV', description: 'Instrumentos y calificaciones' },
-  { href: '/asistencia', label: 'Asistencia', shortLabel: 'AS', description: 'Control diario por sección' },
-  { href: '/usuarios', label: 'Usuarios', shortLabel: 'US', description: 'Accesos y perfiles' },
+  { href: '/sistema/panel', label: 'Panel', shortLabel: 'PA', description: 'Centro operativo' },
+  { href: '/sistema/instituciones', label: 'Institución', shortLabel: 'IE', description: 'Datos base y sedes' },
+  { href: '/sistema/academico', label: 'Académico', shortLabel: 'AC', description: 'Niveles, grados y secciones' },
+  { href: '/sistema/docentes', label: 'Docentes', shortLabel: 'DO', description: 'Planta y asignación académica' },
+  { href: '/sistema/estudiantes', label: 'Estudiantes', shortLabel: 'ES', description: 'Matrícula y ubicación académica' },
+  { href: '/sistema/matriculas', label: 'Matrículas', shortLabel: 'MT', description: 'Inscripciones por estudiante y sección' },
+  { href: '/sistema/materias', label: 'Materias', shortLabel: 'MA', description: 'Oferta curricular y carga base' },
+  { href: '/sistema/asignaciones-academicas', label: 'Asignaciones', shortLabel: 'AA', description: 'Docente + materia + estructura' },
+  { href: '/sistema/evaluaciones', label: 'Evaluaciones', shortLabel: 'EV', description: 'Instrumentos y calificaciones' },
+  { href: '/sistema/asistencia', label: 'Asistencia', shortLabel: 'AS', description: 'Control diario por sección' },
+  { href: '/sistema/usuarios', label: 'Usuarios', shortLabel: 'US', description: 'Accesos y perfiles' },
 ];
 
 const pageMeta: Record<string, { title: string; subtitle: string }> = {
-  '/': {
+  '/sistema': {
     title: 'Centro de gestión escolar',
     subtitle: 'Vista resumida para rectorado, coordinación y personal administrativo.',
   },
-  '/panel': {
+  '/sistema/panel': {
     title: 'Panel institucional',
     subtitle: 'Seguimiento diario de operación, accesos y actividad reciente.',
   },
-  '/instituciones': {
+  '/sistema/instituciones': {
     title: 'Institución',
     subtitle: 'Datos base, sedes y contacto operativo en una sola vista.',
   },
-  '/academico': {
+  '/sistema/academico': {
     title: 'Estructura académica',
     subtitle: 'Niveles, cursos y secciones operativas para una sola institución.',
   },
-  '/docentes': {
+  '/sistema/docentes': {
     title: 'Docentes y carga académica',
     subtitle: 'Planta docente con asignaciones visibles por nivel, curso o sección.',
   },
-  '/estudiantes': {
+  '/sistema/estudiantes': {
     title: 'Estudiantes y matrícula académica',
     subtitle: 'Alta y consulta de estudiantes ubicados en nivel, curso y sección.',
   },
-  '/matriculas': {
+  '/sistema/matriculas': {
     title: 'Matrículas e inscripciones',
     subtitle: 'Registro del periodo escolar enlazado con estudiante, curso y sección.',
   },
-  '/materias': {
+  '/sistema/materias': {
     title: 'Materias y oferta curricular',
     subtitle: 'Base de materias visible para la institución activa y su carga académica.',
   },
-  '/asignaciones-academicas': {
+  '/sistema/asignaciones-academicas': {
     title: 'Asignaciones académicas',
     subtitle: 'Vínculo operativo entre docente, materia, nivel, curso y sección.',
   },
-  '/evaluaciones': {
+  '/sistema/evaluaciones': {
     title: 'Evaluaciones y calificaciones',
     subtitle: 'Seguimiento por materia, docente, evaluación y estudiante matriculado.',
   },
-  '/asistencia': {
+  '/sistema/asistencia': {
     title: 'Asistencia académica',
     subtitle: 'Control diario por fecha, sección y matrícula activa de la institución.',
   },
-  '/usuarios': {
+  '/sistema/usuarios': {
     title: 'Usuarios y gobierno de acceso',
     subtitle: 'Control de perfiles, permisos y seguridad operativa del colegio.',
   },
@@ -72,7 +72,7 @@ const pageMeta: Record<string, { title: string; subtitle: string }> = {
 
 export function AppShell({ children }: Readonly<{ children: React.ReactNode }>) {
   const pathname = usePathname();
-  const activePage = pathname ? (pageMeta[pathname] ?? pageMeta['/']) : pageMeta['/'];
+  const activePage = pathname ? (pageMeta[pathname] ?? pageMeta['/sistema']) : pageMeta['/sistema'];
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
 
   useEffect(() => {
@@ -127,7 +127,7 @@ export function AppShell({ children }: Readonly<{ children: React.ReactNode }>) 
                     </svg>
                   </button>
 
-                  <Link href="/" className="inline-flex min-w-0 items-center gap-2.5 text-slate-950 transition hover:text-sky-700">
+                  <Link href="/sistema" className="inline-flex min-w-0 items-center gap-2.5 text-slate-950 transition hover:text-sky-700">
                     <span className="flex h-8.5 w-8.5 shrink-0 items-center justify-center rounded-2xl bg-slate-950 text-[11px] font-semibold text-white shadow-[0_10px_24px_rgba(15,23,42,0.16)]">
                       ED
                     </span>
@@ -173,8 +173,11 @@ export function AppShell({ children }: Readonly<{ children: React.ReactNode }>) 
                   <input aria-label="Buscar" placeholder="Buscar usuario, vista o registro" />
                 </label>
 
-                <div className="flex flex-wrap items-stretch justify-between gap-2 sm:justify-end xl:shrink-0 xl:justify-start">
-                  <button type="button" className="icon-button" aria-label="Notificaciones">
+                   <div className="flex flex-wrap items-stretch justify-between gap-2 sm:justify-end xl:shrink-0 xl:justify-start">
+                    <Link href="/" className="secondary-button min-h-10 rounded-xl px-3.5 py-2 text-xs sm:w-auto sm:text-sm">
+                      Sitio institucional
+                    </Link>
+                   <button type="button" className="icon-button" aria-label="Notificaciones">
                     <span className="absolute right-2 top-2 h-2.5 w-2.5 rounded-full bg-sky-500" />
                     <svg viewBox="0 0 24 24" aria-hidden="true" className="h-5 w-5 text-slate-600">
                       <path d="M12 3.75a4.25 4.25 0 0 0-4.25 4.25v1.02c0 .64-.2 1.26-.57 1.78L5.8 12.77A1.75 1.75 0 0 0 7.23 15.5h9.54a1.75 1.75 0 0 0 1.43-2.73l-1.38-1.97a3.23 3.23 0 0 1-.57-1.78V8A4.25 4.25 0 0 0 12 3.75Zm0 16.5a2.24 2.24 0 0 0 2.12-1.5H9.88A2.24 2.24 0 0 0 12 20.25Z" fill="currentColor" />
@@ -186,9 +189,10 @@ export function AppShell({ children }: Readonly<{ children: React.ReactNode }>) 
                     <p className="mt-1 text-xs font-medium text-slate-700">Alta y consulta de usuarios</p>
                   </div>
 
-                  <Link href="/usuarios" className="primary-button min-h-10 w-full rounded-xl px-3.5 py-2 text-xs sm:w-auto sm:text-sm">
+                  <Link href="/sistema/usuarios" className="primary-button min-h-10 w-full rounded-xl px-3.5 py-2 text-xs sm:w-auto sm:text-sm">
                     Nuevo usuario
                   </Link>
+                  <LogoutButton className="secondary-button min-h-10 rounded-xl px-3.5 py-2 text-xs sm:w-auto sm:text-sm" />
                 </div>
               </div>
             </div>
@@ -206,7 +210,7 @@ function SidebarContent({ pathname, onNavigate }: { pathname: string; onNavigate
     <>
       <div className="rounded-[24px] border border-slate-200 bg-[linear-gradient(180deg,#ffffff_0%,#f8fbff_100%)] px-4 py-4">
         <div className="flex items-center justify-between gap-3">
-          <Link href="/" className="inline-flex min-w-0 items-center gap-3 text-slate-950 transition hover:text-sky-700" onClick={onNavigate}>
+          <Link href="/sistema" className="inline-flex min-w-0 items-center gap-3 text-slate-950 transition hover:text-sky-700" onClick={onNavigate}>
             <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-slate-950 text-sm font-semibold text-white shadow-[0_14px_30px_rgba(15,23,42,0.16)]">
               ED
             </span>
@@ -220,6 +224,11 @@ function SidebarContent({ pathname, onNavigate }: { pathname: string; onNavigate
         <div className="mt-4 rounded-[20px] border border-slate-200 bg-slate-50/80 px-3.5 py-3">
           <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-500">Foco del día</p>
           <p className="mt-2 text-sm font-semibold text-slate-950">Accesos, estructura y pendientes en un solo flujo.</p>
+        </div>
+        <div className="mt-3 flex gap-2">
+          <Link href="/" className="compact-button flex-1 justify-center" onClick={onNavigate}>
+            Sitio público
+          </Link>
         </div>
       </div>
 
@@ -272,7 +281,7 @@ function SidebarContent({ pathname, onNavigate }: { pathname: string; onNavigate
         <div className="mt-4 rounded-[18px] border border-white/10 bg-white/5 px-3.5 py-3 text-sm text-slate-200">
           Prioridades visibles, acciones más cerca y mejor lectura en móvil y escritorio.
         </div>
-        <Link href="/panel" className="mt-5 inline-flex items-center text-sm font-semibold text-sky-200 transition hover:text-white" onClick={onNavigate}>
+        <Link href="/sistema/panel" className="mt-5 inline-flex items-center text-sm font-semibold text-sky-200 transition hover:text-white" onClick={onNavigate}>
           Abrir panel diario
         </Link>
       </div>
