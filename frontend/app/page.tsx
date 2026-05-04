@@ -175,56 +175,9 @@ const contactDetails = [
   },
 ];
 
-const fadeUpSections = [
-  'landing-hero-copy',
-  'landing-hero-visual',
-  'landing-benefits-head',
-  'landing-programs-head',
-  'landing-about-visual',
-  'landing-about-copy',
-  'landing-stats-grid',
-  'landing-model-head',
-  'landing-testimonials-head',
-  'landing-installations-head',
-  'landing-admissions-copy',
-  'landing-admissions-card',
-  'landing-contact-copy',
-  'landing-contact-form',
-  'landing-final-cta-block',
-];
-
 export default function HomePage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [visibleSections, setVisibleSections] = useState<string[]>([]);
   const currentYear = new Date().getFullYear();
-
-  useEffect(() => {
-    const elements = Array.from(document.querySelectorAll<HTMLElement>('.fade-up'));
-
-    if (!elements.length) {
-      return;
-    }
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const key = entry.target.getAttribute('data-fade-key');
-            if (key) {
-              setVisibleSections((prev) => (prev.includes(key) ? prev : [...prev, key]));
-            }
-          }
-        });
-      },
-      { threshold: 0.12 }
-    );
-
-    elements.forEach((element) => observer.observe(element));
-
-    return () => observer.disconnect();
-  }, []);
-
-  const isVisible = (key: string) => visibleSections.includes(key);
 
   return (
     <main className="min-h-screen overflow-x-hidden bg-white text-eduText">
@@ -295,8 +248,7 @@ export default function HomePage() {
       <section id="inicio" className="hero-bg pb-20 pt-32 lg:pb-28 lg:pt-40">
         <div className="container-page grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
           <div
-            className={`fade-up ${isVisible(fadeUpSections[0]) ? 'show' : ''}`}
-            data-fade-key={fadeUpSections[0]}
+            className="fade-up show"
           >
             <div className="section-label mb-7">
               <span className="h-2.5 w-2.5 rounded-full bg-eduGreen"></span>
@@ -338,8 +290,7 @@ export default function HomePage() {
           </div>
 
           <div
-            className={`fade-up ${isVisible(fadeUpSections[1]) ? 'show' : ''}`}
-            data-fade-key={fadeUpSections[1]}
+            className="fade-up show"
           >
             <div className="floating relative hero-visual-card rounded-5xl border border-white bg-white p-4 shadow-premium sm:p-6">
               <div className="dark-panel flex h-full min-h-[500px] flex-col justify-between overflow-hidden rounded-4xl p-6 sm:p-8 lg:min-h-[520px]">
@@ -395,8 +346,7 @@ export default function HomePage() {
       <section id="beneficios" className="bg-white py-20">
         <div className="container-page">
           <div
-            className={`fade-up mx-auto mb-14 max-w-3xl text-center ${isVisible(fadeUpSections[2]) ? 'show' : ''}`}
-            data-fade-key={fadeUpSections[2]}
+            className="fade-up show mx-auto mb-14 max-w-3xl text-center"
           >
             <span className="section-label">⭐ ¿Por qué elegirnos?</span>
             <h2 className="mt-5 text-3xl font-black text-eduNavy md:text-5xl">
@@ -423,8 +373,7 @@ export default function HomePage() {
       <section id="programas" className="decor-grid bg-eduSoft py-20">
         <div className="container-page">
           <div
-            className={`fade-up mb-14 flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between ${isVisible(fadeUpSections[3]) ? 'show' : ''}`}
-            data-fade-key={fadeUpSections[3]}
+            className="fade-up show mb-14 flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between"
           >
             <div className="max-w-3xl">
               <span className="section-label">🎒 Programas académicos</span>
@@ -475,8 +424,7 @@ export default function HomePage() {
       <section className="bg-white py-20">
         <div className="container-page grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
           <div
-            className={`fade-up ${isVisible(fadeUpSections[4]) ? 'show' : ''}`}
-            data-fade-key={fadeUpSections[4]}
+            className="fade-up show"
           >
             <div className="grid grid-cols-2 gap-5">
               <div className="dark-panel flex min-h-[230px] flex-col justify-between rounded-4xl p-7 text-white shadow-premium">
@@ -512,8 +460,7 @@ export default function HomePage() {
 
           <div
             id="nosotros"
-            className={`fade-up ${isVisible(fadeUpSections[5]) ? 'show' : ''}`}
-            data-fade-key={fadeUpSections[5]}
+            className="fade-up show"
           >
             <span className="section-label">💙 Sobre nosotros</span>
             <h2 className="mt-5 text-3xl font-black text-eduNavy md:text-5xl">
@@ -546,8 +493,7 @@ export default function HomePage() {
       <section className="dark-panel py-16">
         <div className="container-page">
           <div
-            className={`fade-up grid grid-cols-2 gap-5 lg:grid-cols-4 ${isVisible(fadeUpSections[6]) ? 'show' : ''}`}
-            data-fade-key={fadeUpSections[6]}
+            className="fade-up show grid grid-cols-2 gap-5 lg:grid-cols-4"
           >
             {[
               ['1.800+', 'Estudiantes activos'],
@@ -567,8 +513,7 @@ export default function HomePage() {
       <section id="modelo" className="bg-white py-20">
         <div className="container-page">
           <div
-            className={`fade-up mx-auto mb-14 max-w-3xl text-center ${isVisible(fadeUpSections[7]) ? 'show' : ''}`}
-            data-fade-key={fadeUpSections[7]}
+            className="fade-up show mx-auto mb-14 max-w-3xl text-center"
           >
             <span className="section-label">🧩 Modelo pedagógico</span>
             <h2 className="mt-5 text-3xl font-black text-eduNavy md:text-5xl">Aprender haciendo, pensando y creando</h2>
@@ -598,8 +543,7 @@ export default function HomePage() {
       <section className="decor-grid bg-eduSoft py-20">
         <div className="container-page">
           <div
-            className={`fade-up mx-auto mb-14 max-w-3xl text-center ${isVisible(fadeUpSections[8]) ? 'show' : ''}`}
-            data-fade-key={fadeUpSections[8]}
+            className="fade-up show mx-auto mb-14 max-w-3xl text-center"
           >
             <span className="section-label bg-white">💬 Testimonios</span>
             <h2 className="mt-5 text-3xl font-black text-eduNavy md:text-5xl">
@@ -630,8 +574,7 @@ export default function HomePage() {
       <section id="instalaciones" className="bg-white py-20">
         <div className="container-page">
           <div
-            className={`fade-up mb-14 flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between ${isVisible(fadeUpSections[9]) ? 'show' : ''}`}
-            data-fade-key={fadeUpSections[9]}
+            className="fade-up show mb-14 flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between"
           >
             <div className="max-w-3xl">
               <span className="section-label">🏛️ Campus e instalaciones</span>
@@ -666,8 +609,7 @@ export default function HomePage() {
       <section id="admisiones" className="bg-eduSoft py-20">
         <div className="container-page grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
           <div
-            className={`fade-up ${isVisible(fadeUpSections[10]) ? 'show' : ''}`}
-            data-fade-key={fadeUpSections[10]}
+            className="fade-up show"
           >
             <span className="section-label">📝 Admisiones</span>
             <h2 className="mt-5 text-3xl font-black text-eduNavy md:text-5xl">Un proceso claro, humano y acompañado</h2>
@@ -692,8 +634,7 @@ export default function HomePage() {
           </div>
 
           <div
-            className={`fade-up dark-panel rounded-5xl p-8 text-white shadow-premium lg:p-10 ${isVisible(fadeUpSections[11]) ? 'show' : ''}`}
-            data-fade-key={fadeUpSections[11]}
+            className="fade-up show dark-panel rounded-5xl p-8 text-white shadow-premium lg:p-10"
           >
             <p className="font-black text-white/65">Cupos limitados</p>
             <h3 className="mt-3 text-3xl font-black md:text-4xl">Admisiones abiertas para el nuevo periodo académico</h3>
@@ -726,8 +667,7 @@ export default function HomePage() {
       <section id="contacto" className="bg-white py-20">
         <div className="container-page grid gap-12 lg:grid-cols-2 lg:gap-16">
           <div
-            className={`fade-up ${isVisible(fadeUpSections[12]) ? 'show' : ''}`}
-            data-fade-key={fadeUpSections[12]}
+            className="fade-up show"
           >
             <span className="section-label">📩 Contacto</span>
             <h2 className="mt-5 text-3xl font-black text-eduNavy md:text-5xl">Da el primer paso hacia una mejor educación</h2>
@@ -752,8 +692,7 @@ export default function HomePage() {
           </div>
 
           <form
-            className={`fade-up rounded-5xl border border-slate-100 bg-eduSoft p-6 shadow-soft md:p-8 ${isVisible(fadeUpSections[13]) ? 'show' : ''}`}
-            data-fade-key={fadeUpSections[13]}
+            className="fade-up show rounded-5xl border border-slate-100 bg-eduSoft p-6 shadow-soft md:p-8"
           >
             <div className="grid gap-5 md:grid-cols-2">
               <div>
@@ -800,8 +739,7 @@ export default function HomePage() {
 
       <section className="dark-panel py-16">
         <div
-          className={`container-page fade-up text-center ${isVisible(fadeUpSections[14]) ? 'show' : ''}`}
-          data-fade-key={fadeUpSections[14]}
+          className="container-page fade-up show text-center"
         >
           <h2 className="text-3xl font-black text-white md:text-5xl">El futuro de tu hijo empieza con una gran decisión</h2>
           <p className="mx-auto mt-5 max-w-3xl text-lg leading-relaxed text-white/70">
