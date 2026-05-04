@@ -49,10 +49,13 @@ export async function POST(request: Request) {
     },
   });
 
+  const forwardedProto = request.headers.get('x-forwarded-proto');
+  const isHttpsRequest = forwardedProto === 'https' || new URL(request.url).protocol === 'https:';
+
   const cookieOptions = {
     httpOnly: false,
     sameSite: 'lax' as const,
-    secure: process.env.NODE_ENV === 'production',
+    secure: isHttpsRequest,
     path: '/',
     maxAge: SESSION_COOKIE_MAX_AGE,
   };
