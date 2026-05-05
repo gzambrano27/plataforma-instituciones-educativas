@@ -76,30 +76,29 @@ export function EvaluationsWorkspace({
     <>
       <div className="space-y-5">
         <div className="grid gap-5 xl:grid-cols-[0.95fr_1.05fr]">
-          <aside className="section-grid-card">
-            <div className="flex flex-col gap-4">
+          <section className="table-shell overflow-hidden">
+            <div className="table-toolbar soft-divider">
               <div>
                 <p className="eyebrow">Planeación evaluativa</p>
-                <h2 className="mt-2 text-xl font-semibold text-slate-950">Altas rápidas de evaluaciones y notas sobre la operación académica real</h2>
-                <p className="mt-2 text-sm leading-6 text-slate-600">
-                  La coordinación puede definir instrumentos por asignación y registrar calificaciones sin salir del mismo módulo operativo.
-                </p>
+                <h2 className="table-title">Estado real de evaluaciones y notas</h2>
+                <p className="table-subtitle">Prioridad en volumen, cobertura y rendimiento real, no en textos de relleno.</p>
               </div>
-
               <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-                <button type="button" className="primary-button w-full sm:w-auto" onClick={() => setCreateEvaluationOpen(true)}>
+                <button type="button" className="compact-button w-full sm:w-auto" onClick={() => setCreateEvaluationOpen(true)}>
                   Nueva evaluación
                 </button>
-                <button type="button" className="secondary-button w-full sm:w-auto" onClick={() => setCreateGradeOpen(true)}>
+                <button type="button" className="compact-button w-full sm:w-auto" onClick={() => setCreateGradeOpen(true)}>
                   Registrar calificación
                 </button>
               </div>
-
-              <div className="surface-muted p-4 text-sm text-slate-600">
-                Las evaluaciones salen de asignaciones académicas existentes y las calificaciones solo aceptan estudiantes con matrícula activa dentro de la cobertura correcta.
-              </div>
             </div>
-          </aside>
+            <div className="grid gap-3 p-5 sm:grid-cols-2 xl:grid-cols-4">
+              <div className="metric-tile"><p className="summary-label">Evaluaciones</p><p className="summary-value">{evaluationsSnapshot?.summary.evaluations ?? 0}</p></div>
+              <div className="metric-tile"><p className="summary-label">Con sección</p><p className="summary-value">{evaluationsSnapshot?.summary.sectionScoped ?? 0}</p></div>
+              <div className="metric-tile"><p className="summary-label">Calificaciones</p><p className="summary-value">{gradesSnapshot?.summary.grades ?? 0}</p></div>
+              <div className="metric-tile"><p className="summary-label">Promedio</p><p className="summary-value">{gradesSnapshot?.summary.averageScore ?? 0}</p></div>
+            </div>
+          </section>
 
           <aside className="section-grid-card">
             <div className="flex items-center justify-between gap-4">

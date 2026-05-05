@@ -72,28 +72,27 @@ export function AttendanceWorkspace({ snapshot, error }: AttendanceWorkspaceProp
     <>
       <div className="space-y-5">
         <div className="grid gap-5 xl:grid-cols-[0.92fr_1.08fr]">
-          <aside className="section-grid-card">
-            <div className="flex flex-col gap-4">
+          <section className="table-shell overflow-hidden">
+            <div className="table-toolbar soft-divider">
               <div>
                 <p className="eyebrow">Control diario</p>
-                <h2 className="mt-2 text-xl font-semibold text-slate-950">Toma diaria por sección con actualización del mismo día</h2>
-                <p className="mt-2 text-sm leading-6 text-slate-600">
-                  Coordinación y tutoría pueden registrar asistencia por lote para estudiantes realmente matriculados, manteniendo trazabilidad por fecha, sección y periodo escolar.
-                </p>
+                <h2 className="table-title">Estado real de asistencia del periodo</h2>
+                <p className="table-subtitle">Información útil para coordinación y tutoría, con foco en volumen, cobertura y seguimiento real.</p>
               </div>
-
               <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-                <button type="button" className="primary-button w-full sm:w-auto" onClick={() => setCreateOpen(true)}>
+                <button type="button" className="compact-button w-full sm:w-auto" onClick={() => setCreateOpen(true)}>
                   Registrar asistencia
                 </button>
                 <span className="info-chip">{snapshot?.institution.activeSchoolYearLabel ?? 'Periodo activo'}</span>
               </div>
-
-              <div className="surface-muted p-4 text-sm text-slate-600">
-                Si una fecha ya tiene registros previos, la nueva carga actualiza la asistencia del mismo grupo sin romper la relación con la matrícula activa.
-              </div>
             </div>
-          </aside>
+            <div className="grid gap-3 p-5 sm:grid-cols-2 xl:grid-cols-4">
+              <div className="metric-tile"><p className="summary-label">Presentes</p><p className="summary-value">{snapshot?.summary.present ?? 0}</p></div>
+              <div className="metric-tile"><p className="summary-label">Ausentes</p><p className="summary-value">{snapshot?.summary.absent ?? 0}</p></div>
+              <div className="metric-tile"><p className="summary-label">Atrasos</p><p className="summary-value">{snapshot?.summary.late ?? 0}</p></div>
+              <div className="metric-tile"><p className="summary-label">Justificadas</p><p className="summary-value">{snapshot?.summary.justified ?? 0}</p></div>
+            </div>
+          </section>
 
           <aside className="section-grid-card">
             <div className="flex items-center justify-between gap-4">
@@ -122,7 +121,7 @@ export function AttendanceWorkspace({ snapshot, error }: AttendanceWorkspaceProp
               </div>
             </div>
             <div className="mt-4 rounded-[20px] border border-slate-200 bg-slate-50/80 p-4 text-sm text-slate-600">
-              Cobertura actual: {snapshot?.summary.sectionsCovered ?? 0} secciones, {snapshot?.summary.trackedDates ?? 0} fechas y {presentShare}% de registros marcados como presentes.
+              Cobertura actual: {snapshot?.summary.sectionsCovered ?? 0} secciones, {snapshot?.summary.trackedDates ?? 0} fechas, {snapshot?.summary.studentsCovered ?? 0} estudiantes seguidos y {presentShare}% de registros marcados como presentes.
             </div>
           </aside>
         </div>

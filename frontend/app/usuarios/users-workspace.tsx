@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { PaginationControls } from '../../components/pagination-controls';
 import { UserFormModal, UserFormValues } from './user-create-form';
 
@@ -36,45 +36,48 @@ export function UsersWorkspace({ users, roles, institutions, error }: UsersWorks
   const totalPages = Math.max(1, Math.ceil(users.length / pageSize));
   const paginatedUsers = users.slice((page - 1) * pageSize, page * pageSize);
   const systemRoles = roles.filter((role) => role.isSystem).length;
+  const usersByStatus = useMemo(() => ({
+    active: users.filter((user) => user.status === 'active').length,
+    pending: users.filter((user) => user.status === 'pending').length,
+    blocked: users.filter((user) => user.status === 'blocked').length,
+  }), [users]);
+  const rolesInUse = useMemo(() => new Set(users.flatMap((user) => user.roleCodes)).size, [users]);
 
   return (
     <>
       <div className="space-y-5">
-        <div className="grid gap-5 xl:grid-cols-[0.9fr_1.1fr]">
-          <aside className="section-grid-card">
-            <div className="flex flex-col gap-4">
+        <div className="grid gap-5 xl:grid-cols-[1.05fr_0.95fr]">
+          <section className="table-shell overflow-hidden">
+            <div className="table-toolbar soft-divider">
               <div>
-                <p className="eyebrow">Acciones de usuario</p>
-                <h2 className="mt-2 text-xl font-semibold text-slate-950">Altas y edición desde una vista compacta</h2>
-                <p className="mt-2 text-sm leading-6 text-slate-600">
-                  La creación se resuelve en modal y la futura edición ya está preparada desde cada fila, evitando formularios largos dentro de la pantalla principal.
-                </p>
+                <p className="eyebrow">Gobierno de acceso</p>
+                <h2 className="table-title">Estado real de usuarios y perfiles</h2>
+                <p className="table-subtitle">Menos texto plano y más lectura útil para decidir altas, bloqueos y cobertura de roles.</p>
               </div>
-
-              <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-                <button type="button" className="primary-button w-full sm:w-auto" onClick={() => setCreateOpen(true)}>
-                  Crear usuario
-                </button>
-                <span className="info-chip">{users.length} registrados</span>
-              </div>
-
-              <div className="surface-muted p-4 text-sm text-slate-600">
-                El flujo actual de creación sigue operativo sobre la API protegida. La edición queda lista en interfaz sin modificar backend.
-              </div>
+              <button type="button" className="compact-button" onClick={() => setCreateOpen(true)}>
+                Crear usuario
+              </button>
             </div>
-          </aside>
+            <div className="grid gap-3 p-5 sm:grid-cols-2 xl:grid-cols-4">
+              <div className="metric-tile"><p className="summary-label">Activos</p><p className="summary-value">{usersByStatus.active}</p></div>
+              <div className="metric-tile"><p className="summary-label">Pendientes</p><p className="summary-value">{usersByStatus.pending}</p></div>
+              <div className="metric-tile"><p className="summary-label">Bloqueados</p><p className="summary-value">{usersByStatus.blocked}</p></div>
+              <div className="metric-tile"><p className="summary-label">Roles en uso</p><p className="summary-value">{rolesInUse}</p></div>
+            </div>
+          </section>
 
-          <aside className="section-grid-card">
-            <div className="flex items-center justify-between gap-4">
+          <section className="table-shell overflow-hidden">
+            <div className="table-toolbar soft-divider">
               <div>
                 <p className="eyebrow">Catálogo de roles</p>
-                <p className="mt-2 text-sm text-slate-500">Perfiles disponibles para el trabajo institucional actual.</p>
+                <h2 className="table-title">Perfiles disponibles</h2>
+                <p className="table-subtitle">Solo contexto útil para operación, sin duplicar explicación decorativa.</p>
               </div>
               <span className="info-chip">{roles.length} roles</span>
             </div>
-            <div className="mt-5 grid gap-3 md:grid-cols-2">
+            <div className="grid gap-3 p-5 md:grid-cols-2">
               {roles.map((role) => (
-                <div key={role.id} className="surface-muted p-4">
+                <div key={role.id} className="rounded-2xl border border-slate-200 bg-slate-50/70 p-4">
                   <div className="flex items-start justify-between gap-4">
                     <div>
                       <p className="font-medium text-slate-950">{role.name}</p>
@@ -85,7 +88,7 @@ export function UsersWorkspace({ users, roles, institutions, error }: UsersWorks
                 </div>
               ))}
             </div>
-            <div className="mt-4 grid gap-3 sm:grid-cols-2">
+            <div className="grid gap-3 border-t border-slate-200 p-5 sm:grid-cols-2">
               <div className="metric-tile">
                 <p className="summary-label">Roles del sistema</p>
                 <p className="summary-value">{systemRoles}</p>
@@ -95,7 +98,7 @@ export function UsersWorkspace({ users, roles, institutions, error }: UsersWorks
                 <p className="summary-value">{institutions.length}</p>
               </div>
             </div>
-          </aside>
+          </section>
         </div>
 
         <section className="table-shell overflow-hidden">
