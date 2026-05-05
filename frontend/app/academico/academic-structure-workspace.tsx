@@ -49,29 +49,32 @@ export function AcademicStructureWorkspace({ snapshot, error }: AcademicStructur
     <>
       <div className="space-y-5">
         <div className="grid gap-5 xl:grid-cols-[0.9fr_1.1fr]">
-          <aside className="section-grid-card">
-            <div className="flex flex-col gap-4">
+          <section className="table-shell overflow-hidden">
+            <div className="table-toolbar soft-divider">
               <div>
                 <p className="eyebrow">Base académica</p>
-                <h2 className="mt-2 text-xl font-semibold text-slate-950">Altas directas para coordinación y administración</h2>
-                <p className="mt-2 text-sm leading-6 text-slate-600">
-                  Los tres bloques quedan operativos con creación en modal, lectura rápida y jerarquía visible sin salir de la pantalla principal.
-                </p>
+                <h2 className="table-title">Estado real de la estructura escolar</h2>
+                <p className="table-subtitle">La prioridad es operar niveles, grados y secciones con lectura útil y directa.</p>
               </div>
-
               <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-                <button type="button" className="primary-button w-full sm:w-auto" onClick={() => setLevelOpen(true)}>
+                <button type="button" className="compact-button w-full sm:w-auto" onClick={() => setLevelOpen(true)}>
                   Nuevo nivel
                 </button>
-                <button type="button" className="secondary-button w-full sm:w-auto" onClick={() => setGradeOpen(true)}>
+                <button type="button" className="compact-button w-full sm:w-auto" onClick={() => setGradeOpen(true)}>
                   Nuevo curso o grado
                 </button>
-                <button type="button" className="secondary-button w-full sm:w-auto" onClick={() => setSectionOpen(true)}>
+                <button type="button" className="compact-button w-full sm:w-auto" onClick={() => setSectionOpen(true)}>
                   Nueva sección
                 </button>
               </div>
             </div>
-          </aside>
+            <div className="grid gap-3 p-5 sm:grid-cols-2 xl:grid-cols-4">
+              <div className="metric-tile"><p className="summary-label">Niveles</p><p className="summary-value">{snapshot?.summary.levels ?? 0}</p></div>
+              <div className="metric-tile"><p className="summary-label">Cursos o grados</p><p className="summary-value">{snapshot?.summary.grades ?? 0}</p></div>
+              <div className="metric-tile"><p className="summary-label">Secciones</p><p className="summary-value">{snapshot?.summary.sections ?? 0}</p></div>
+              <div className="metric-tile"><p className="summary-label">Con capacidad</p><p className="summary-value">{sectionsWithCapacity}</p></div>
+            </div>
+          </section>
 
           <aside className="section-grid-card">
             <div className="flex items-center justify-between gap-4">

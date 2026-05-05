@@ -53,28 +53,27 @@ export function AcademicAssignmentsWorkspace({ snapshot, error }: AcademicAssign
     <>
       <div className="space-y-5">
         <div className="grid gap-5 xl:grid-cols-[0.9fr_1.1fr]">
-          <aside className="section-grid-card">
-            <div className="flex flex-col gap-4">
+          <section className="table-shell overflow-hidden">
+            <div className="table-toolbar soft-divider">
               <div>
                 <p className="eyebrow">Carga docente por materia</p>
-                <h2 className="mt-2 text-xl font-semibold text-slate-950">Altas rápidas con validación académica en el mismo flujo</h2>
-                <p className="mt-2 text-sm leading-6 text-slate-600">
-                  La institución ya puede vincular docentes y materias sobre nivel, curso y sección con reglas coherentes respecto a la estructura existente.
-                </p>
+                <h2 className="table-title">Estado real de asignaciones académicas</h2>
+                <p className="table-subtitle">Se prioriza cobertura docente, alcance curricular y densidad real de operación.</p>
               </div>
-
               <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-                <button type="button" className="primary-button w-full sm:w-auto" onClick={() => setCreateOpen(true)}>
+                <button type="button" className="compact-button w-full sm:w-auto" onClick={() => setCreateOpen(true)}>
                   Nueva asignación académica
                 </button>
                 <span className="info-chip">{assignments.length} registradas</span>
               </div>
-
-              <div className="surface-muted p-4 text-sm text-slate-600">
-                El formulario valida coincidencia entre nivel, curso, sección y materia para evitar cargas académicas incoherentes.
-              </div>
             </div>
-          </aside>
+            <div className="grid gap-3 p-5 sm:grid-cols-2 xl:grid-cols-4">
+              <div className="metric-tile"><p className="summary-label">Asignaciones</p><p className="summary-value">{snapshot?.summary.assignments ?? 0}</p></div>
+              <div className="metric-tile"><p className="summary-label">Con sección</p><p className="summary-value">{snapshot?.summary.withSection ?? 0}</p></div>
+              <div className="metric-tile"><p className="summary-label">Docentes vinculados</p><p className="summary-value">{snapshot?.summary.linkedTeachers ?? 0}</p></div>
+              <div className="metric-tile"><p className="summary-label">Por curso</p><p className="summary-value">{assignmentsWithoutSection}</p></div>
+            </div>
+          </section>
 
           <aside className="section-grid-card">
             <div className="flex items-center justify-between gap-4">

@@ -42,28 +42,27 @@ export function TeachersWorkspace({ snapshot, error }: TeachersWorkspaceProps) {
     <>
       <div className="space-y-5">
         <div className="grid gap-5 xl:grid-cols-[0.9fr_1.1fr]">
-          <aside className="section-grid-card">
-            <div className="flex flex-col gap-4">
+          <section className="table-shell overflow-hidden">
+            <div className="table-toolbar soft-divider">
               <div>
                 <p className="eyebrow">Planta docente</p>
-                <h2 className="mt-2 text-xl font-semibold text-slate-950">Altas rápidas con asignación académica en el mismo flujo</h2>
-                <p className="mt-2 text-sm leading-6 text-slate-600">
-                  La coordinación ya puede registrar docentes y dejar visible su responsabilidad por nivel, curso o sección sin depender de pantallas separadas.
-                </p>
+                <h2 className="table-title">Estado real de la cobertura docente</h2>
+                <p className="table-subtitle">La prioridad es ver disponibilidad, asignación y actividad real, no bloques decorativos.</p>
               </div>
-
               <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-                <button type="button" className="primary-button w-full sm:w-auto" onClick={() => setCreateOpen(true)}>
+                <button type="button" className="compact-button w-full sm:w-auto" onClick={() => setCreateOpen(true)}>
                   Nuevo docente
                 </button>
                 <span className="info-chip">{teachers.length} registrados</span>
               </div>
-
-              <div className="surface-muted p-4 text-sm text-slate-600">
-                La asignación inicial ya se valida contra la estructura académica de la institución activa y puede quedar pendiente si todavía no se define la carga.
-              </div>
             </div>
-          </aside>
+            <div className="grid gap-3 p-5 sm:grid-cols-2 xl:grid-cols-4">
+              <div className="metric-tile"><p className="summary-label">Docentes</p><p className="summary-value">{snapshot?.summary.teachers ?? 0}</p></div>
+              <div className="metric-tile"><p className="summary-label">Con asignación</p><p className="summary-value">{snapshot?.summary.assignedTeachers ?? 0}</p></div>
+              <div className="metric-tile"><p className="summary-label">Niveles disponibles</p><p className="summary-value">{levels.length}</p></div>
+              <div className="metric-tile"><p className="summary-label">Sin actividad</p><p className="summary-value">{inactiveTeachers}</p></div>
+            </div>
+          </section>
 
           <aside className="section-grid-card">
             <div className="flex items-center justify-between gap-4">

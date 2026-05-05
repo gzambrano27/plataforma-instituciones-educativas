@@ -46,28 +46,27 @@ export function EnrollmentsWorkspace({ snapshot, error }: EnrollmentsWorkspacePr
     <>
       <div className="space-y-5">
         <div className="grid gap-5 xl:grid-cols-[0.9fr_1.1fr]">
-          <aside className="section-grid-card">
-            <div className="flex flex-col gap-4">
+          <section className="table-shell overflow-hidden">
+            <div className="table-toolbar soft-divider">
               <div>
                 <p className="eyebrow">Inscripción académica</p>
-                <h2 className="mt-2 text-xl font-semibold text-slate-950">Alta operativa por estudiante y sección en el mismo flujo</h2>
-                <p className="mt-2 text-sm leading-6 text-slate-600">
-                  La coordinación puede registrar matrículas reales y dejar sincronizada la ubicación vigente del estudiante con la estructura académica existente.
-                </p>
+                <h2 className="table-title">Estado real de matrículas del periodo</h2>
+                <p className="table-subtitle">Se prioriza cobertura real, estudiantes afectados y novedades administrativas.</p>
               </div>
-
               <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-                <button type="button" className="primary-button w-full sm:w-auto" onClick={() => setCreateOpen(true)}>
+                <button type="button" className="compact-button w-full sm:w-auto" onClick={() => setCreateOpen(true)}>
                   Nueva matrícula
                 </button>
                 <span className="info-chip">{snapshot?.institution.activeSchoolYearLabel ?? 'Periodo activo'}</span>
               </div>
-
-              <div className="surface-muted p-4 text-sm text-slate-600">
-                La sección define automáticamente el curso y el nivel; además, la ficha del estudiante se actualiza para mantener una ubicación académica coherente.
-              </div>
             </div>
-          </aside>
+            <div className="grid gap-3 p-5 sm:grid-cols-2 xl:grid-cols-4">
+              <div className="metric-tile"><p className="summary-label">Matrículas</p><p className="summary-value">{snapshot?.summary.enrollments ?? 0}</p></div>
+              <div className="metric-tile"><p className="summary-label">Activas</p><p className="summary-value">{snapshot?.summary.activeEnrollments ?? 0}</p></div>
+              <div className="metric-tile"><p className="summary-label">Estudiantes cubiertos</p><p className="summary-value">{snapshot?.summary.uniqueStudents ?? 0}</p></div>
+              <div className="metric-tile"><p className="summary-label">Con novedad</p><p className="summary-value">{inactiveEnrollments}</p></div>
+            </div>
+          </section>
 
           <aside className="section-grid-card">
             <div className="flex items-center justify-between gap-4">

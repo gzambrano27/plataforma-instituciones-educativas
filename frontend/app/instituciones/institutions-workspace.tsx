@@ -26,24 +26,31 @@ export function InstitutionsWorkspace({ institutions, error }: InstitutionsWorks
     <>
       <div className="space-y-5">
         <div className="grid gap-5 xl:grid-cols-[1.1fr_0.9fr]">
-          <aside className="section-grid-card">
-            <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+          <section className="table-shell overflow-hidden">
+            <div className="table-toolbar soft-divider">
               <div>
-                <p className="eyebrow">Acciones institucionales</p>
-                <h2 className="mt-2 text-xl font-semibold text-slate-950">Altas y edición sin sacar el foco del listado</h2>
-                <p className="mt-2 text-sm leading-6 text-slate-600">
-                  La vista principal se mantiene libre de formularios persistentes. El alta y la futura edición viven en modal para favorecer lectura y velocidad operativa.
-                </p>
+                <p className="eyebrow">Estructura institucional</p>
+                <h2 className="table-title">Estado real de sedes y registros base</h2>
+                <p className="table-subtitle">La prioridad es contacto, tipología y capacidad de seguimiento real.</p>
               </div>
-
               <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-                <button type="button" className="primary-button w-full sm:w-auto" onClick={() => setCreateOpen(true)}>
+                <button type="button" className="compact-button w-full sm:w-auto" onClick={() => setCreateOpen(true)}>
                   Nuevo registro
                 </button>
                 <span className="info-chip">{institutions.length} registros</span>
               </div>
             </div>
-          </aside>
+            <div className="grid gap-3 p-5 sm:grid-cols-2">
+              <div className="metric-tile">
+                <p className="summary-label">Con contacto</p>
+                <p className="summary-value">{institutionsWithContact}</p>
+              </div>
+              <div className="metric-tile">
+                <p className="summary-label">Sin contacto</p>
+                <p className="summary-value">{Math.max(institutions.length - institutionsWithContact, 0)}</p>
+              </div>
+            </div>
+          </section>
 
           <aside className="section-grid-card">
             <div className="flex items-center justify-between gap-4">

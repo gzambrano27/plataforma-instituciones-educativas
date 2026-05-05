@@ -38,28 +38,27 @@ export function SubjectsWorkspace({ snapshot, error }: SubjectsWorkspaceProps) {
     <>
       <div className="space-y-5">
         <div className="grid gap-5 xl:grid-cols-[0.9fr_1.1fr]">
-          <aside className="section-grid-card">
-            <div className="flex flex-col gap-4">
+          <section className="table-shell overflow-hidden">
+            <div className="table-toolbar soft-divider">
               <div>
                 <p className="eyebrow">Oferta curricular</p>
-                <h2 className="mt-2 text-xl font-semibold text-slate-950">Altas rápidas de materias con alcance académico visible</h2>
-                <p className="mt-2 text-sm leading-6 text-slate-600">
-                  Coordinación ya puede registrar materias, asociarlas opcionalmente a un nivel y dejar lista la base curricular para asignar carga docente.
-                </p>
+                <h2 className="table-title">Estado real de materias y cobertura</h2>
+                <p className="table-subtitle">Más datos de uso y menos explicación decorativa dentro del módulo.</p>
               </div>
-
               <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-                <button type="button" className="primary-button w-full sm:w-auto" onClick={() => setCreateOpen(true)}>
+                <button type="button" className="compact-button w-full sm:w-auto" onClick={() => setCreateOpen(true)}>
                   Nueva materia
                 </button>
                 <span className="info-chip">{subjects.length} registradas</span>
               </div>
-
-              <div className="surface-muted p-4 text-sm text-slate-600">
-                Cada materia puede quedar general para toda la institución o acotada a un nivel para facilitar asignaciones académicas coherentes.
-              </div>
             </div>
-          </aside>
+            <div className="grid gap-3 p-5 sm:grid-cols-2 xl:grid-cols-4">
+              <div className="metric-tile"><p className="summary-label">Materias</p><p className="summary-value">{snapshot?.summary.subjects ?? 0}</p></div>
+              <div className="metric-tile"><p className="summary-label">Activas</p><p className="summary-value">{snapshot?.summary.activeSubjects ?? 0}</p></div>
+              <div className="metric-tile"><p className="summary-label">Con nivel</p><p className="summary-value">{snapshot?.summary.scopedSubjects ?? 0}</p></div>
+              <div className="metric-tile"><p className="summary-label">Sin actividad</p><p className="summary-value">{inactiveSubjects}</p></div>
+            </div>
+          </section>
 
           <aside className="section-grid-card">
             <div className="flex items-center justify-between gap-4">
