@@ -87,32 +87,36 @@ export default async function EstudiantesPage() {
   const inactiveStudents = Math.max(0, (snapshot?.summary.students ?? 0) - (snapshot?.summary.activeStudents ?? 0));
 
   return (
-    <main className="page-main">
-      <section className="hero-panel">
-        <div className="hero-grid">
+    <main className="space-y-6">
+      <section className="panel-card overflow-hidden rounded-[18px] border border-[#EEF1F5] bg-white p-5 shadow-soft lg:p-6">
+        <div className="grid gap-4 xl:grid-cols-[1.35fr_0.9fr] xl:items-start">
           <div>
-            <p className="eyebrow">Fase académica 3</p>
-            <h1 className="section-title mt-3">Estudiantes y matrícula mínima conectados con la estructura real del colegio</h1>
-            <p className="section-copy mt-4 max-w-3xl">
-              El módulo ya permite registrar estudiantes sobre la institución activa y ubicarlos coherentemente en nivel, curso y sección dentro del flujo académico actual.
+            <span className="badge badge-warn">Fase académica 3</span>
+            <h1 className="mt-4 text-[24px] font-extrabold leading-tight text-ink sm:text-[28px]">
+              Estudiantes y matrícula mínima conectados con la estructura real del colegio
+            </h1>
+            <p className="mt-3 max-w-3xl text-sm leading-6 text-muted sm:text-[15px]">
+              El módulo ya permite registrar estudiantes sobre la institución activa y ubicarlos coherentemente en nivel,
+              curso y sección dentro del flujo académico actual.
             </p>
           </div>
-          <aside className="side-note-card">
-            <div className="summary-strip xl:grid-cols-2">
-              <div className="summary-item">
-                <p className="summary-label">Estudiantes activos</p>
-                <p className="summary-value">{snapshot?.summary.activeStudents ?? 0}</p>
-                <p className="mt-1 text-sm text-slate-500">Matrícula disponible para operación diaria.</p>
-              </div>
-              <div className="summary-item">
-                <p className="summary-label">Con estado no activo</p>
-                <p className="summary-value">{inactiveStudents}</p>
-                <p className="mt-1 text-sm text-slate-500">Casos visibles para seguimiento administrativo.</p>
-              </div>
+
+          <aside className="grid gap-3 sm:grid-cols-2 xl:grid-cols-1">
+            <div className="rounded-2xl border border-line bg-brand-50/60 p-4">
+              <p className="tiny-label">Estudiantes activos</p>
+              <p className="mt-2 text-[28px] font-extrabold leading-none text-ink">{snapshot?.summary.activeStudents ?? 0}</p>
+              <p className="mt-2 text-xs leading-5 text-muted">Matrícula disponible para operación diaria.</p>
             </div>
-            <div className="mt-4 rounded-[20px] border border-slate-200 bg-slate-50/80 p-4">
-              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">Alcance actual</p>
-              <p className="mt-2 text-sm leading-6 text-slate-600">La fase deja resuelta la alta mínima de estudiantes y su ubicación coherente dentro de una sola institución educativa.</p>
+            <div className="rounded-2xl border border-line bg-white p-4">
+              <p className="tiny-label">Con estado no activo</p>
+              <p className="mt-2 text-[28px] font-extrabold leading-none text-ink">{inactiveStudents}</p>
+              <p className="mt-2 text-xs leading-5 text-muted">Casos visibles para seguimiento administrativo.</p>
+            </div>
+            <div className="rounded-2xl border border-dashed border-line bg-[#FAFBFC] p-4 sm:col-span-2 xl:col-span-1">
+              <p className="tiny-label">Alcance actual</p>
+              <p className="mt-2 text-sm leading-6 text-slate-600">
+                La fase deja resuelta la alta mínima de estudiantes y su ubicación coherente dentro de una sola institución educativa.
+              </p>
             </div>
           </aside>
         </div>

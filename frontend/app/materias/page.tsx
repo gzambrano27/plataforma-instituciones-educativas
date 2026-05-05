@@ -59,32 +59,35 @@ export default async function MateriasPage() {
   const inactiveSubjects = Math.max(0, (snapshot?.summary.subjects ?? 0) - (snapshot?.summary.activeSubjects ?? 0));
 
   return (
-    <main className="page-main">
-      <section className="hero-panel">
-        <div className="hero-grid">
+    <main className="space-y-6">
+      <section className="panel-card overflow-hidden rounded-[18px] border border-[#EEF1F5] bg-white p-5 shadow-soft lg:p-6">
+        <div className="grid gap-4 xl:grid-cols-[1.35fr_0.9fr] xl:items-start">
           <div>
-            <p className="eyebrow">Fase académica 4</p>
-            <h1 className="section-title mt-3">Materias visibles y listas para conectarse con docentes y estructura académica</h1>
-            <p className="section-copy mt-4 max-w-3xl">
+            <span className="badge badge-success">Fase académica 4</span>
+            <h1 className="mt-4 text-[24px] font-extrabold leading-tight text-ink sm:text-[28px]">
+              Materias visibles y listas para conectarse con docentes y estructura académica
+            </h1>
+            <p className="mt-3 max-w-3xl text-sm leading-6 text-muted sm:text-[15px]">
               El módulo ya permite registrar materias reales para la institución activa y dejarlas preparadas para su asignación por nivel, curso o sección.
             </p>
           </div>
-          <aside className="side-note-card">
-            <div className="summary-strip xl:grid-cols-2">
-              <div className="summary-item">
-                <p className="summary-label">Materias activas</p>
-                <p className="summary-value">{snapshot?.summary.activeSubjects ?? 0}</p>
-                <p className="mt-1 text-sm text-slate-500">Disponibles para carga académica.</p>
-              </div>
-              <div className="summary-item">
-                <p className="summary-label">Sin actividad</p>
-                <p className="summary-value">{inactiveSubjects}</p>
-                <p className="mt-1 text-sm text-slate-500">Registros que no participan hoy.</p>
-              </div>
+
+          <aside className="grid gap-3 sm:grid-cols-2 xl:grid-cols-1">
+            <div className="rounded-2xl border border-line bg-brand-50/60 p-4">
+              <p className="tiny-label">Materias activas</p>
+              <p className="mt-2 text-[28px] font-extrabold leading-none text-ink">{snapshot?.summary.activeSubjects ?? 0}</p>
+              <p className="mt-2 text-xs leading-5 text-muted">Disponibles para carga académica.</p>
             </div>
-            <div className="mt-4 rounded-[20px] border border-slate-200 bg-slate-50/80 p-4">
-              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">Alcance actual</p>
-              <p className="mt-2 text-sm leading-6 text-slate-600">La fase deja resuelta la base de materias en español y conectada con la única institución educativa del entorno demo.</p>
+            <div className="rounded-2xl border border-line bg-white p-4">
+              <p className="tiny-label">Sin actividad</p>
+              <p className="mt-2 text-[28px] font-extrabold leading-none text-ink">{inactiveSubjects}</p>
+              <p className="mt-2 text-xs leading-5 text-muted">Registros que no participan hoy.</p>
+            </div>
+            <div className="rounded-2xl border border-dashed border-line bg-[#FAFBFC] p-4 sm:col-span-2 xl:col-span-1">
+              <p className="tiny-label">Alcance actual</p>
+              <p className="mt-2 text-sm leading-6 text-slate-600">
+                La fase deja resuelta la base de materias en español y conectada con la única institución educativa del entorno demo.
+              </p>
             </div>
           </aside>
         </div>

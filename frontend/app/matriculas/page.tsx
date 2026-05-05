@@ -107,31 +107,32 @@ export default async function MatriculasPage() {
   const nonActiveEnrollments = Math.max(0, (snapshot?.summary.enrollments ?? 0) - (snapshot?.summary.activeEnrollments ?? 0));
 
   return (
-    <main className="page-main">
-      <section className="hero-panel">
-        <div className="hero-grid">
+    <main className="space-y-6">
+      <section className="panel-card overflow-hidden rounded-[18px] border border-[#EEF1F5] bg-white p-5 shadow-soft lg:p-6">
+        <div className="grid gap-4 xl:grid-cols-[1.35fr_0.9fr] xl:items-start">
           <div>
-            <p className="eyebrow">Fase académica 5</p>
-            <h1 className="section-title mt-3">Matrículas e inscripciones enlazadas con estudiantes y secciones reales</h1>
-            <p className="section-copy mt-4 max-w-3xl">
+            <span className="badge badge-blue">Fase académica 5</span>
+            <h1 className="mt-4 text-[24px] font-extrabold leading-tight text-ink sm:text-[28px]">
+              Matrículas e inscripciones enlazadas con estudiantes y secciones reales
+            </h1>
+            <p className="mt-3 max-w-3xl text-sm leading-6 text-muted sm:text-[15px]">
               El módulo registra la matrícula del periodo activo sobre una sola institución educativa y deriva automáticamente nivel y curso desde la sección elegida.
             </p>
           </div>
-          <aside className="side-note-card">
-            <div className="summary-strip xl:grid-cols-2">
-              <div className="summary-item">
-                <p className="summary-label">Matrículas activas</p>
-                <p className="summary-value">{snapshot?.summary.activeEnrollments ?? 0}</p>
-                <p className="mt-1 text-sm text-slate-500">Inscripciones vigentes para operación diaria.</p>
-              </div>
-              <div className="summary-item">
-                <p className="summary-label">Con novedad</p>
-                <p className="summary-value">{nonActiveEnrollments}</p>
-                <p className="mt-1 text-sm text-slate-500">Retiros o anulaciones visibles para control.</p>
-              </div>
+
+          <aside className="grid gap-3 sm:grid-cols-2 xl:grid-cols-1">
+            <div className="rounded-2xl border border-line bg-brand-50/60 p-4">
+              <p className="tiny-label">Matrículas activas</p>
+              <p className="mt-2 text-[28px] font-extrabold leading-none text-ink">{snapshot?.summary.activeEnrollments ?? 0}</p>
+              <p className="mt-2 text-xs leading-5 text-muted">Inscripciones vigentes para operación diaria.</p>
             </div>
-            <div className="mt-4 rounded-[20px] border border-slate-200 bg-slate-50/80 p-4">
-              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">Periodo activo</p>
+            <div className="rounded-2xl border border-line bg-white p-4">
+              <p className="tiny-label">Con novedad</p>
+              <p className="mt-2 text-[28px] font-extrabold leading-none text-ink">{nonActiveEnrollments}</p>
+              <p className="mt-2 text-xs leading-5 text-muted">Retiros o anulaciones visibles para control.</p>
+            </div>
+            <div className="rounded-2xl border border-dashed border-line bg-[#FAFBFC] p-4 sm:col-span-2 xl:col-span-1">
+              <p className="tiny-label">Periodo activo</p>
               <p className="mt-2 text-sm leading-6 text-slate-600">
                 {snapshot?.institution.activeSchoolYearLabel ?? 'Sin periodo configurado'} · La matrícula actualiza la ubicación del estudiante y mantiene la trazabilidad por sección.
               </p>
